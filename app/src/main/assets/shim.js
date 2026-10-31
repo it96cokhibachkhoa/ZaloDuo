@@ -2413,6 +2413,8 @@
         if (!found.i18n && d && typeof d.str === 'function' && typeof d.currentLanguage === 'function') found.i18n = d;
         // Tên gợi nhớ (người dùng tự đặt cho bạn bè, vd. "Bố"): Zalo hiện tên này thay cho tên Zalo ở mọi nơi.
         if (!found.alias && d && typeof d.getAliasName === 'function' && typeof d.getAllAlias === 'function') found.alias = d;
+        // Hồ sơ mọi tài khoản đã gặp, cả người lạ và Official Account (không có trong getFriends, tin cuối không có dName).
+        if (!found.profile && d && typeof d.getProfileFriendByIdSync === 'function') found.profile = d;
         // Hàm Zalo dùng để ra dòng tin cuối ở danh sách (chữ, "Sticker", tên file, tin hệ thống...).
         if (!found.fmt) {
           for (var n in ex) {
@@ -2428,7 +2430,7 @@
       Z = { st: found.storage, preview: res(T.PreviewDataManager), unread: res(T.UnreadDataManager),
         pin: res(T.PinDataManager), mute: res(T.MuteDataManager), conv: found.convCtl ? res(found.convCtl) : null,
         info: T.ConvInfoDataManager ? res(T.ConvInfoDataManager) : null, // tên / ảnh cả người lạ (không trong danh bạ)
-        fmt: found.fmt, i18n: found.i18n, alias: found.alias || null };
+        fmt: found.fmt, i18n: found.i18n, alias: found.alias || null, profile: found.profile || null };
       diag('native list: zalo services ' + (Z.preview && Z.unread ? 'found' : 'partial') + (Z.fmt ? '' : ', no preview formatter'));
       return Z;
     }
@@ -2506,6 +2508,12 @@
       var fresh = Date.now() - namesAt > 60000;
       Promise.all([z.st.getConversations(), fresh ? z.st.getFriends() : null, fresh ? z.st.getGroups() : null]).then(function (all) {
         var convs = all[0] || [];
+        // getConversations chỉ có hội thoại 1-1, nhóm nằm ở ConvInfoDataManager.
+        try {
+          var hasConv = {};
+          convs.forEach(function (c) { hasConv[c.userId] = true; });
+          convs = convs.concat((z.info && z.info.getAllConvSync ? z.info.getAllConvSync() : []).filter(function (c) { return c && !hasConv[c.userId]; }));
+        } catch (e) { /* ignore */ }
         // Trang vừa tải: danh bạ / nhóm có thể chưa nạp (rỗng) — giữ tên cũ, lần dựng sau lấy lại ngay.
         if (fresh && ((all[1] || []).length || (all[2] || []).length)) {
           namesAt = Date.now();
@@ -2527,13 +2535,14 @@
           });
         } catch (e) { /* ignore */ }
         // Hội thoại ảo của Zalo (vd. "stranger_box" — hộp tin người lạ, mã không phải số): web chỉ hiện khi có tin.
-        convs = convs.filter(function (c) { return /^\d+$/.test(c.userId) || previews[c.userId]; });
+        convs = convs.filter(function (c) { return c.isGroup || /^\d+$/.test(c.userId) || previews[c.userId]; });
         var list = convs.map(function (c) {
           var id = c.userId, p = previews[id], u = unreads[id] || {}, info = names[id];
           if (!info || !info.n) {
-            // Không có trong danh bạ / nhóm (người lạ...): thông tin hội thoại của Zalo vẫn có tên + ảnh.
+            // Không có trong danh bạ / nhóm (người lạ, Official Account...): hồ sơ của Zalo vẫn có tên + ảnh.
             var ci = null;
-            try { ci = z.info && z.info.getConvByIdSync ? z.info.getConvByIdSync(id) : null; } catch (e) { /* ignore */ }
+            try { ci = z.profile ? z.profile.getProfileFriendByIdSync(id) : null; } catch (e) { /* ignore */ }
+            try { ci = ci || (z.info && z.info.getConvByIdSync ? z.info.getConvByIdSync(id) : null); } catch (e) { /* ignore */ }
             if (ci && (ci.displayName || ci.zaloName)) {
               info = { n: ci.displayName || ci.zaloName, a: ci.avatar || (info && info.a) || '', ms: info && info.ms, tm: info && info.tm };
               names[id] = info;
@@ -2553,6 +2562,12 @@
               // Người gửi trong nhóm: tên gợi nhớ / tên trong danh bạ như Zalo hiện trong chat, không phải tên Zalo gốc (dName).
               var fr = names[p.fromUid];
               var who = aliasOf(p.fromUid) || (fr && !fr.ms && fr.n) || p.dName;
+              if (!who) { // không phải bạn bè, tin cuối không có dName
+                try {
+                  var pr = z.profile ? z.profile.getProfileFriendByIdSync(p.fromUid) : null;
+                  who = pr && (pr.displayName || pr.zaloName);
+                } catch (e) { /* ignore */ }
+              }
               if (who) text = who + ': ' + text;
             }
           }
