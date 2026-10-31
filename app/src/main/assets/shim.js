@@ -16,6 +16,9 @@
   'use strict';
   if (window.__zw) return;
   var cfg = window.__ZW_CFG || {};
+  // Mã bí mật cho ZaloBridge (JsBridge.ok): giữ trong closure, gỡ khỏi window để không nằm lại trên trang.
+  var BT = String(cfg.bt || '');
+  try { delete window.__ZW_CFG; } catch (e) { /* ignore */ }
 
   // Cầu nối Android (window.ZaloBridge) có thể chưa sẵn sàng đúng lúc script này chạy (tùy bản
   // WebView của máy). Không bỏ cuộc: mọi lời gọi đi qua lớp trung gian, tra lại ZaloBridge mỗi lần.
@@ -26,7 +29,7 @@
     bridge[m] = function () {
       var b = window.ZaloBridge;
       if (!b || typeof b[m] !== 'function') return m === 'permission' ? 'default' : undefined;
-      return b[m].apply(b, arguments);
+      return b[m].apply(b, [BT].concat([].slice.call(arguments)));
     };
   });
 

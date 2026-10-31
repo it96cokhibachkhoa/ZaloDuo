@@ -273,9 +273,22 @@ final class WebViewHolder {
         }
     }
 
+    /** Mã bí mật của tiến trình, shim.js gửi kèm mọi lời gọi ZaloBridge (xem JsBridge.ok). Đổi mỗi lần app chạy. */
+    static final String BRIDGE_TOKEN = newToken();
+
+    private static String newToken() {
+        byte[] b = new byte[16];
+        new java.security.SecureRandom().nextBytes(b);
+        StringBuilder s = new StringBuilder();
+        for (byte x : b) s.append(String.format("%02x", x));
+        return s.toString();
+    }
+
     static String buildScript() {
         if (shimSource == null) shimSource = readAsset(app, "shim.js");
-        return "window.__ZW_CFG={viewportWidth:" + Prefs.viewportWidth(app)
+        // Chỉ gán cấu hình khi shim chưa chạy: lần chạy lại (lưới an toàn ở onPageFinished) shim tự bỏ qua nên sẽ không
+        // gỡ __ZW_CFG (có mã bí mật BRIDGE_TOKEN) khỏi trang.
+        return "if(!window.__zw)window.__ZW_CFG={bt:\"" + BRIDGE_TOKEN + "\",viewportWidth:" + Prefs.viewportWidth(app)
                 + ",ringDetect:" + Prefs.callAlerts(app)
                 + ",mobile:" + Prefs.mobileUi(app)
                 + ",dockOpacity:" + Prefs.dockOpacity(app)
