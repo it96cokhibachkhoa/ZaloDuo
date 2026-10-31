@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_settings"
+        android:shortcutId="settings"
+        android:shortcutShortLabel="@string/shortcut_settings">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="app.zaloduo.client.SettingsActivity"
+            android:targetPackage="app.zaloduo.client" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_reload"
+        android:shortcutId="reload"
+        android:shortcutShortLabel="@string/shortcut_reload">
+        <intent
+            android:action="app.zaloduo.client.RELOAD"
+            android:targetClass="app.zaloduo.client.MainActivity"
+            android:targetPackage="app.zaloduo.client" />
+    </shortcut>
+</shortcuts>

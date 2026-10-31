@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ZaloDuo</string>
+
+    <string name="ch_messages">Tin nhắn</string>
+    <string name="ch_messages_desc">Tin nhắn mới từ Zalo Web</string>
+    <string name="ch_messages_silent">Tin nhắn (im lặng)</string>
+    <string name="ch_calls">Cuộc gọi đến</string>
+    <string name="ch_calls_desc">Đổ chuông và hiện toàn màn hình khi có cuộc gọi</string>
+    <string name="ch_calls_quiet">Cuộc gọi đến (Zalo tự đổ chuông)</string>
+    <string name="ch_service">Chạy nền</string>
+    <string name="ch_service_desc">Giữ kết nối để nhận tin nhắn và cuộc gọi</string>
+
+    <string name="svc_running">ZaloDuo đang chạy nền</string>
+    <string name="svc_running_text">Đang giữ kết nối để nhận tin nhắn và cuộc gọi</string>
+    <string name="svc_conn_on">🟢 Đã kết nối máy chủ Zalo</string>
+    <string name="svc_conn_wait">🟡 Đang kết nối máy chủ Zalo…</string>
+    <string name="svc_conn_off">🔴 Mất kết nối máy chủ Zalo</string>
+    <string name="svc_in_call">Đang trong cuộc gọi Zalo</string>
+    <string name="svc_in_call_text">Chạm để quay lại cuộc gọi</string>
+    <string name="action_settings">Cài đặt</string>
+    <string name="action_speaker_on">Bật loa ngoài</string>
+    <string name="action_speaker_off">Tắt loa ngoài</string>
+
+    <string name="call_incoming">Có cuộc gọi Zalo đến</string>
+    <string name="call_open_hint">Mở để nghe máy</string>
+    <string name="call_open">Mở để nghe</string>
+
+    <string name="settings_title">Cài đặt ZaloDuo</string>
+    <string name="shortcut_settings">Cài đặt</string>
+    <string name="shortcut_reload">Tải lại</string>
+
+    <string name="battery_title">Cho phép chạy nền</string>
+    <string name="battery_message">Để nhận tin nhắn và cuộc gọi khi tắt màn hình, hãy cho app chạy nền không bị giới hạn pin ở màn hình tiếp theo.</string>
+    <string name="battery_ok">Tiếp tục</string>
+    <string name="later">Để sau</string>
+
+    <string name="download_started">Đang tải: %1$s</string>
+    <string name="download_saved">Đã lưu vào Download/Zalo: %1$s</string>
+    <string name="download_failed">Không tải được tệp</string>
+    <string name="download_need_permission">Cấp quyền bộ nhớ rồi bấm tải lại</string>
+    <string name="no_app_to_open">Không có ứng dụng nào mở được liên kết này</string>
+</resources>

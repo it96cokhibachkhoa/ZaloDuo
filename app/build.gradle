@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace = 'app.zaloduo.client'
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId = 'app.zaloduo.client'
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 13
+        versionName = '2.2'
+    }
+
+    // Khóa ký cố định: mọi bản build (máy bạn hay GitHub Actions) đều cùng chữ ký, nên cài bản mới đè lên bản cũ được
+    // mà không mất đăng nhập. Khóa KHÔNG nằm trong repo (ai có khóa là ký được bản "cập nhật" giả, đọc được phiên đăng
+    // nhập Zalo): trên máy lấy từ app/keystore.properties (không đưa lên git), trên GitHub Actions lấy từ Secrets
+    // (biến môi trường ZALODUO_KEYSTORE_FILE / _PASSWORD / ZALODUO_KEY_ALIAS / ZALODUO_KEY_PASSWORD). Không có khóa thì
+    // bản release không ký (không cài được), bản debug dùng khóa debug mặc định của Android.
+    def ks = new Properties()
+    def ksFile = file('keystore.properties')
+    if (ksFile.exists()) ksFile.withInputStream { ks.load(it) }
+    def ksPath = ks.getProperty('storeFile') ?: System.getenv('ZALODUO_KEYSTORE_FILE')
+    signingConfigs {
+        if (ksPath) {
+            fixed {
+                storeFile = file(ksPath)
+                storePassword = ks.getProperty('storePassword') ?: System.getenv('ZALODUO_KEYSTORE_PASSWORD')
+                keyAlias = ks.getProperty('keyAlias') ?: System.getenv('ZALODUO_KEY_ALIAS')
+                keyPassword = ks.getProperty('keyPassword') ?: System.getenv('ZALODUO_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            if (ksPath) signingConfig = signingConfigs.fixed
+        }
+        debug {
+            if (ksPath) signingConfig = signingConfigs.fixed
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+}

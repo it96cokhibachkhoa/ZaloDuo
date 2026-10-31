@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="zalo_blue">#0068FF</color>
+    <color name="ic_launcher_background">#0068FF</color>
+    <color name="zalo_dark_bg">#121416</color>
+
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/zalo_blue</item>
+        <item name="android:colorAccent">@color/zalo_blue</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- Màn hình chờ khi mở app lúc Zalo đang để giao diện tối (MainActivity chọn qua setSplashScreenTheme). -->
+    <style name="AppTheme.Dark">
+        <item name="android:windowBackground">@color/zalo_dark_bg</item>
+        <item name="android:statusBarColor">@color/zalo_dark_bg</item>
+        <item name="android:navigationBarColor">@color/zalo_dark_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="SettingsTheme" parent="@android:style/Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/zalo_blue</item>
+        <item name="android:colorPrimaryDark">#0052CC</item>
+        <item name="android:colorAccent">@color/zalo_blue</item>
+    </style>
+</resources>
