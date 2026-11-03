@@ -163,6 +163,13 @@ final class JsBridge {
         }
     }
 
+    /** Người dùng vừa vào một hội thoại (mục 8 của shim.js): xoá thông báo của hội thoại đó. */
+    @JavascriptInterface
+    public void convOpened(String t, final String convId) {
+        if (!ok(t) || owner.popup || convId == null) return;
+        Notifier.clearConversation(app, convId);
+    }
+
     /** Trạng thái kết nối máy chủ Zalo ("on" / "wait" / "off", mục 11 của shim.js): hiện ở thông báo chạy nền. */
     @JavascriptInterface
     public void connState(String t, final String state) {

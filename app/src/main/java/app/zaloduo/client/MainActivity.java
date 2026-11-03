@@ -119,7 +119,7 @@ public class MainActivity extends Activity {
         if (Prefs.mobileUi(this) && Prefs.nativeList(this)) {
             nativeList = new NativeChatList(this);
             nativeDock = new NativeDock(this);
-            nativeDock.onShown = nativeList::glassShown;
+            nativeDock.setGlass(nativeList.dockGlass()); // kính mờ đi cùng dock (ẩn / hiện, trượt một lớp)
             nativeList.onOpen = nativeDock::hideForOpen;
         }
         WebViewHolder.attach(this);
@@ -147,7 +147,10 @@ public class MainActivity extends Activity {
         // "Theo cỡ chữ của máy": đổi cỡ chữ trong Android thì màn hình được dựng lại (native theo cỡ mới), trang Zalo
         // (WebView giữ lại) phải áp lại cỡ chữ.
         if (Prefs.textZoomSetting(this) == 0) WebViewHolder.applySettings(false);
-        if (nativeDock != null && nativeDock.getParent() != null) nativeDock.setLayoutParams(nativeDock.params()); // khoảng cách đáy đổi trong Cài đặt
+        if (nativeDock != null && nativeDock.getParent() != null) { // khoảng cách đáy, độ đậm đổi trong Cài đặt: áp ngay
+            nativeDock.setLayoutParams(nativeDock.params());
+            nativeDock.applyOpacity();
+        }
     }
 
     @Override
@@ -159,7 +162,6 @@ public class MainActivity extends Activity {
         WebViewHolder.setHidden(false);
         WebViewHolder.wake("app opened");
         Notifier.cancelCallAlert(this);
-        if (Prefs.clearOnOpen(this)) Notifier.clearMessages(this);
     }
 
     @Override

@@ -11,3 +11,4 @@ app/keystore/
 app/keystore.properties
 *.jks
 *.keystore
+app/keystore*

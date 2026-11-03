@@ -76,7 +76,29 @@ final class NativeChatList extends FrameLayout {
         super(c);
         density = getResources().getDisplayMetrics().density;
         zoom = Prefs.textZoom(c) / 100f;
-        listView = new ListView(c);
+        listView = new ListView(c) {
+            /**
+             * Android 12+: nội dung danh sách ghi một lần mỗi khung hình vào nút content; kính mờ dưới dock vẽ lại chính
+             * nút đó (drawRenderNode) thay vì ghi lại cả danh sách lần nữa — rẻ, cuộn mượt, kính luôn khớp khung hình.
+             */
+            @Override
+            public void draw(Canvas cv) {
+                if (android.os.Build.VERSION.SDK_INT < 31 || !cv.isHardwareAccelerated()) {
+                    super.draw(cv);
+                    return;
+                }
+                if (content == null) content = new android.graphics.RenderNode("zd-list");
+                content.setPosition(0, 0, getWidth(), getHeight());
+                Canvas rc = content.beginRecording();
+                try {
+                    super.draw(rc);
+                } finally {
+                    content.endRecording();
+                }
+                cv.drawRenderNode(content);
+                if (glass != null && glass.getVisibility() == VISIBLE) glass.invalidate();
+            }
+        };
         listView.setDivider(null);
         listView.setSelector(new GradientDrawable()); // không có nền chọn mặc định
         listView.setClipToPadding(false);
@@ -136,9 +158,8 @@ final class NativeChatList extends FrameLayout {
             }
         });
         addView(listView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        glass = new DockGlass(c);
+        glass = new DockGlass(c); // nằm trong dock native (NativeDock.setGlass), không nằm trong danh sách
         glass.setVisibility(GONE);
-        addView(glass, new LayoutParams(0, 0));
         header = new Header(c);
         addView(header, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.TOP));
         WebViewHolder.evalMain("window.__zw&&window.__zw.connReport&&window.__zw.connReport()"); // trạng thái hiện tại
@@ -782,57 +803,31 @@ final class NativeChatList extends FrameLayout {
         if (dr instanceof android.graphics.drawable.BitmapDrawable) ((android.graphics.drawable.BitmapDrawable) dr).getBitmap().recycle();
     }
 
-    // ------------------------------------------------------------------ kính mờ dưới dock
+    // ------------------------------------------------------------------ kính mờ của dock
 
     private DockGlass glass;
-    private final android.graphics.Rect glassRect = new android.graphics.Rect();
-    private boolean glassHidden;
+    /** Bản ghi nội dung danh sách (Android 12+), kính vẽ lại nút này. */
+    private android.graphics.RenderNode content;
+
+    /** Lớp kính mờ cho dock native (NativeDock.setGlass): vẽ lại phần danh sách nằm sau dock rồi làm nhòe. */
+    View dockGlass() {
+        return glass;
+    }
 
     /**
-     * Dock là của trang web: backdrop-filter của nó chỉ làm nhòe nội dung web, không thấy danh sách native nằm dưới
-     * WebView (nhìn xuyên như kính trong). Lớp này nằm ngay dưới dock, vẽ lại phần danh sách sau dock rồi làm nhòe
-     * (RenderEffect, Android 12+) — kính mờ thật. Dock ẩn (dh) thì trượt xuống cùng nhịp với dock của trang.
+     * Kính chỉ có khi danh sách native đang hiện (tab Tin nhắn) và máy làm nhòe được (RenderEffect, Android 12+); các tab
+     * khác (Danh bạ...) là trang web, dock của trang tự làm nhòe (backdrop-filter). Kính nằm trong dock native nên ẩn /
+     * hiện, trượt cùng một lớp với dock — không lệch nhịp.
      */
     private void placeGlass(JSONArray d, boolean hidden) {
         if (glass == null) return;
-        if (d == null || android.os.Build.VERSION.SDK_INT < 31) {
-            glass.setVisibility(GONE);
-            return;
-        }
-        if (!hidden) { // vị trí lúc dock hiện (lúc ẩn, trang đo được vị trí đang trượt)
-            android.graphics.Rect r = new android.graphics.Rect(dp(d.optInt(0)), dp(d.optInt(1)), dp(d.optInt(2)), dp(d.optInt(3)));
-            if (!r.equals(glassRect) && r.width() > 0) {
-                glassRect.set(r);
-                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(r.width(), r.height(), Gravity.TOP | Gravity.START);
-                lp.leftMargin = r.left;
-                lp.topMargin = r.top;
-                glass.setLayoutParams(lp);
-            }
-        }
-        if (glassRect.isEmpty()) return;
-        glass.setVisibility(VISIBLE);
-        if (hidden == glassHidden) return;
-        glassHidden = hidden;
-        float off = hidden ? getHeight() - glassRect.top + dp(12) : 0;
-        glass.animate().cancel();
-        glass.animate().translationY(off).setDuration(420) // = transition của #main-tab (shim.js)
-                .setInterpolator(new android.view.animation.PathInterpolator(.22f, .61f, .36f, 1f))
-                .setUpdateListener(a -> glass.invalidate()).start();
+        glass.setVisibility(d != null && android.os.Build.VERSION.SDK_INT >= 31 ? VISIBLE : GONE);
+        glass.invalidate();
     }
-
-    /** Dock native ẩn hẳn (mở chat, hộp thoại, menu giữ lâu che lên): kính dưới dock mờ đi theo. */
-    void glassShown(boolean v) {
-        if (glass == null) return;
-        // Riêng một ObjectAnimator: animate() của kính đang dùng cho trượt (placeGlass hủy nó mỗi lần).
-        if (glassFade != null) glassFade.cancel();
-        glassFade = android.animation.ObjectAnimator.ofFloat(glass, ALPHA, v ? 1f : 0f);
-        glassFade.setDuration(v ? 200 : 120);
-        glassFade.start();
-    }
-
-    private android.animation.ObjectAnimator glassFade;
 
     private final class DockGlass extends View {
+        private final int[] at = new int[2], from = new int[2];
+
         DockGlass(Context c) {
             super(c);
             setWillNotDraw(false);
@@ -856,11 +851,12 @@ final class NativeChatList extends FrameLayout {
         @Override
         protected void onDraw(Canvas c) {
             c.drawColor(bg);
+            // Vị trí thật trên màn hình của danh sách so với kính (kính đi theo dock, danh sách dịch theo thanh trên).
+            listView.getLocationInWindow(at);
+            getLocationInWindow(from);
             int save = c.save();
-            // Gốc của danh sách so với kính (cả hai cùng trong NativeChatList; danh sách dịch theo thanh trên).
-            c.translate(listView.getLeft() + listView.getTranslationX() - getLeft() - getTranslationX(),
-                    listView.getTop() + listView.getTranslationY() - getTop() - getTranslationY());
-            listView.draw(c);
+            c.translate(at[0] - from[0], at[1] - from[1]);
+            if (content != null && c.isHardwareAccelerated()) c.drawRenderNode(content);
             c.restoreToCount(save);
         }
     }

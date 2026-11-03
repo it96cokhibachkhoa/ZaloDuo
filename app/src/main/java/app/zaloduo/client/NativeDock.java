@@ -23,8 +23,11 @@ import org.json.JSONObject;
  * Trạng thái (biểu tượng, số chưa đọc, nút đang chọn, hiện / trượt ẩn, màu) do shim.js gửi (mục 8, JsBridge.dockState);
  * chạm nút thì app bấm hộ nút tương ứng của dock trang (đã ẩn, chỉ còn lớp làm nhòe nền phía sau). Mở app dùng trạng
  * thái lần trước nên dock có ngay, không chờ trang tải.
+ *
+ * Kính mờ (lớp nhòe danh sách native phía sau, NativeChatList.dockGlass) là view con của dock: vẽ theo thứ tự bóng đổ →
+ * kính → lớp màu, viên thuốc, biểu tượng — ẩn / hiện, trượt cùng một lớp, không lệch nhịp như hai lớp riêng.
  */
-final class NativeDock extends View {
+final class NativeDock extends FrameLayout {
     private static final String SAVED = "native_dock_state";
     /** Cao dock theo px CSS của trang (= dp), như #main-tab của shim.js; M: lề quanh dock để vẽ bóng đổ; tối đa 5 nút. */
     private static final int H = 56, M = 24, MAX = 5;
@@ -51,12 +54,15 @@ final class NativeDock extends View {
     private android.animation.ValueAnimator pillAnim;
     private boolean visible = true, slid;
     private android.animation.ObjectAnimator fade, slide;
-    /** Dock hiện / ẩn hẳn (không tính trượt): kính mờ dưới dock (NativeChatList) ẩn theo. */
-    java.util.function.Consumer<Boolean> onShown;
     private String last;
+    /** Kính mờ (view con) và màu nền dock trang gửi (rgb; độ đậm lấy từ Cài đặt — applyOpacity). */
+    private View glass;
+    private int baseTint = 0xFF005AE0;
 
     NativeDock(Context c) {
         super(c);
+        setWillNotDraw(false);
+        setClipChildren(false);
         density = getResources().getDisplayMetrics().density;
         zoom = Prefs.textZoom(c) / 100f;
         setLayerType(LAYER_TYPE_HARDWARE, null);
@@ -73,11 +79,33 @@ final class NativeDock extends View {
         edge.setStrokeWidth(density);
         edge.setColor(0x1FFFFFFF); // inset 0 0 0 1px rgba(255,255,255,.12)
         // Màu mặc định (chưa có trạng thái từ trang): dock xanh của Zalo, biểu tượng trắng.
-        tint.setColor(0x99005AE0);
+        applyOpacity();
         glyph.setColor(Color.WHITE);
         pill.setColor(0x29000000);
         setTranslationZ(1001); // trên WebView và trên danh sách native lúc mở app (boot, Z 1000)
         apply(Prefs.sp(c).getString(SAVED, null), false);
+    }
+
+    /** Gắn lớp kính mờ (NativeChatList.dockGlass) vào trong dock, đúng khung dock. */
+    void setGlass(View g) {
+        if (g == null) return;
+        if (g.getParent() instanceof android.view.ViewGroup) ((android.view.ViewGroup) g.getParent()).removeView(g);
+        glass = g;
+        addView(g, 0, glassParams());
+    }
+
+    private FrameLayout.LayoutParams glassParams() {
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(dp(W), dp(H), Gravity.TOP | Gravity.START);
+        lp.leftMargin = dp(M);
+        lp.topMargin = dp(M);
+        return lp;
+    }
+
+    /** Độ đậm nền dock theo Cài đặt (0-100%), áp ngay — không chờ trang tính lại màu. */
+    void applyOpacity() {
+        int a = Math.round(Math.max(0, Math.min(100, Prefs.dockOpacity(getContext()))) * 2.55f);
+        tint.setColor((baseTint & 0x00FFFFFF) | (a << 24));
+        invalidate();
     }
 
     /** Khung của view: dock + lề M quanh để vẽ bóng, sát đáy cách theo Cài đặt. */
@@ -122,9 +150,13 @@ final class NativeDock extends View {
             if (w != W) { // bật / tắt nút zCloud, Công cụ: dock rộng / hẹp lại
                 W = w;
                 if (getParent() != null) setLayoutParams(params());
+                if (glass != null) glass.setLayoutParams(glassParams());
             }
             int c = parse(o.optString("c"));
-            if (c != 0) tint.setColor(c);
+            if (c != 0) { // chỉ lấy màu (sáng / tối theo giao diện Zalo); độ đậm theo Cài đặt
+                baseTint = c;
+                applyOpacity();
+            }
             int ic = parse(o.optString("ic"));
             if (ic != 0) glyph.setColor(ic);
             int ind = parse(o.optString("ind"));
@@ -154,7 +186,6 @@ final class NativeDock extends View {
         // Mờ và trượt là hai hiệu ứng riêng (ViewPropertyAnimator gộp chung: hủy cái này dừng luôn cái kia giữa chừng).
         if (v != visible) {
             visible = v;
-            if (onShown != null) onShown.accept(v);
             if (fade != null) fade.cancel();
             if (v) setVisibility(VISIBLE);
             if (animate) {
@@ -181,8 +212,11 @@ final class NativeDock extends View {
                 slide = android.animation.ObjectAnimator.ofFloat(this, TRANSLATION_Y, y);
                 slide.setDuration(420);
                 slide.setInterpolator(EASE);
+                // Dock trượt thì phần danh sách nằm sau kính đổi theo: vẽ lại kính từng khung hình.
+                slide.addUpdateListener(an -> { if (glass != null) glass.invalidate(); });
                 slide.start();
             } else setTranslationY(y);
+            if (glass != null) glass.invalidate();
         }
     }
 
@@ -251,7 +285,7 @@ final class NativeDock extends View {
     }
 
     @Override
-    protected void onDraw(Canvas c) {
+    protected void dispatchDraw(Canvas c) {
         float r = box.height() / 2f;
         // Bóng đổ chỉ bên ngoài dock (nền dock trong suốt một phần, không để bóng lộ qua).
         c.save();
@@ -260,6 +294,7 @@ final class NativeDock extends View {
         c.restore();
         c.save();
         c.clipPath(boxPath);
+        super.dispatchDraw(c); // kính mờ (view con) nằm dưới lớp màu
         c.drawRoundRect(box, r, r, tint);
         if (pillX >= 0 && present[sel]) {
             tmp.set(pillX, box.top + dp(4), pillX + btnW(), box.top + dp(4) + dp(48));

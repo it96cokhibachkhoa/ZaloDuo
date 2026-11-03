@@ -68,7 +68,7 @@ final class Notifier {
         final boolean call = Prefs.callAlerts(c) && CALL_TEXT.matcher(t + "\n" + b).find();
         final int nid;
         if (call) nid = CALL_ID;
-        else if (tag != null && !tag.isEmpty()) nid = 0x40000000 | (tag.hashCode() & 0x3FFFFFFF);
+        else if (tag != null && !tag.isEmpty()) nid = idForTag(tag);
         else nid = nextId();
         if (jsId != null) {
             if (idByJsId.size() > 500) idByJsId.clear();
@@ -111,6 +111,19 @@ final class Notifier {
 
     static void cancelCallAlert(Context c) {
         nm(c).cancel(CALL_ID);
+    }
+
+    /** Mã thông báo Android của một hội thoại: Zalo đặt tag = mã hội thoại, mỗi hội thoại một thông báo (tin mới thay tin cũ). */
+    private static int idForTag(String tag) {
+        return 0x40000000 | (tag.hashCode() & 0x3FFFFFFF);
+    }
+
+    /** Vào một hội thoại (JsBridge.convOpened): xoá thông báo của riêng hội thoại đó, các hội thoại khác giữ nguyên. */
+    static void clearConversation(Context c, String convId) {
+        if (convId == null || convId.isEmpty()) return;
+        int nid = idForTag(convId);
+        nm(c).cancel(nid);
+        idByJsId.values().removeIf(v -> v == nid);
     }
 
     static void clearMessages(Context c) {

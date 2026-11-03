@@ -25,7 +25,7 @@
   var bridge = {};
   ['showNotification', 'cancelNotification', 'permission', 'requestPermission', 'isHidden', 'mediaActive',
     'ringing', 'saveFile', 'shareFile', 'log', 'mobileState', 'systemBars', 'pageReady', 'diag', 'convList',
-    'nativeLayout', 'connState', 'needLogin', 'prefetch', 'dockState', 'connLog'].forEach(function (m) {
+    'nativeLayout', 'connState', 'needLogin', 'prefetch', 'dockState', 'connLog', 'convOpened'].forEach(function (m) {
     bridge[m] = function () {
       var b = window.ZaloBridge;
       if (!b || typeof b[m] !== 'function') return m === 'permission' ? 'default' : undefined;
@@ -114,6 +114,7 @@
     if (forcedHidden === hidden) return;
     forcedHidden = hidden;
     if (!hidden) stopRing();
+    if (!hidden && api.reportConv) api.reportConv(); // mở lại app đúng lúc đang ở một hội thoại
     safe(function () {
       document.dispatchEvent(new Event('visibilitychange'));
       window.dispatchEvent(new Event(hidden ? 'blur' : 'focus'));
@@ -573,7 +574,34 @@
     if (changed && !on && api.showDock) api.showDock(); // về danh sách: dock và thanh tìm kiếm luôn hiện
     if (M.placeBack) M.placeBack();
     if (api.syncDock) api.syncDock(); // dock native ẩn khi mở chat, hiện lại khi về danh sách
+    if (on) setTimeout(function () { if (api.reportConv) api.reportConv(); }, 400); // chờ React dựng khung chat
   }
+
+  /*
+   * Hội thoại đang mở (mã như tag thông báo của Zalo — Zalo tạo Notification với tag = userId của hội thoại): báo app
+   * xoá thông báo của riêng hội thoại đó. Mã lấy từ props "conversation" của khung chat (React).
+   */
+  var lastReported = '', lastReportedAt = 0;
+  function openConvId() {
+    var sc = document.getElementById('messageViewScroll');
+    var fk = sc && Object.keys(sc).filter(function (k) { return k.indexOf('__react') === 0; })[0];
+    for (var f = fk && sc[fk], i = 0; f && i < 40; f = f.return, i++) {
+      var p = f.memoizedProps;
+      if (p && p.conversation && p.conversation.userId) return String(p.conversation.userId);
+      if (p && typeof p.conversationId === 'string') return p.conversationId;
+    }
+    return '';
+  }
+  api.reportConv = function () {
+    safe(function () {
+      if (!M.chat || isHidden(document)) return;
+      var id = openConvId();
+      if (!id || (id === lastReported && Date.now() - lastReportedAt < 1500)) return;
+      lastReported = id;
+      lastReportedAt = Date.now();
+      bridge.convOpened(id);
+    });
+  };
   var leaving = false, passBack = false;
   api.mobileHome = function () {
     var m = M.main, b = zaloBack();
@@ -905,6 +933,9 @@
       'html.zd-m.zd-ndock #main-tab[data-zdg] { background: transparent !important;' +
         ' box-shadow: none !important; pointer-events: none !important; }',
       'html.zd-m.zd-ndock #main-tab * { visibility: hidden !important; }',
+      // Danh sách native đang hiện: kính mờ nằm trong dock native; lớp nhòe của trang chỉ nhòe trang trong suốt, chồng
+      // thêm một lớp lệch nhịp khi dock trượt — tắt.
+      'html.zd-m.zd-ndock.zd-native #main-tab[data-zdg] { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }',
       '@keyframes zd-fade { from { opacity: 0; } to { opacity: 1; } }',
       'html.zd-m [data-zd=header] { padding-left: 44px !important; box-sizing: border-box !important; }',
       '#zd-back, #zd-info-back { display: none; position: fixed; left: 0; z-index: 16; width: 44px; margin: 0; padding: 0;' +
@@ -1066,6 +1097,13 @@
         ' background: transparent !important; }',
       // Không có nút X: đóng bằng Back hoặc vuốt (api.back vẫn bấm nút ẩn này).
       'html.zd-m #image-show__close { display: none !important; }',
+      // Nhãn "Người lạ" ở thanh trên khung chat: không co, không xuống dòng (cỡ chữ lớn bị gãy 2 dòng).
+      'html.zd-m .threadChat__btn-is-friend { flex-shrink: 0 !important; white-space: nowrap !important; }',
+      'html.zd-m .threadChat__mutual-include { min-width: 0 !important; overflow: hidden; }',
+      // Số nhóm chung ("N nhóm chung" / "Không có nhóm chung"): bỏ hẳn cho thanh trên gọn, cùng vạch ngăn sau nó; không
+      // phải người lạ thì cả khối trống, ẩn luôn.
+      'html.zd-m .threadChat__mutual-group, html.zd-m .threadChat__mutual-include + .new-separator,' +
+        ' html.zd-m .threadChat__mutual-include:not(:has(.threadChat__btn-is-friend)) { display: none !important; }',
       'html.zd-m .media-viewer__footer { position: absolute !important; top: 0; left: 0; right: 0;' +
         ' width: auto !important; height: 56px !important; z-index: 32; background: transparent !important;' +
         ' pointer-events: none; transition: opacity .2s; }',

@@ -8,7 +8,6 @@ final class Prefs {
     static final String KEEP_ALIVE = "keep_alive";
     static final String START_ON_BOOT = "start_on_boot";
     static final String CALL_ALERTS = "call_alerts";
-    static final String CLEAR_ON_OPEN = "clear_on_open";
     static final String MOBILE_UI = "mobile_ui";
     static final String VIEWPORT_WIDTH = "viewport_width";
     static final String TEXT_ZOOM = "text_zoom";
@@ -49,7 +48,6 @@ final class Prefs {
     static boolean dockCloud(Context c) { return bool(c, DOCK_CLOUD, false); }
     static boolean dockTools(Context c) { return bool(c, DOCK_TOOLS, false); }
 
-    static boolean clearOnOpen(Context c) { return bool(c, CLEAR_ON_OPEN, true); }
 
     /** Giao diện điện thoại: danh sách chat -> chạm mở chat -> Back quay lại. */
     static boolean mobileUi(Context c) { return bool(c, MOBILE_UI, true); }

@@ -89,7 +89,6 @@ public class SettingsActivity extends Activity {
             else KeepAliveService.stop(this);
         });
         toggle("Tự chạy khi khởi động máy", Prefs.START_ON_BOOT, true, null);
-        toggle("Xóa thông báo tin nhắn khi mở app", Prefs.CLEAR_ON_OPEN, true, null);
         button("Cho phép chạy nền không giới hạn pin", () -> requestIgnoreBattery(this));
         // Huawei / Honor: "không giới hạn pin" chưa đủ, quản lý khởi chạy vẫn đóng băng app ở nền — phải bật thủ công.
         if (isHuawei()) button("Huawei: cho phép chạy nền (Quản lý khởi chạy)", this::openHuaweiLaunchManager);
@@ -142,16 +141,6 @@ public class SettingsActivity extends Activity {
         button("Tải lại Zalo", () -> {
             WebViewHolder.reload();
             Toast.makeText(this, "Đang tải lại", Toast.LENGTH_SHORT).show();
-        });
-        // Nhật ký kết nối máy chủ Zalo (DiagLog.conn): có cả ở bản release, để gửi khi app ở nền bị mất kết nối.
-        button("Sao chép nhật ký kết nối (gửi khi bị mất kết nối)", () -> {
-            ClipboardManager cm = getSystemService(ClipboardManager.class);
-            cm.setPrimaryClip(ClipData.newPlainText("ZaloDuo connection log", DiagLog.dumpConn(this)));
-            Toast.makeText(this, "Đã sao chép nhật ký kết nối, dán vào tin nhắn để gửi", Toast.LENGTH_LONG).show();
-        });
-        button("Xóa nhật ký kết nối", () -> {
-            DiagLog.clearConn();
-            Toast.makeText(this, "Đã xóa nhật ký kết nối", Toast.LENGTH_SHORT).show();
         });
         // Công cụ gỡ lỗi: chỉ có ở bản debug, bản release (build trên GitHub) không hiện.
         if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
