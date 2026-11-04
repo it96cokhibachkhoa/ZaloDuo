@@ -170,6 +170,20 @@ final class JsBridge {
         Notifier.clearConversation(app, convId);
     }
 
+    /**
+     * Ô nhập tin vừa bị Zalo bỏ focus rồi focus lại (chọn tên ở danh sách @nhắc tên, mục 18 của shim.js): bàn phím
+     * Android đã đóng theo, focus bằng script không tự mở lại — mở lại từ phía app.
+     */
+    @JavascriptInterface
+    public void showKeyboard(String t) {
+        if (!ok(t)) return;
+        App.MAIN.post(() -> {
+            owner.requestFocus();
+            android.view.inputmethod.InputMethodManager im = app.getSystemService(android.view.inputmethod.InputMethodManager.class);
+            if (im != null) im.showSoftInput(owner, 0);
+        });
+    }
+
     /** Trạng thái kết nối máy chủ Zalo ("on" / "wait" / "off", mục 11 của shim.js): hiện ở thông báo chạy nền. */
     @JavascriptInterface
     public void connState(String t, final String state) {

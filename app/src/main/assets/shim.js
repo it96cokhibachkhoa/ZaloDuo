@@ -25,7 +25,7 @@
   var bridge = {};
   ['showNotification', 'cancelNotification', 'permission', 'requestPermission', 'isHidden', 'mediaActive',
     'ringing', 'saveFile', 'shareFile', 'log', 'mobileState', 'systemBars', 'pageReady', 'diag', 'convList',
-    'nativeLayout', 'connState', 'needLogin', 'prefetch', 'dockState', 'connLog', 'convOpened'].forEach(function (m) {
+    'nativeLayout', 'connState', 'needLogin', 'prefetch', 'dockState', 'connLog', 'convOpened', 'showKeyboard'].forEach(function (m) {
     bridge[m] = function () {
       var b = window.ZaloBridge;
       if (!b || typeof b[m] !== 'function') return m === 'permission' ? 'default' : undefined;
@@ -138,6 +138,12 @@
   // ------------------------------------------------------------------ 2. Notification API
   var seq = 0;
   var lastNativeNotif = 0; // lần gần nhất Zalo tự tạo Notification
+  /** Nội dung thông báo chung chung, không nói gì cụ thể: trống, "Bạn có (N) tin nhắn mới / chưa đọc"... */
+  function generic(body) {
+    var b = String(body == null ? '' : body).trim();
+    return !b || /^(bạn\s+)?có\s+(\d+\+?\s+)?(tin nhắn|thông báo)\s+(mới|chưa đọc)\.?$/i.test(b) ||
+      /^you have (\d+\+?\s+)?new (message|notification)s?\.?$/i.test(b);
+  }
   var live = Object.create(null);
   var liveOrder = [];
 
@@ -207,6 +213,11 @@
     // Zalo Web luôn đặt silent: true rồi tự phát tiếng "ting" trong trang (bị chặn khi ở nền, xem mục 5),
     // nên cờ này không có nghĩa là người dùng tắt tiếng: hội thoại đã tắt thông báo thì Zalo không gọi tới đây.
     diag('zalo notification' + (isHidden(document) ? '' : ' (page visible)'));
+    if (generic(this.body)) { // không có nội dung cụ thể ("Bạn có tin nhắn mới"...): không hiện
+      diag('zalo notification skipped: no content');
+      setTimeout(function () { self._zwFire('show'); }, 0);
+      return;
+    }
     safe(function () {
       bridge.showNotification(self._zwId, self.title, zEmoji(self.body), self.tag, self.icon, false);
     });
@@ -387,37 +398,11 @@
     setInterval(function () { if (mediaOn) updateMedia(); }, 5000);
   });
 
-  // ------------------------------------------------------------------ 5. Đoán cuộc gọi đến + thông báo dự phòng
+  // ------------------------------------------------------------------ 5. Đoán cuộc gọi đến
   /*
-   * Thông báo dự phòng: nếu Zalo Web không gọi new Notification() (ví dụ chỉ dùng Web Push, thứ WebView
-   * không hỗ trợ), vẫn báo được "có tin nhắn mới" dựa vào số tin chưa đọc trên tiêu đề trang và tiếng ting.
+   * Không còn thông báo dự phòng chung chung ("Bạn có tin nhắn mới" theo số chưa đọc trên tiêu đề / tiếng ting): chỉ
+   * hiện thông báo Zalo tự tạo, có tên người gửi và nội dung.
    */
-  var lastGeneric = 0;
-  function genericNotify() {
-    if (!isHidden(document) || mediaOn || ringingEl) return;
-    if (Date.now() - lastNativeNotif < 5000 || Date.now() - lastGeneric < 3000) return;
-    if (ZNotification.permission !== 'granted') return;
-    lastGeneric = Date.now();
-    diag('fallback notification (zalo did not notify)');
-    var n = unreadFromTitle();
-    safe(function () {
-      bridge.showNotification('zd-unread', 'Zalo', n > 0 ? 'Bạn có ' + n + ' tin nhắn chưa đọc' : 'Bạn có tin nhắn mới',
-        'zd-unread', '', false);
-    });
-  }
-  function unreadFromTitle() {
-    var t = document.title || '';
-    var m = /\((\d+)\+?\)/.exec(t) || /(\d+)\+?\s*(tin|thông báo|new|unread)/i.exec(t);
-    return m ? parseInt(m[1], 10) : 0;
-  }
-  var lastUnread = -1;
-  function checkTitle() {
-    var n = unreadFromTitle();
-    if (lastUnread >= 0 && n > lastUnread) genericNotify();
-    lastUnread = n;
-  }
-  safe(function () { setInterval(checkTitle, 2500); });
-
   var ringingEl = null;
   function stopRing() {
     if (!ringingEl) return;
@@ -433,11 +418,6 @@
       var ting = !el.loop && el.tagName === 'AUDIO' && isHidden(document) && !mediaOn;
       var result = ting ? Promise.resolve() : origPlay.apply(this, arguments);
       safe(function () {
-        // Dự phòng nếu Zalo không bắn Notification.
-        if (ting) {
-          var at = Date.now();
-          setTimeout(function () { if (lastNativeNotif < at - 500) genericNotify(); }, 1500);
-        }
         if (cfg.ringDetect !== false && el.loop && el.tagName === 'AUDIO' && isHidden(document) && !mediaOn && !ringingEl) {
           ringingEl = el;
           var stop = function () {
@@ -1748,7 +1728,8 @@
     /**
      * Mở hội thoại thì Zalo gọi focus() vào ô nhập tin: bật bàn phím (khác app điện thoại) và làm trang phải
      * tính lại bố cục 2 lần (lần focus, lần bàn phím đổi kích thước) — phần lớn độ giật khi mở chat.
-     * Chỉ cho focus tự động khi người dùng vừa chạm vào trong khung chat (nút Trả lời, emoji, Gửi...).
+     * Chỉ cho focus tự động khi người dùng vừa chạm vào trong khung chat (nút Trả lời, emoji, Gửi...) hoặc vào bảng nổi
+     * của nó (danh sách @nhắc tên, bảng biểu cảm... nằm ngoài khung chat, trong body). Chạm vào danh sách chat thì không.
      * Chạm thẳng vào ô nhập vẫn mở bàn phím bình thường (trình duyệt tự focus, không qua hàm này).
      */
     var lastTouch = { t: 0, el: null };
@@ -1757,8 +1738,9 @@
     HTMLElement.prototype.focus = function () {
       if (this.isContentEditable && document.activeElement !== this) {
         var chat = this.closest('#container main');
-        var touchedChat = Date.now() - lastTouch.t < 1500 && lastTouch.el instanceof Node &&
-          !!chat && chat.contains(lastTouch.el);
+        var el = lastTouch.el instanceof Element ? lastTouch.el : null;
+        var touchedChat = Date.now() - lastTouch.t < 1500 && !!el && !!chat &&
+          (chat.contains(el) || !!el.closest('body > .popover-v3, body > [class*=popover], body > [class*=mention]'));
         if (chat && !touchedChat) return undefined;
       }
       return origFocus.apply(this, arguments);
@@ -3284,6 +3266,240 @@
     }
     if (document.body) start();
     else document.addEventListener('DOMContentLoaded', start);
+  });
+
+  // ------------------------------------------------------------------ 17. Xem tin nhắn đã thu hồi
+  /*
+   * Tin bị thu hồi vẫn nằm trong dữ liệu của trang (msgType 20, originMsgType "chat.undo"): "message" thường còn nội dung
+   * gốc; khi Zalo đã thay bằng "[Tin nhắn đã được thu hồi]" thì chữ gốc vẫn còn trong z_parsedTokens (chỉ mục tìm kiếm).
+   * Thêm phòng hờ: chữ của mọi tin đã thấy trong khung chat được nhớ lại (localStorage, theo cliMsgId). Dưới dòng
+   * "Tin nhắn đã được thu hồi" (#bb_msg_id_<cliMsgId> .undo-message) hiện nội dung gốc. Chỉ có khi trang đã nhận được tin
+   * trước lúc bị thu hồi.
+   */
+  safe(function () {
+    if (window.opener || window.top !== window) return;
+    var KEY = 'zd_seen_msgs', MAX = 3000, seen = null, dirty = false, timer = 0;
+    var CSS17 = [
+      '.zd-undo-orig { margin-top: 4px; padding: 4px 8px; border-left: 2px solid currentColor; border-radius: 2px;',
+      '  font-style: normal; white-space: pre-wrap; word-break: break-word; opacity: .85; }',
+      '.zd-undo-orig b { display: block; font-size: 11px; font-weight: 600; opacity: .7; }',
+      '.zd-undo-orig img { display: block; max-width: 200px; max-height: 200px; margin-top: 4px; border-radius: 6px; }'
+    ].join('\n');
+    function load() {
+      if (seen) return seen;
+      try { seen = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { seen = {}; }
+      return seen;
+    }
+    function save() {
+      if (!dirty) return;
+      dirty = false;
+      var ks = Object.keys(seen);
+      if (ks.length > MAX) { // bỏ các tin cũ nhất (cliMsgId tăng theo thời gian)
+        ks.sort(function (a, b) { return a.length - b.length || (a < b ? -1 : 1); });
+        ks.slice(0, ks.length - MAX).forEach(function (k) { delete seen[k]; });
+      }
+      try { localStorage.setItem(KEY, JSON.stringify(seen)); } catch (e) { /* đầy: bỏ qua */ }
+    }
+    function messages() {
+      var sc = document.getElementById('messageViewScroll');
+      var fk = sc && Object.keys(sc).filter(function (k) { return k.indexOf('__react') === 0; })[0];
+      for (var f = fk && sc[fk], i = 0; f && i < 20; f = f.return, i++) {
+        var p = f.memoizedProps;
+        if (p && Array.isArray(p.messages) && typeof p.loadMoreMessages === 'function') return p.messages;
+      }
+      return null;
+    }
+    function isUndo(m) {
+      return m.msgType === 20 || m.originMsgType === 'chat.undo';
+    }
+    function placeholder(s) {
+      return /^\[.*thu hồi.*\]$/i.test(s) || /^\[.*recall.*\]$/i.test(s);
+    }
+    function jpg(u) {
+      return u.replace(/\/(\w+)\/jxl\//, '/$1/jpg/').replace(/\.jxl(\?|$)/, '.jpg$1');
+    }
+    /** Nội dung gốc của một tin: { text, img } hoặc null. */
+    function original(m) {
+      var c = m.message;
+      if (typeof c === 'string') {
+        if (c && !placeholder(c)) return { text: c };
+      } else if (c && typeof c === 'object') {
+        var pr = {};
+        try { pr = typeof c.params === 'string' ? JSON.parse(c.params || '{}') : (c.params || {}); } catch (e) { /* ignore */ }
+        var img = [c.thumbUrl, c.thumb, c.normalUrl, c.hdUrl, pr.hd].filter(function (u) {
+          return typeof u === 'string' && /^https:/.test(u);
+        })[0];
+        var t = c.title || c.description || (typeof c.href === 'string' && !img ? c.href : '');
+        if (img || t) return { text: t || '', img: img ? jpg(img) : '' };
+      }
+      var tk = m.z_parsedTokens;
+      try { if (typeof tk === 'string') tk = JSON.parse(tk); } catch (e) { tk = null; }
+      if (Array.isArray(tk) && tk.length && tk.join('').trim()) return { text: tk.join(' ') };
+      var s = load()[String(m.cliMsgId)];
+      return s ? { text: s } : null;
+    }
+    function run() {
+      var ms = messages();
+      if (!ms) return;
+      var by = {};
+      load();
+      for (var i = 0; i < ms.length; i++) {
+        var m = ms[i];
+        if (!m || m.cliMsgId == null) continue;
+        by[String(m.cliMsgId)] = m;
+        if (!isUndo(m) && typeof m.message === 'string' && m.message && !seen[m.cliMsgId]) {
+          seen[m.cliMsgId] = m.message.slice(0, 2000);
+          dirty = true;
+        }
+      }
+      save();
+      var spans = document.querySelectorAll('#messageViewScroll .undo-message');
+      for (var j = 0; j < spans.length; j++) {
+        var sp = spans[j], box = sp.parentElement;
+        if (!box || box.querySelector('.zd-undo-orig')) continue;
+        var row = sp.closest('[id^="bb_msg_id_"]');
+        var m2 = row && by[row.id.slice('bb_msg_id_'.length)];
+        var o = m2 && original(m2);
+        if (!o) continue;
+        var d = document.createElement('div');
+        d.className = 'zd-undo-orig';
+        var b = document.createElement('b');
+        b.textContent = 'Nội dung đã thu hồi';
+        d.appendChild(b);
+        if (o.text) d.appendChild(document.createTextNode(o.text));
+        if (o.img) {
+          var im = document.createElement('img');
+          im.loading = 'lazy';
+          im.src = o.img;
+          im.onerror = function () { this.remove(); };
+          d.appendChild(im);
+        }
+        box.appendChild(d);
+      }
+    }
+    function start() {
+      try {
+        var sheet = new CSSStyleSheet();
+        sheet.replaceSync(CSS17);
+        document.adoptedStyleSheets = document.adoptedStyleSheets.concat([sheet]);
+      } catch (e) {
+        var s = document.createElement('style');
+        s.textContent = CSS17;
+        (document.head || document.documentElement).appendChild(s);
+      }
+      new MutationObserver(function () {
+        if (timer) return;
+        timer = setTimeout(function () { timer = 0; safe(run); }, 300);
+      }).observe(document.body, { childList: true, subtree: true });
+    }
+    if (document.body) start();
+    else document.addEventListener('DOMContentLoaded', start);
+  });
+
+  // ------------------------------------------------------------------ 18. Bảng biểu cảm thay chỗ bàn phím
+  /*
+   * Nút Biểu cảm / Sticker mở bảng .media-dock trong một popover (body > .popover-v3). Zalo đóng popover khi cửa sổ đổi
+   * kích thước, nên bấm lúc bàn phím đang bật thì bàn phím đóng (ô nhập mất focus), cửa sổ cao lên và bảng vừa mở bị đóng
+   * luôn — phải bấm lần nữa. Ở đây: bấm khi bàn phím bật thì giữ lại cú bấm, cất bàn phím, đợi cửa sổ cao lên rồi mới bấm
+   * hộ nút. Bảng thành tấm dưới đáy, cao bằng bàn phím (đo lần gần nhất), khung chat chừa chỗ phía trên như app Zalo.
+   * Bảng đang mở mà bấm lại nút thì Zalo đóng bảng, ô nhập được focus lại (bàn phím lên).
+   */
+  safe(function () {
+    if (!mobile || window.opener || window.top !== window) return;
+    var KB = 'zd_kb_h', full = innerHeight, kb = 0, held = 0;
+    try { kb = parseInt(localStorage.getItem(KB), 10) || 0; } catch (e) { /* ignore */ }
+    function setKb(h) {
+      kb = Math.max(220, Math.min(Math.round(h), Math.round(full * 0.6) || 420)); // full: cao khi không có bàn phím
+      document.documentElement.style.setProperty('--zd-kb', kb + 'px');
+    }
+    setKb(kb || 280);
+    var CSS18 = [
+      'html.zd-m body > .popover-v3:has(> .media-dock) { left: 0 !important; right: 0 !important; top: auto !important;',
+      '  bottom: 0 !important; width: 100% !important; transform: none !important; box-sizing: border-box !important;',
+      '  padding: 0 !important; border-width: 1px 0 0 !important; border-radius: 0 !important; }',
+      'html.zd-m body > .popover-v3 > .media-dock { width: 100% !important; height: var(--zd-kb) !important;',
+      '  margin: 0 !important; border-radius: 0 !important; }',
+      'html.zd-m:has(body > .popover-v3 > .media-dock) [data-zd=main] { padding-bottom: var(--zd-kb) !important;',
+      '  box-sizing: border-box !important; }'
+    ].join('\n');
+    function input() {
+      var a = document.activeElement;
+      return a && a.isContentEditable && M.main && M.main.contains(a) ? a : null;
+    }
+    function panelOpen() {
+      return !!document.querySelector('body > .popover-v3 > .media-dock');
+    }
+    function btnOf(t) {
+      return t instanceof Element ? t.closest('[icon="Emoji_24_Line"], [icon="Sticker_24_Line"]') : null;
+    }
+    // Đo bàn phím: ô nhập đang focus mà cửa sổ thấp đi so với lúc không có bàn phím.
+    addEventListener('resize', function () {
+      if (!input()) {
+        full = innerHeight;
+        return;
+      }
+      var h = full - innerHeight;
+      if (h > 150) {
+        setKb(h);
+        try { localStorage.setItem(KB, String(kb)); } catch (e) { /* ignore */ }
+      }
+    });
+    document.addEventListener('pointerdown', function (e) {
+      var b = btnOf(e.target);
+      if (!b) return;
+      var inp = input();
+      if (panelOpen()) {
+        // Bấm lại nút khi bảng đang mở: Zalo đóng bảng; đưa bàn phím lên lại.
+        var box = document.getElementById('richInput');
+        if (box) setTimeout(function () { safe(function () { box.focus(); bridge.showKeyboard(); }); }, 80);
+        return;
+      }
+      if (!inp) return;
+      e.preventDefault(); // giữ cú bấm, tự cất bàn phím
+      held = Date.now();
+      var h0 = innerHeight, done = false;
+      function open() {
+        if (done) return;
+        done = true;
+        removeEventListener('resize', onResize);
+        setTimeout(function () { safe(function () { b.click(); }); }, 50);
+      }
+      function onResize() { if (innerHeight > h0 + 80) open(); }
+      addEventListener('resize', onResize);
+      setTimeout(open, 700);
+      inp.blur();
+    }, true);
+    // Danh sách @nhắc tên (#mentionPopover, trong body): chạm chọn tên mà ô nhập mất focus thì bàn phím đóng. Giữ focus ở
+    // ô nhập (chặn mặc định của pointerdown — không ảnh hưởng cuộn). Lúc chèn tên Zalo vẫn tự bỏ focus rồi focus lại ô
+    // nhập, bàn phím đã đóng thì không tự lên: nhờ app mở lại.
+    var mentionAt = 0;
+    document.addEventListener('pointerdown', function (e) {
+      if (!(e.target instanceof Element) || !e.target.closest('#mentionPopover, .mention-popover') || !input()) return;
+      e.preventDefault();
+      mentionAt = Date.now();
+    }, true);
+    document.addEventListener('click', function (e) {
+      if (!mentionAt || Date.now() - mentionAt > 1500 || !(e.target instanceof Element) ||
+        !e.target.closest('.mention-popover__item')) return;
+      mentionAt = 0;
+      setTimeout(function () { if (input()) bridge.showKeyboard(); }, 120);
+    }, true);
+    // Cú bấm thật đi sau pointerdown đã giữ lại: chặn, nút được bấm hộ khi bàn phím đã cất.
+    document.addEventListener('click', function (e) {
+      if (!e.isTrusted || !held || Date.now() - held > 1000 || !btnOf(e.target)) return;
+      held = 0;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+    try {
+      var sheet = new CSSStyleSheet();
+      sheet.replaceSync(CSS18);
+      document.adoptedStyleSheets = document.adoptedStyleSheets.concat([sheet]);
+    } catch (e) {
+      var s = document.createElement('style');
+      s.textContent = CSS18;
+      (document.head || document.documentElement).appendChild(s);
+    }
   });
 
   api.version = 10;
