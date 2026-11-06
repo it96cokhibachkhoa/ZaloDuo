@@ -1,0 +1,12 @@
+++ adb shell getprop ro.build.version.release
+++ adb shell getprop ro.build.version.sdk
++ echo 'android=13 api=33'
+android=13 api=33
++ adb shell dumpsys webviewupdate
++ grep -iE 'current webview package|version'
++ head -5
+  Current WebView package (name, version): (com.google.android.webview, 109.0.5414.123)
+  Minimum targetSdkVersion: 33
+  Minimum WebView version code: 541412337
+  Preferred WebView package (name, version): (com.google.android.webview, 109.0.5414.123)
+    Valid package com.google.android.webview (versionName: 109.0.5414.123, versionCode: 541412337, targetSdkVersion: 33) is  installed/enabled for all users

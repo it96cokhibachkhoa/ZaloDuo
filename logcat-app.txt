@@ -1,0 +1,229 @@
+11-06 12:28:55.406 I/ActivityTaskManager(  487): START u0 {flg=0x10000000 cmp=app.zaloduo.client/.MainActivity} from uid 2000
+11-06 12:28:56.181 D/CoreBackPreview(  487): Window{73c949b u0 Splash Screen app.zaloduo.client}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@516b8b2, mPriority=0}
+11-06 12:28:56.204 I/ActivityManager(  487): Background started FGS: Allowed [callingPackage: com.google.android.apps.messaging; callingUid: 10112; uidState: SVC ; intent: Intent { cmp=com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService (has extras) }; code:BACKGROUND_FGS_PERMISSION; tempAllowListReason:<null>; targetSdkVersion:33; callerTargetSdkVersion:33; startForegroundCount:0; bindFromPackage:null]
+11-06 12:28:56.205 I/.zaloduo.client( 3061): Using CollectorTypeCC GC.
+11-06 12:28:56.205 W/.zaloduo.client( 3061): Unexpected CPU variant for x86: x86_64.
+11-06 12:28:56.205 W/.zaloduo.client( 3061): Known variants: atom, sandybridge, silvermont, kabylake, default
+11-06 12:28:56.225 D/CarrierSvcBindHelper(  975): onPackageAdded: app.zaloduo.client
+11-06 12:28:56.229 I/ActivityManager(  487): Start proc 3061:app.zaloduo.client/u0a174 for next-top-activity {app.zaloduo.client/app.zaloduo.client.MainActivity}
+11-06 12:28:56.295 W/ActivityManager(  487): Foreground service started from background can not have location/camera/microphone access: service com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService
+11-06 12:28:56.319 D/nativeloader( 3061): Configuring classloader-namespace for other apk /data/app/~~xKyNsZfEz3MyzF86Uzt_hw==/app.zaloduo.client-XyPaQcbPsETPsAcmxepveQ==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~xKyNsZfEz3MyzF86Uzt_hw==/app.zaloduo.client-XyPaQcbPsETPsAcmxepveQ==/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/app.zaloduo.client
+11-06 12:28:56.322 V/GraphicsEnvironment( 3061): ANGLE Developer option for 'app.zaloduo.client' set to: 'default'
+11-06 12:28:56.322 V/GraphicsEnvironment( 3061): ANGLE GameManagerService for app.zaloduo.client: false
+11-06 12:28:56.456 D/ZaloDuo ( 3061): diag: process start
+11-06 12:28:56.627 W/BackupTransportManager(  487): Package app.zaloduo.client enabled setting: 0
+11-06 12:28:56.787 W/.zaloduo.client( 3061): Entry not found
+11-06 12:28:56.843 I/cr_WVCFactoryProvider( 3061): Loaded version=109.0.5414.123 minSdkVersion=29 isBundle=false multiprocess=true packageId=2
+11-06 12:28:56.864 I/cr_VariationsUtils( 3061): Failed reading seed file "/data/user/0/app.zaloduo.client/app_webview/variations_seed_new"
+11-06 12:28:56.864 I/cr_VariationsUtils( 3061): Failed reading seed file "/data/user/0/app.zaloduo.client/app_webview/variations_seed"
+11-06 12:28:56.864 I/cr_VariationsUtils( 3061): Requesting new seed from IVariationsSeedServer
+11-06 12:28:56.870 I/cr_LibraryLoader( 3061): Successfully loaded native library
+11-06 12:28:56.870 I/cr_CachingUmaRecorder( 3061): Flushed 9 samples from 9 histograms.
+11-06 12:28:56.930 D/MediaPlayerList(  945): Name of package changed: app.zaloduo.client
+11-06 12:28:56.930 D/MediaPlayerList(  945): Name of package changed: app.zaloduo.client
+11-06 12:28:57.263 D/ConnectivityService(  487): requestNetwork for uid/pid:10174/3061 activeRequest: null callbackRequest: 82 [NetworkRequest [ REQUEST id=83, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+11-06 12:28:57.264 D/WifiNetworkFactory(  487): got request NetworkRequest [ REQUEST id=83, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:28:57.265 D/UntrustedWifiNetworkFactory(  487): got request NetworkRequest [ REQUEST id=83, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:28:57.265 D/OemPaidWifiNetworkFactory(  487): got request NetworkRequest [ REQUEST id=83, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:28:57.265 D/MultiInternetWifiNetworkFactory(  487): got request NetworkRequest [ REQUEST id=83, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:28:57.314 D/ConnectivityService(  487): requestNetwork for uid/pid:10174/3061 activeRequest: null callbackRequest: 85 [NetworkRequest [ REQUEST id=86, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+11-06 12:28:57.319 W/cr_media( 3061): BLUETOOTH_CONNECT permission is missing.
+11-06 12:28:57.319 D/ZaloDuo ( 3061): diag: network available
+11-06 12:28:57.320 D/WifiNetworkFactory(  487): got request NetworkRequest [ REQUEST id=86, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:28:57.321 D/UntrustedWifiNetworkFactory(  487): got request NetworkRequest [ REQUEST id=86, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:28:57.321 D/OemPaidWifiNetworkFactory(  487): got request NetworkRequest [ REQUEST id=86, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:28:57.321 D/MultiInternetWifiNetworkFactory(  487): got request NetworkRequest [ REQUEST id=86, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10174 RequestorUid: 10174 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:28:57.324 W/cr_media( 3061): registerBluetoothIntentsIfNeeded: Requires BLUETOOTH permission
+11-06 12:28:57.356 D/ZaloDuo ( 3061): diag: no snapshot saved, zalo loading screen visible
+11-06 12:28:57.401 D/ZaloDuo ( 3061): diag: app opened (zalo page still loading)
+11-06 12:28:57.506 D/CoreBackPreview(  487): Window{53015f5 u0 app.zaloduo.client/app.zaloduo.client.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@ac49a18, mPriority=0}
+11-06 12:28:57.745 I/ActivityManager(  487): Start proc 3182:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0ai9000 for  {app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0}
+11-06 12:28:57.856 I/ActivityManager(  487): Background started FGS: Allowed [callingPackage: com.google.android.apps.wellbeing; callingUid: 10114; uidState: BTOP; intent: Intent { cmp=com.google.android.apps.wellbeing/com.google.apps.tiktok.concurrent.InternalForegroundService (has extras) }; code:BACKGROUND_ACTIVITY_PERMISSION; tempAllowListReason:<broadcast:1000:android.intent.action.LOCKED_BOOT_COMPLETED,reason:,reasonCode:LOCKED_BOOT_COMPLETED,duration:20000,callingUid:1000>; targetSdkVersion:33; callerTargetSdkVersion:33; startForegroundCount:0; bindFromPackage:null]
+11-06 12:28:57.925 D/ImsResolver(  975): maybeAddedImsService, packageName: app.zaloduo.client
+11-06 12:28:58.147 I/cr_VariationsUtils( 2381): Downloading new seed
+11-06 12:28:58.624 W/ActivityTaskManager(  487): Activity top resumed state loss timeout for ActivityRecord{2d9128c u0 app.zaloduo.client/.MainActivity} t9}
+11-06 12:28:58.626 W/ActivityTaskManager(  487): Activity pause timeout for ActivityRecord{2d9128c u0 app.zaloduo.client/.MainActivity} t9}
+11-06 12:28:58.695 I/cr_VariationsSeedFetch( 2381): Fetched first run seed in 547 ms
+11-06 12:28:58.770 I/cr_WebViewApkApp( 3182): Launched version=109.0.5414.123 minSdkVersion=29 isBundle=false processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+11-06 12:28:58.816 I/cr_ChildProcessService( 3182): Creating new ChildProcessService pid=3182
+11-06 12:28:59.021 D/CarrierSvcBindHelper(  975): onPackageModified: app.zaloduo.client
+11-06 12:28:59.149 I/cr_LibraryLoader( 3182): Successfully loaded native library
+11-06 12:28:59.171 I/cr_CachingUmaRecorder( 3182): Flushed 3 samples from 3 histograms.
+11-06 12:28:59.374 D/ZaloDuo ( 3061): diag: service start
+11-06 12:28:59.388 I/cr_VariationsUtils( 2381): Throttling seed download job
+11-06 12:28:59.388 I/cr_VariationsUtils( 2381): Writing new seed to app's data directory
+11-06 12:28:59.394 W/InputManager-JNI(  487): Input channel object '73c949b Splash Screen app.zaloduo.client (client)' was disposed without first being removed with the input manager!
+11-06 12:28:59.394 D/CoreBackPreview(  487): Window{73c949b u0 Splash Screen app.zaloduo.client EXITING}: Setting back callback null
+11-06 12:28:59.600 I/cr_CronetLibraryLoader( 2822): Cronet version: 113.0.5672.51, arch: x86_64
+11-06 12:28:59.693 D/ImsResolver(  975): maybeAddedImsService, packageName: app.zaloduo.client
+11-06 12:28:59.851 I/cr_WebViewApkApp( 3304): Launched version=109.0.5414.123 minSdkVersion=29 isBundle=false processName=com.google.android.webview:webview_apk
+11-06 12:28:59.905 I/cr_LibraryLoader( 3304): Successfully loaded native library
+11-06 12:29:00.023 W/cr_AWNetworkFetcherTask( 3304): IOException during downloadToFile.
+11-06 12:29:00.023 W/cr_AWNetworkFetcherTask( 3304): java.io.IOException: Cleartext HTTP traffic to edgedl.me.gvt1.com not permitted
+11-06 12:29:00.023 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.HttpHandler$CleartextURLFilter.checkURLPermitted(HttpHandler.java:127)
+11-06 12:29:00.023 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:462)
+11-06 12:29:00.023 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-06 12:29:00.023 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+11-06 12:29:00.023 W/cr_AWNetworkFetcherTask( 3304): 	at org.chromium.android_webview.nonembedded.NetworkFetcherTask.download(chromium-TrichromeWebViewGoogle6432.apk-stable-541412337:48)
+11-06 12:29:00.092 I/AiAiEcho( 1523): EchoSearch: AppFetcherImpl is initialized with [19] apps [time=17, reason=app.zaloduo.client is added]
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): IOException during downloadToFile.
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): java.io.IOException: Cleartext HTTP traffic to edgedl.me.gvt1.com not permitted
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.HttpHandler$CleartextURLFilter.checkURLPermitted(HttpHandler.java:127)
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:462)
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at org.chromium.android_webview.nonembedded.NetworkFetcherTask.download(chromium-TrichromeWebViewGoogle6432.apk-stable-541412337:48)
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): IOException during downloadToFile.
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): java.io.IOException: Cleartext HTTP traffic to redirector.gvt1.com not permitted
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.HttpHandler$CleartextURLFilter.checkURLPermitted(HttpHandler.java:127)
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:462)
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+11-06 12:29:00.341 W/cr_AWNetworkFetcherTask( 3304): 	at org.chromium.android_webview.nonembedded.NetworkFetcherTask.download(chromium-TrichromeWebViewGoogle6432.apk-stable-541412337:48)
+11-06 12:29:00.413 W/cr_AWNetworkFetcherTask( 3304): IOException during downloadToFile.
+11-06 12:29:00.413 W/cr_AWNetworkFetcherTask( 3304): java.io.IOException: Cleartext HTTP traffic to edgedl.me.gvt1.com not permitted
+11-06 12:29:00.413 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.HttpHandler$CleartextURLFilter.checkURLPermitted(HttpHandler.java:127)
+11-06 12:29:00.413 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:462)
+11-06 12:29:00.413 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-06 12:29:00.413 W/cr_AWNetworkFetcherTask( 3304): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+11-06 12:29:00.413 W/cr_AWNetworkFetcherTask( 3304): 	at org.chromium.android_webview.nonembedded.NetworkFetcherTask.download(chromium-TrichromeWebViewGoogle6432.apk-stable-541412337:48)
+11-06 12:29:00.744 I/cr_CronetLibraryLoader( 1039): Cronet version: 113.0.5672.51, arch: x86_64
+11-06 12:29:01.180 D/ZaloDuo ( 3061): diag: page load zalo
+11-06 12:29:01.217 D/ZaloDuo ( 3061): diag: no snapshot saved, zalo loading screen visible
+11-06 12:29:02.433 D/ZaloDuo ( 3061): diag: web: sync ui: no banner
+11-06 12:29:03.760 I/BlockstoreStorage( 1254): Clearing Blockstore Data for package app.zaloduo.client [CONTEXT service_id=258 ]
+11-06 12:29:03.851 D/ZaloDuo ( 3061): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:29:04.088 I/FontLog ( 1039): Package app.zaloduo.client has no metadata [CONTEXT service_id=132 ]
+11-06 12:29:04.151 D/ZaloDuo ( 3061): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.236 D/ZaloDuo ( 3061): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.252 D/ZaloDuo ( 3061): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.255 D/ZaloDuo ( 3061): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.256 D/ZaloDuo ( 3061): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:29:04.270 D/ZaloDuo ( 3061): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.273 D/ZaloDuo ( 3061): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.279 D/ZaloDuo ( 3061): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.282 D/ZaloDuo ( 3061): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.285 D/ZaloDuo ( 3061): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.300 D/ZaloDuo ( 3061): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.304 D/ZaloDuo ( 3061): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:04.305 D/ZaloDuo ( 3061): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.927 I/.zaloduo.client( 3061): Background concurrent copying GC freed 69043(3396KB) AllocSpace objects, 21(3644KB) LOS objects, 49% free, 3398KB/6797KB, paused 33us,11us total 182.622ms
+11-06 12:29:08.081 E/cr_MediaCodecUtil( 3061): Decoder for type video/av01 is not supported on this device [requireSoftware=false, requireHardware=true].
+11-06 12:29:11.483 D/ZaloDuo ( 3061): console: do open indexeddb zsecure-localstorage 2 @https://zalo-chat-static.zadn.vn/v1/lazy/web-startup.a00a02c532982ab4915a.js:1
+11-06 12:29:14.377 D/ZaloDuo ( 3061): console: do open indexeddb zdb_qos 3 @https://zalo-chat-static.zadn.vn/v1/lazy/web-startup.a00a02c532982ab4915a.js:1
+11-06 12:29:14.383 D/ZaloDuo ( 3061): console: Uncaught (in promise) #<Object> @https://zalo-chat-static.zadn.vn/v1/lazy/1.c72c0957b455ab70b73c.js:1
+11-06 12:29:14.807 I/ActivityTaskManager(  487): START u0 {flg=0x10000000 cmp=app.zaloduo.client/.MainActivity} from uid 2000
+11-06 12:29:15.052 D/CoreBackPreview(  487): Window{b347e2d u0 app.zaloduo.client/app.zaloduo.client.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@4bb214f, mPriority=0}
+11-06 12:29:15.307 I/cr_CronetLibraryLoader( 2784): Cronet version: 113.0.5672.51, arch: x86_64
+11-06 12:29:15.722 D/ZaloDuo ( 3061): diag: page load zalo
+11-06 12:29:15.841 I/cr_CronetUrlRequestContext( 2784): destroyNativeStreamLocked org.chromium.net.impl.CronetBidirectionalStream@c10084d
+11-06 12:29:16.868 D/ZaloDuo ( 3061): diag: web: sync ui: no banner
+11-06 12:29:20.125 D/ZaloDuo ( 3061): diag: zalo login screen
+11-06 12:29:21.456 D/ZaloDuo ( 3061): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:29:22.353 D/ZaloDuo ( 3061): diag: boot completed
+11-06 12:29:26.417 I/HibernationPolicy( 4836): Usage stats for user 0: {com.google.android.networkstack.tethering=Fri Nov 06 12:28:45 UTC 2026, com.android.cts.priv.ctsshim=Thu Jan 01 00:00:00 UTC 1970, com.google.android.youtube=Fri Nov 06 12:28:50 UTC 2026, com.android.internal.display.cutout.emulation.corner=Thu Jan 01 00:00:00 UTC 1970, com.google.android.ext.services=Fri Nov 06 12:28:45 UTC 2026, com.android.internal.display.cutout.emulation.double=Thu Jan 01 00:00:00 UTC 1970, com.android.providers.telephony=Thu Jan 01 00:00:00 UTC 1970, com.android.dynsystem=Thu Jan 01 00:00:00 UTC 1970, com.google.android.googlequicksearchbox=Fri Nov 06 12:29:06 UTC 2026, com.google.android.cellbroadcastservice=Fri Nov 06 12:28:46 UTC 2026, com.android.providers.calendar=Fri Nov 06 12:29:03 UTC 2026, com.android.providers.media=Fri Nov 06 12:28:50 UTC 2026, com.google.android.onetimeinitializer=Thu Jan 01 00:00:00 UTC 1970, com.google.android.ext.shared=Thu Jan 01 00:00:00 UTC 1970, com.android.internal.systemui.navbar.gestural_wide_back=Thu Jan 01 00:00:00 UTC 1970, com.android.wallpapercropper=Thu Jan 01 00:00:00 UTC 1970, com.android.managedprovisioning.auto_generated_rro_product__=Thu Jan 01 00:00:00 UTC 1970, com.android.carrierconfig.auto_generated_rro_vendor__=Thu Jan 01 00:00:00 UTC 1970, com.android.systemui.emulation.pixel_3_xl=Thu Jan 01 00:00:00 UTC 1970, com.android.systemui.emulation.pixel_4_xl=Thu Jan 01 00:00:00 UTC 1970, com.android.simappdialog.auto_generated_rro_product__=Thu Jan 01 00:00:00 UTC 1970, com.android.externalstorage=Thu Jan 01 00:00:00 UTC 1970, com.android.htmlviewer=Thu Jan 01 00:00:00 UTC 1970, com.android.companiondevicemanager=Thu Jan 01 00:00:00 UTC 1970, com.android.mms.service=Thu Jan 01 00:00:00 UTC 1970, com.android.providers.downloads=Thu Jan 01 00:00:00 UTC 1970, com.android.systemui.auto_generated_rro_product__=Thu Jan 01 00:00:00 UTC 1970, com.google.android.apps.messaging=Fri Nov 06 12:29:18 UTC 2026, com.google.android.soundpicker=Thu Jan 01 00:00:00 UTC 1970, com.breel.wallpapers18=Thu Jan 01 00:00:00 UTC 1970, com.google.android.marvin.talkbackoverlay=Thu Jan 01 00:00:00 UTC 1970, com.google.android.configupdater=Thu Jan 01 00:00:00 UTC 1970, com.android.internal.emulation.pixel_3a_xl=Thu Jan 01 00:00:00 UTC 1970, com.android.internal.emulation.pixel_6_pro=Thu Jan 01 00:00:00 UTC 1970, com.android.internal.emulation.pixel_7_pro=Thu Jan 01 00:00:00 UTC 1970, com.google.android.providers.media.module=Fri Nov 06 12:29:06 UTC 2026, com.android.internal.emulation.pixel_3a=Thu Jan 01 00:00:00 UTC 1970, com.android.internal.emulation.pixel_4a=Thu Jan 01 00:00:00 UTC 1970, com.android.internal.emulation.pixel_6a=Thu Jan 01 00:00:00 UTC 1970, com.google.android.overlay.googlewebview=Thu Jan 01 00:00:00 UTC 1970, com.android.systemui.plugin.globalactions.wallet=Thu Jan 01 00:00:00 UTC 1970, com.android.providers.downloads.ui=Thu Jan 01 00:00:00 UTC 1970, com.google.android.hotspot2.osulogin=Thu Jan 01 00:00:00 UTC 1970, com.android.vending=Thu Jan 01 00:00:00 UTC 1970, com.android.pacprocessor=Thu Jan 01 00:00:00 UTC 1970, com.android.simappdialog=Thu Jan 01 00:00:00 UTC 1970, com.google.android.adservices.api=Thu Jan 01 00:00:00 UTC 1970, com.android.internal.display.cutout.emulation.hole=Thu Jan 01 00:00:00 UTC 1970, com.android.internal.display.cutout.emulation.tall=Thu Jan 01 00:00:00 UTC 1970, com.android.certinstaller=Thu Jan 01 00:00:00 UTC 1970, com.android.carrierconfig=Fri Nov 06 12:28:52 UTC 2026, com.google.android.marvin.talkback=Fri Nov 06 12:29:23 UTC 2026, com.android.internal.systemui.navbar.threebutton=Thu Jan 01 00:00:00 UTC 1970, android=Thu Jan 01 00:00:00 UTC 1970, com.google.android.sdksandbox=Thu Jan 01 00:00:00 UTC 1970, com.android.egg=Thu Jan 01 00:00:00 UTC 1970, com.android.mtp=Thu Jan 01 00:00:00 UTC 1970, com.android.nfc=Thu Jan 01 00:00:00 UTC 1970, com.android.ons=Fri Nov 06 12:28:47 UTC 2026, com.android.stk=Fri Nov 06 12:28:55 UTC 2026, app.zaloduo.client=Fri Nov 06 12:29:14 UTC 2026, com.android.backupconfirm=Thu Jan 01 00:
+11-06 12:29:29.090 I/AndroidRuntime( 4312): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:29.476 I/AndroidRuntime( 5243): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:29.653 I/AndroidRuntime( 5262): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:29.739 I/AndroidRuntime( 5280): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:29.860 I/AndroidRuntime( 5297): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:30.029 I/AndroidRuntime( 5319): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:30.216 I/AndroidRuntime( 5338): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:30.344 I/AndroidRuntime( 5355): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:30.515 I/AndroidRuntime( 5373): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:30.816 I/AndroidRuntime( 5392): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:30.911 I/AndroidRuntime( 5411): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:30.993 I/AndroidRuntime( 5429): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:31.095 I/AndroidRuntime( 5446): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:31.162 I/AndroidRuntime( 5464): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:31.228 I/AndroidRuntime( 5483): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:31.306 I/AndroidRuntime( 5501): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:31.365 I/AndroidRuntime( 5519): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:31.416 I/AndroidRuntime( 5538): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:32.403 I/AiAiCaptions( 1523): Would disable com.google.android.apps.miphone.aiai.captions.CaptionsForegroundService (reason: Captions is disabled in device config) but already disabled
+11-06 12:29:32.787 I/cr_WebViewApkApp( 5580): Launched version=109.0.5414.123 minSdkVersion=29 isBundle=false processName=com.google.android.webview
+11-06 12:29:34.628 I/AndroidRuntime( 5712): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:34.683 I/AndroidRuntime( 5730): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:34.723 I/AndroidRuntime( 5747): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:34.778 I/AndroidRuntime( 5771): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:34.835 I/AndroidRuntime( 5788): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:34.869 I/AndroidRuntime( 5805): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:37.351 I/AndroidRuntime( 5849): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:37.400 I/AndroidRuntime( 5866): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:37.442 I/AndroidRuntime( 5883): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:37.499 I/AndroidRuntime( 5900): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:41.253 I/cr_CronetLibraryLoader( 5988): Cronet version: 113.0.5672.51, arch: x86_64
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): Exception in upload method
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): com.google.android.apps.gsa.shared.r.d: Error code: 262182
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.shared.ab.bk.d(PG:5)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.libraries.gsa.c.a.ar.d(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.libraries.gsa.c.a.bo.b(PG:5)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.libraries.gsa.c.a.e.a(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.libraries.gsa.c.a.a.run(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.bf.execute(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.i(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:12)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.m(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.j.a(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:3)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.m(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.j.a(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:3)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.m(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.j.a(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:3)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.m(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.j.a(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:3)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.m(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.c.a(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:3)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.bu.cancel(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:17)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.staticplugins.bk.b.h.run(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.bf.execute(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.i(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:12)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.m(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.j.a(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:3)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.shared.util.c.aj.a(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:3)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.m(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.c.a(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.l(PG:3)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.common.util.concurrent.d.cancel(PG:8)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.s3.o.c(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.s3.r.a(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.staticplugins.dc.a.c.e(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.staticplugins.dc.a.c.c(PG:3)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.staticplugins.dc.a.e.a(PG:5)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.s3.n.hh(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.cd.g.a.f.e(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.speech.k.a.g.d(PG:22)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.speech.k.a.g.ks(PG:6)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.s3.o.e(PG:14)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.s3.p.run(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:463)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.shared.util.c.a.e.run(PG:2)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.shared.util.c.a.bi.run(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.shared.util.c.a.bi.run(PG:1)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1137)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:637)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at java.lang.Thread.run(Thread.java:1012)
+11-06 12:29:42.728 E/cr_CronetUrlRequestContext( 1614): 	at com.google.android.apps.gsa.shared.util.c.a.l.run(PG:5)
+11-06 12:29:45.780 D/ZaloDuo ( 3061): diag: app to background
+11-06 12:29:54.505 I/AndroidRuntime( 6581): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:54.618 I/AndroidRuntime( 6603): VM exiting with result code 0, cleanup skipped.
+11-06 12:30:05.448 I/ActivityTaskManager(  487): START u0 {flg=0x10000000 cmp=app.zaloduo.client/.MainActivity} from uid 2000
+11-06 12:30:05.509 D/ZaloDuo ( 3061): diag: app opened (zalo page still loading)
