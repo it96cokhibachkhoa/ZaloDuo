@@ -157,10 +157,11 @@ public class SettingsActivity extends Activity {
             WebViewHolder.reload();
             Toast.makeText(this, "Đang tải lại", Toast.LENGTH_SHORT).show();
         });
-        // Công cụ gỡ lỗi: chỉ có ở bản debug, bản release (build trên GitHub) không hiện.
+        // Log debug (không có tên người / nội dung tin): có ở cả bản release để gửi khi gặp lỗi. Công cụ gỡ lỗi còn lại
+        // chỉ có ở bản debug.
+        button("Sao chép log debug (gửi khi gặp lỗi)", this::copyDebugLog);
         if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
             button("Sao chép cấu trúc giao diện (gửi để sửa lỗi hiển thị)", this::copyLayout);
-            button("Sao chép log debug (gửi khi gặp lỗi)", this::copyDebugLog);
             button("Xóa log debug", () -> {
                 DiagLog.clear();
                 Toast.makeText(this, "Đã xóa nhật ký", Toast.LENGTH_SHORT).show();

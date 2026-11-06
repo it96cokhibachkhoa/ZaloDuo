@@ -2518,7 +2518,7 @@
 
     var pageStart = Date.now();
     var lastSent = '', building = false, names = {}, namesAt = 0; // tên + ảnh bạn bè / nhóm, lấy lại tối đa mỗi 60 s
-    var lastStat = '', nativeBroken = false; // nativeBroken: danh sách native rỗng dù trang có hội thoại (xem buildAndSend)
+    var lastStat = '', nativeBroken = false, nameRetries = 0; // nativeBroken: danh sách native rỗng dù trang có hội thoại (xem buildAndSend)
     /**
      * Mã các hội thoại danh sách web đang hiện (đã lọc theo Ưu tiên / Khác, Chưa đọc, Phân loại...), theo thứ tự của
      * Zalo: prop "conversations" của component cha #conversationListId (danh sách ảo hóa chỉ vẽ vài dòng trong DOM).
@@ -2579,8 +2579,9 @@
             var ci = null;
             try { ci = z.profile ? z.profile.getProfileFriendByIdSync(id) : null; } catch (e) { /* ignore */ }
             try { ci = ci || (z.info && z.info.getConvByIdSync ? z.info.getConvByIdSync(id) : null); } catch (e) { /* ignore */ }
-            if (ci && (ci.displayName || ci.zaloName)) {
-              info = { n: ci.displayName || ci.zaloName, a: ci.avatar || (info && info.a) || '', ms: info && info.ms, tm: info && info.tm };
+            var cn = ci && (ci.displayName || ci.zaloName || ci.groupName || ci.name);
+            if (cn) {
+              info = { n: cn, a: ci.avatar || (info && info.a) || '', ms: info && info.ms, tm: info && info.tm };
               names[id] = info;
             }
           }
@@ -2665,6 +2666,15 @@
           lastSent = json;
           bridge.convList(json);
         }
+        // Còn hội thoại chưa có tên (hiện mã số, hay gặp ở nhóm ngay sau khi đồng bộ từ điện thoại chính: danh bạ nhóm
+        // của Zalo nạp sau): lấy lại danh bạ / nhóm và dựng lại sau ít giây, tới khi đủ tên (tối đa ~3 phút).
+        var unnamed = list.filter(function (it) { return !it.me && it.n === it.id; }).length;
+        if (unnamed && nameRetries < 36) {
+          nameRetries++;
+          namesAt = 0;
+          if (nameRetries === 1) diag('native list: ' + unnamed + ' without name, retrying');
+          scheduleBuild(5000);
+        } else if (!unnamed) nameRetries = 0;
       }).catch(function (e) { log('native list build failed: ' + e); }).then(function () { building = false; });
     }
     var buildTimer = 0;
