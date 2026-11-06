@@ -2528,7 +2528,7 @@
 
     var pageStart = Date.now();
     var lastSent = '', building = false, names = {}, namesAt = 0; // tên + ảnh bạn bè / nhóm, lấy lại tối đa mỗi 60 s
-    var lastStat = '', nativeBroken = false, nameRetries = 0; // nativeBroken: danh sách native rỗng dù trang có hội thoại (xem buildAndSend)
+    var lastStat = '', nativeBroken = false, nameRetries = 0, lastBadOrder = '', lastMore = ''; // nativeBroken: danh sách native rỗng dù trang có hội thoại (xem buildAndSend)
     /**
      * Mã các hội thoại danh sách web đang hiện (đã lọc theo Ưu tiên / Khác, Chưa đọc, Phân loại...), theo thứ tự của
      * Zalo: prop "conversations" của component cha #conversationListId (danh sách ảo hóa chỉ vẽ vài dòng trong DOM).
@@ -2538,7 +2538,21 @@
       var fk = l && Object.keys(l).filter(function (k) { return k.indexOf('__react') === 0; })[0];
       for (var f = fk && l[fk], i = 0; f && i < 6; f = f.return, i++) {
         var c = f.memoizedProps && f.memoizedProps.conversations;
-        if (Array.isArray(c)) return c.map(String);
+        if (Array.isArray(c)) {
+          // Thường là mã hội thoại (chuỗi), nhưng có mục là đối tượng (String() thành "[object Object]" — dòng lạ ở
+          // cuối danh sách native): lấy mã bên trong, không có mã thì bỏ.
+          var bad = [];
+          var ids = c.map(function (x) {
+            if (typeof x === 'string' || typeof x === 'number') return String(x);
+            var v = x && (x.userId || x.convId || x.id || x.conversationId);
+            if (typeof v === 'string' || typeof v === 'number') return String(v);
+            bad.push(x && typeof x === 'object' ? Object.keys(x).slice(0, 8).join('|') : typeof x);
+            return null;
+          }).filter(Boolean);
+          var bk = bad.join(', ');
+          if (bk !== lastBadOrder) { lastBadOrder = bk; if (bk) diag('native list: web entries without id: ' + bk); }
+          return ids;
+        }
       }
       // Tab lọc không có hội thoại nào: Zalo bỏ hẳn danh sách, chỉ còn thanh lọc + màn trống.
       if (!l && document.querySelector('#sidebarNav .msg-filters-bar')) return [];
@@ -2641,9 +2655,19 @@
             var it = safe(function () { return toItem({ userId: id, isGroup: grp }); });
             if (it) { byId[id] = it; added++; }
           });
+          // Có trong bộ nhớ Zalo mà tab đang chọn của trang không hiện (đã ẩn, người lạ, Official Account, tab lọc...):
+          // chỉ ghi loại vào log để biết vì sao thiếu (không hiện thêm — có thể là hội thoại người dùng đã ẩn).
+          var inOrder = {};
+          order.forEach(function (id) { inOrder[id] = true; });
+          var extra = convs.filter(function (c) { return !inOrder[c.userId]; });
+          var extraStat = extra.length ? extra.length + ' (' + extra.map(function (c) {
+            return (c.isGroup ? 'group' : /^\d+$/.test(c.userId) ? 'user' : 'other:' + String(c.userId).replace(/\d/g, '').slice(0, 12)) +
+              (previews[c.userId] ? '+msg' : '');
+          }).join(',') + ')' : '0';
           list = order.map(function (id) { return byId[id]; }).filter(Boolean);
         } else list.sort(function (a, b) { return (b.p - a.p) || (b.t - a.t); });
-        var stat = 'native list: store ' + fromStore + ', web ' + (order ? order.length : 'n/a') + ', added ' + added + ', shown ' + list.length;
+        var stat = 'native list: store ' + fromStore + ', web ' + (order ? order.length : 'n/a') + ', added ' + added + ', shown ' + list.length +
+          (order ? ', not on web ' + extraStat : '');
         if (stat !== lastStat) { lastStat = stat; diag(stat); }
         // Trang có hội thoại mà danh sách native vẫn rỗng (không đọc được dữ liệu của bản Zalo này): đừng che danh sách
         // web bằng một danh sách trống — tạm tắt chế độ native, hiện danh sách của Zalo Web.
@@ -2709,6 +2733,8 @@
         var el = null;
         for (var a = l; a && a !== document.body && !el; a = a.parentElement) if (scrollable(a)) el = a;
         if (!el) el = [].slice.call(l.querySelectorAll('div'), 0, 40).filter(scrollable)[0] || null;
+        var ms = el ? 'scrolled ' + (el.id || el.className.toString().split(' ')[0] || el.tagName) : 'no scroll container';
+        if (ms !== lastMore) { lastMore = ms; diag('native list: load more: ' + ms); }
         if (!el) return;
         el.scrollTop = el.scrollHeight;
         el.dispatchEvent(new Event('scroll', { bubbles: true }));
