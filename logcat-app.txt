@@ -1,0 +1,150 @@
+11-06 12:28:57.594 I/ActivityTaskManager(  525): START u0 {flg=0x10000000 cmp=app.zaloduo.client/.MainActivity} from uid 2000
+11-06 12:28:57.677 D/StartingSurfaceDrawer(  767): addSplashScreen app.zaloduo.client theme=7f0b0000 task=12 suggestType=3
+11-06 12:28:57.733 I/MediaProvider( 1405): Invalidating LocalCallingIdentity cache for package app.zaloduo.client. Reason: package android.intent.action.PACKAGE_ADDED
+11-06 12:28:57.739 I/GsaVoiceInteractionSrv( 1399): O received Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.zaloduo.client flg=0x4000010 (has extras) }
+11-06 12:28:57.756 D/MediaPlayerList(  752): Name of package changed: app.zaloduo.client
+11-06 12:28:57.954 W/.zaloduo.clien( 2456): Unexpected CPU variant for X86 using defaults: x86_64
+11-06 12:28:57.971 I/ActivityManager(  525): Start proc 2456:app.zaloduo.client/u0a145 for pre-top-activity {app.zaloduo.client/app.zaloduo.client.MainActivity}
+11-06 12:28:58.017 V/GraphicsEnvironment( 2456): ANGLE Developer option for 'app.zaloduo.client' set to: 'default'
+11-06 12:28:58.029 D/ZaloDuo ( 2456): diag: process start
+11-06 12:28:58.043 D/ImsResolver(  958): maybeAddedImsService, packageName: app.zaloduo.client
+11-06 12:28:58.229 I/cr_VariationsUtils( 2456): Failed reading seed file "/data/user/0/app.zaloduo.client/app_webview/variations_seed_new"
+11-06 12:28:58.229 I/cr_VariationsUtils( 2456): Failed reading seed file "/data/user/0/app.zaloduo.client/app_webview/variations_seed"
+11-06 12:28:58.229 I/cr_VariationsUtils( 2456): Requesting new seed from IVariationsSeedServer
+11-06 12:28:58.232 I/cr_LibraryLoader( 2456): Loaded native library version number "91.0.4472.114"
+11-06 12:28:58.234 I/cr_CachingUmaRecorder( 2456): Flushed 5 samples from 5 histograms.
+11-06 12:28:58.432 I/ActivityManager(  525): Start proc 2532:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0ai9000 for  {app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0}
+11-06 12:28:58.481 D/ConnectivityService(  525): requestNetwork for uid/pid:10145/2456 activeRequest: null callbackRequest: 60 [NetworkRequest [ REQUEST id=61, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10145 RequestorUid: 10145 RequestorPkg: app.zaloduo.client] ]] callback flags: 0 priority: 2147483647
+11-06 12:28:58.500 D/WifiNetworkFactory(  525): got request NetworkRequest [ REQUEST id=61, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10145 RequestorUid: 10145 RequestorPkg: app.zaloduo.client] ]
+11-06 12:28:58.506 D/UntrustedWifiNetworkFactory(  525): got request NetworkRequest [ REQUEST id=61, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10145 RequestorUid: 10145 RequestorPkg: app.zaloduo.client] ]
+11-06 12:28:58.513 D/OemPaidWifiNetworkFactory(  525): got request NetworkRequest [ REQUEST id=61, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10145 RequestorUid: 10145 RequestorPkg: app.zaloduo.client] ]
+11-06 12:28:58.540 D/ConnectivityService(  525): requestNetwork for uid/pid:10145/2456 activeRequest: null callbackRequest: 63 [NetworkRequest [ REQUEST id=64, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10145 RequestorUid: 10145 RequestorPkg: app.zaloduo.client] ]] callback flags: 0 priority: 2147483647
+11-06 12:28:58.553 D/ZaloDuo ( 2456): diag: network available
+11-06 12:28:58.555 D/WifiNetworkFactory(  525): got request NetworkRequest [ REQUEST id=64, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10145 RequestorUid: 10145 RequestorPkg: app.zaloduo.client] ]
+11-06 12:28:58.555 D/UntrustedWifiNetworkFactory(  525): got request NetworkRequest [ REQUEST id=64, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10145 RequestorUid: 10145 RequestorPkg: app.zaloduo.client] ]
+11-06 12:28:58.555 D/OemPaidWifiNetworkFactory(  525): got request NetworkRequest [ REQUEST id=64, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10145 RequestorUid: 10145 RequestorPkg: app.zaloduo.client] ]
+11-06 12:28:58.576 D/ZaloDuo ( 2456): diag: no snapshot saved, zalo loading screen visible
+11-06 12:28:58.609 W/cr_media( 2456): Requires BLUETOOTH permission
+11-06 12:28:58.623 D/ZaloDuo ( 2456): diag: app opened (zalo page still loading)
+11-06 12:28:58.846 I/cr_ChildProcessService( 2532): Creating new ChildProcessService pid=2532
+11-06 12:28:58.929 I/cr_LibraryLoader( 2532): Loaded native library version number "91.0.4472.114"
+11-06 12:28:58.943 I/cr_CachingUmaRecorder( 2532): Flushed 1 samples from 1 histograms.
+11-06 12:28:59.163 I/cr_CronetLibraryLoader( 2330): Cronet version: 108.0.5359.61, arch: x86_64
+11-06 12:29:00.687 D/ZaloDuo ( 2456): diag: service start
+11-06 12:29:00.871 I/ActivityTaskManager(  525): Displayed app.zaloduo.client/.MainActivity: +3s100ms
+11-06 12:29:00.876 D/ZaloDuo ( 2456): diag: page load zalo
+11-06 12:29:00.879 D/ZaloDuo ( 2456): diag: no snapshot saved, zalo loading screen visible
+11-06 12:29:00.911 D/InterruptionStateProvider(  767): No bubble up: not allowed to bubble: 0|app.zaloduo.client|1|null|10145
+11-06 12:29:00.996 I/cr_VariationsUtils( 2509): Scheduling seed download job
+11-06 12:29:01.004 D/InterruptionStateProvider(  767): No heads up: unimportant notification: 0|app.zaloduo.client|1|null|10145
+11-06 12:29:01.004 D/PeopleSpaceWidgetMgr(  767): Sbn doesn't contain valid PeopleTileKey: null/0/app.zaloduo.client
+11-06 12:29:01.045 W/InputManager-JNI(  525): Input channel object 'ade60f3 Splash Screen app.zaloduo.client (client)' was disposed without first being removed with the input manager!
+11-06 12:29:01.254 D/ZaloDuo ( 2456): js: shim error: Error: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.
+11-06 12:29:01.254 D/ZaloDuo ( 2456):     at <anonymous>:135:5
+11-06 12:29:01.254 D/ZaloDuo ( 2456):     at safe (<anonymous>:44:18)
+11-06 12:29:01.254 D/ZaloDuo ( 2456):     at <anonymous>:133:3
+11-06 12:29:01.254 D/ZaloDuo ( 2456):     at <anonymous>:3708:3
+11-06 12:29:01.280 D/ZaloDuo ( 2456): js: shim error: TypeError: Cannot read property 'style' of null
+11-06 12:29:01.280 D/ZaloDuo ( 2456):     at setDockBottom (<anonymous>:1605:32)
+11-06 12:29:01.280 D/ZaloDuo ( 2456):     at <anonymous>:1607:5
+11-06 12:29:01.280 D/ZaloDuo ( 2456):     at safe (<anonymous>:44:18)
+11-06 12:29:01.280 D/ZaloDuo ( 2456):     at <anonymous>:710:15
+11-06 12:29:01.280 D/ZaloDuo ( 2456):     at <anonymous>:3708:3
+11-06 12:29:01.283 D/ZaloDuo ( 2456): js: shim error: TypeError: Cannot read property 'style' of null
+11-06 12:29:01.283 D/ZaloDuo ( 2456):     at setKb (<anonymous>:3529:32)
+11-06 12:29:01.283 D/ZaloDuo ( 2456):     at <anonymous>:3531:5
+11-06 12:29:01.283 D/ZaloDuo ( 2456):     at safe (<anonymous>:44:18)
+11-06 12:29:01.283 D/ZaloDuo ( 2456):     at <anonymous>:3521:3
+11-06 12:29:01.283 D/ZaloDuo ( 2456):     at <anonymous>:3708:3
+11-06 12:29:01.283 D/ZaloDuo ( 2456): js: shim error: TypeError: Failed to execute 'observe' on 'MutationObserver': parameter 1 is not of type 'Node'.
+11-06 12:29:01.283 D/ZaloDuo ( 2456):     at <anonymous>:3689:8
+11-06 12:29:01.283 D/ZaloDuo ( 2456):     at safe (<anonymous>:44:18)
+11-06 12:29:01.283 D/ZaloDuo ( 2456):     at <anonymous>:3630:3
+11-06 12:29:01.283 D/ZaloDuo ( 2456):     at <anonymous>:3708:3
+11-06 12:29:01.287 D/ZaloDuo ( 2456): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:29:02.289 D/ZaloDuo ( 2456): diag: network available
+11-06 12:29:02.607 W/GCM     ( 1049): Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.zaloduo.client flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+11-06 12:29:02.607 I/FontLog ( 1049): Package app.zaloduo.client has no metadata [CONTEXT service_id=132 ]
+11-06 12:29:02.611 W/GCM     ( 1049): Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.zaloduo.client flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+11-06 12:29:03.573 D/ZaloDuo ( 2456): diag: page load zalo
+11-06 12:29:03.574 D/ZaloDuo ( 2456): diag: no snapshot saved, zalo loading screen visible
+11-06 12:29:03.588 D/ZaloDuo ( 2456): js: shim error: TypeError: Cannot read property 'style' of null
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at setDockBottom (<anonymous>:1605:32)
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at <anonymous>:1607:5
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at safe (<anonymous>:44:18)
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at <anonymous>:710:15
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at <anonymous>:3708:3
+11-06 12:29:03.588 D/ZaloDuo ( 2456): js: shim error: TypeError: Cannot read property 'style' of null
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at setKb (<anonymous>:3529:32)
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at <anonymous>:3531:5
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at safe (<anonymous>:44:18)
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at <anonymous>:3521:3
+11-06 12:29:03.588 D/ZaloDuo ( 2456):     at <anonymous>:3708:3
+11-06 12:29:03.589 D/ZaloDuo ( 2456): js: shim error: TypeError: Failed to execute 'observe' on 'MutationObserver': parameter 1 is not of type 'Node'.
+11-06 12:29:03.589 D/ZaloDuo ( 2456):     at <anonymous>:3689:8
+11-06 12:29:03.589 D/ZaloDuo ( 2456):     at safe (<anonymous>:44:18)
+11-06 12:29:03.589 D/ZaloDuo ( 2456):     at <anonymous>:3630:3
+11-06 12:29:03.589 D/ZaloDuo ( 2456):     at <anonymous>:3708:3
+11-06 12:29:03.723 W/BroadcastQueue(  525): Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.zaloduo.client flg=0x4000010 (has extras) } to com.google.android.packageinstaller/com.android.packageinstaller.PackageInstalledReceiver
+11-06 12:29:03.725 W/BroadcastQueue(  525): Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.zaloduo.client flg=0x4000010 (has extras) } to com.google.android.gms/.games.chimera.GamesSystemBroadcastReceiverProxy
+11-06 12:29:03.725 W/BroadcastQueue(  525): Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.zaloduo.client flg=0x4000010 (has extras) } to com.google.android.gms/.gass.chimera.PackageChangeBroadcastReceiver
+11-06 12:29:03.725 W/BroadcastQueue(  525): Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.zaloduo.client flg=0x4000010 (has extras) } to com.google.android.gms/.chimera.GmsIntentOperationService$PersistentTrustedReceiver
+11-06 12:29:03.725 W/BroadcastQueue(  525): Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.zaloduo.client flg=0x4000010 (has extras) } to com.google.android.googlequicksearchbox/com.google.android.apps.gsa.googlequicksearchbox.GelStubAppWatcher
+11-06 12:29:04.972 D/ZaloDuo ( 2456): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:29:06.116 D/ZaloDuo ( 2456): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.142 D/ZaloDuo ( 2456): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:29:06.144 D/ZaloDuo ( 2456): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.155 D/ZaloDuo ( 2456): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.158 D/ZaloDuo ( 2456): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.159 D/ZaloDuo ( 2456): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.161 D/ZaloDuo ( 2456): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.167 D/ZaloDuo ( 2456): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.168 D/ZaloDuo ( 2456): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.172 D/ZaloDuo ( 2456): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.173 D/ZaloDuo ( 2456): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.173 D/ZaloDuo ( 2456): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.174 D/ZaloDuo ( 2456): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:29:06.665 I/cr_VariationsUtils( 2509): Downloading new seed
+11-06 12:29:06.956 D/InterruptionStateProvider(  767): No bubble up: not allowed to bubble: 0|app.zaloduo.client|1|null|10145
+11-06 12:29:06.957 D/InterruptionStateProvider(  767): No heads up: unimportant notification: 0|app.zaloduo.client|1|null|10145
+11-06 12:29:06.968 D/PeopleSpaceWidgetMgr(  767): Sbn doesn't contain valid PeopleTileKey: null/0/app.zaloduo.client
+11-06 12:29:06.973 I/cr_VariationsSeedFetch( 2509): Fetched first run seed in 309 ms
+11-06 12:29:09.004 W/cr_MediaCodecUtil( 2456): HW encoder for video/avc is not available on this device.
+11-06 12:29:11.180 I/ActivityManager(  525): Background started FGS: Allowed [callingPackage: com.google.android.apps.wellbeing; callingUid: 10098; uidState: BFGS; intent: Intent { cmp=com.google.android.apps.wellbeing/com.google.apps.tiktok.concurrent.InternalForegroundService (has extras) }; code:BACKGROUND_ACTIVITY_PERMISSION; tempAllowListReason:<broadcast:1000:android.intent.action.BOOT_COMPLETED,reason:,reasonCode:BOOT_COMPLETED,duration:20000,callingUid:1000>; targetSdkVersion:30; callerTargetSdkVersion:30; startForegroundCount:0; bindFromPackage:null]
+11-06 12:29:12.029 D/ZaloDuo ( 2456): console: do open indexeddb zsecure-localstorage 2 @https://zalo-chat-static.zadn.vn/v1/lazy/web-startup.a00a02c532982ab4915a.js:1
+11-06 12:29:12.171 I/cr_CronetLibraryLoader( 3722): Cronet version: 108.0.5359.61, arch: x86_64
+11-06 12:29:12.492 I/.zaloduo.clien( 2456): Background concurrent copying GC freed 61295(2649KB) AllocSpace objects, 16(4936KB) LOS objects, 49% free, 3623KB/7246KB, paused 16us,26us total 121.970ms
+11-06 12:29:12.759 D/ZaloDuo ( 2456): console: ZLOG: cal-worker caught error TypeError: navigator.storage.getDirectory is not a function @https://chat.zalo.me/opfs-worker.081738ba2350940a6b28.js:1
+11-06 12:29:13.137 I/cr_CronetLibraryLoader( 1049): Cronet version: 108.0.5359.61, arch: x86_64
+11-06 12:29:14.234 D/ZaloDuo ( 2456): console: do open indexeddb zdb_qos 3 @https://zalo-chat-static.zadn.vn/v1/lazy/web-startup.a00a02c532982ab4915a.js:1
+11-06 12:29:14.234 D/ZaloDuo ( 2456): console: Uncaught (in promise) #<Object> @https://zalo-chat-static.zadn.vn/v1/lazy/1.c72c0957b455ab70b73c.js:1
+11-06 12:29:15.303 D/ZaloDuo ( 2456): diag: page load zalo
+11-06 12:29:17.109 I/ActivityTaskManager(  525): START u0 {flg=0x10000000 cmp=app.zaloduo.client/.MainActivity} from uid 2000
+11-06 12:29:17.949 D/ZaloDuo ( 2456): diag: web: sync ui: no banner
+11-06 12:29:19.171 D/ZaloDuo ( 2456): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:29:19.974 D/ZaloDuo ( 2456): diag: zalo login screen
+11-06 12:29:23.060 I/cr_CronetLibraryLoader( 1645): Cronet version: 108.0.5359.61, arch: x86_64
+11-06 12:29:27.340 I/cr_CronetLibraryLoader( 1645): Cronet version: 93.0.4542.0, arch: x86_64
+11-06 12:29:30.552 D/ZaloDuo ( 2456): diag: boot completed
+11-06 12:29:30.574 D/InterruptionStateProvider(  767): No bubble up: not allowed to bubble: 0|app.zaloduo.client|1|null|10145
+11-06 12:29:30.575 D/InterruptionStateProvider(  767): No heads up: unimportant notification: 0|app.zaloduo.client|1|null|10145
+11-06 12:29:30.586 D/PeopleSpaceWidgetMgr(  767): Sbn doesn't contain valid PeopleTileKey: null/0/app.zaloduo.client
+11-06 12:29:31.010 I/cr_CronetLibraryLoader( 4952): Cronet version: 108.0.5359.61, arch: x86_64
+11-06 12:29:31.055 I/AndroidRuntime( 4994): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:33.310 I/AndroidRuntime( 5206): VM exiting with result code 0, cleanup skipped.
+11-06 12:29:43.605 I/cr_CronetLibraryLoader( 5475): Cronet version: 108.0.5359.61, arch: x86_64
+11-06 12:29:45.383 D/InterruptionStateProvider(  767): No bubble up: not allowed to bubble: 0|app.zaloduo.client|1|null|10145
+11-06 12:29:45.383 D/InterruptionStateProvider(  767): No heads up: unimportant notification: 0|app.zaloduo.client|1|null|10145
+11-06 12:29:45.391 D/PeopleSpaceWidgetMgr(  767): Sbn doesn't contain valid PeopleTileKey: null/0/app.zaloduo.client
+11-06 12:29:48.407 D/ZaloDuo ( 2456): diag: app to background
+11-06 12:29:53.047 W/ProviderHelper( 5502): Unknown dynamite feature mlkit_ocr_common
+11-06 12:29:53.048 W/DynamiteModule( 5502): Local module descriptor class for com.google.android.gms.mlkit_ocr_common not found.
+11-06 12:29:53.048 I/DynamiteModule( 5502): Considering local module com.google.android.gms.mlkit_ocr_common:0 and remote module com.google.android.gms.mlkit_ocr_common:0
+11-06 12:29:57.810 W/ProviderHelper( 5502): Unknown dynamite feature mlkit_ocr_common
+11-06 12:29:57.810 W/DynamiteModule( 5502): Local module descriptor class for com.google.android.gms.mlkit_ocr_common not found.
+11-06 12:29:57.810 I/DynamiteModule( 5502): Considering local module com.google.android.gms.mlkit_ocr_common:0 and remote module com.google.android.gms.mlkit_ocr_common:0
+11-06 12:30:08.008 I/ActivityTaskManager(  525): START u0 {flg=0x10000000 cmp=app.zaloduo.client/.MainActivity} from uid 2000
+11-06 12:30:08.053 D/ZaloDuo ( 2456): diag: app opened (zalo page still loading)
+11-06 12:30:08.111 D/InterruptionStateProvider(  767): No bubble up: not allowed to bubble: 0|app.zaloduo.client|1|null|10145
+11-06 12:30:08.111 D/InterruptionStateProvider(  767): No heads up: unimportant notification: 0|app.zaloduo.client|1|null|10145
+11-06 12:30:08.114 D/PeopleSpaceWidgetMgr(  767): Sbn doesn't contain valid PeopleTileKey: null/0/app.zaloduo.client

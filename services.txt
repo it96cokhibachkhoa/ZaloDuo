@@ -1,0 +1,56 @@
+ACTIVITY MANAGER SERVICES (dumpsys activity services)
+  User 0 active services:
+  * ServiceRecord{69f358c u0 app.zaloduo.client/.KeepAliveService}
+    intent={cmp=app.zaloduo.client/.KeepAliveService}
+    packageName=app.zaloduo.client
+    processName=app.zaloduo.client
+    baseDir=/data/app/~~_d7j2ROxO1Nsh67sMnjhZg==/app.zaloduo.client-YRRpPRuzEUrV-DGYPTFA3A==/base.apk
+    dataDir=/data/user/0/app.zaloduo.client
+    app=ProcessRecord{ae2b7e6 2456:app.zaloduo.client/u0a145}
+    allowWhileInUsePermissionInFgs=true
+    recentCallingPackage=app.zaloduo.client
+    recentCallingUid=10145
+    allowStartForeground=12
+    startForegroundCount=1
+    infoAllowStartForeground=[callingPackage: app.zaloduo.client; callingUid: 10145; uidState: TOP ; intent: Intent { cmp=app.zaloduo.client/.KeepAliveService }; code:PROC_STATE_TOP; tempAllowListReason:<null>; targetSdkVersion:35; callerTargetSdkVersion:35; startForegroundCount:0; bindFromPackage:null]
+    isForeground=true foregroundId=1 foregroundNoti=Notification(channel=service shortcut=null contentView=null vibrate=null sound=null defaults=0x0 flags=0x62 color=0xff0068ff category=service actions=1 vis=PRIVATE)
+    createTime=-49s142ms startingBgTimeout=--
+    lastActivity=-17s212ms restartTime=-49s141ms createdFromFg=true
+    startRequested=true delayedStop=false stopIfKilled=false callStart=true lastStartId=2
+
+  * ServiceRecord{c1a5b34 u0 app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0}
+    intent={cmp=app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0}
+    packageName=app.zaloduo.client
+    processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+    baseDir=/data/app/~~OYjA-7rQhG0qAhPA_VOcfQ==/com.google.android.webview-FjMeiq-I6U3v8qTuUja2xQ==/WebViewGoogle.apk
+    dataDir=/data/user/0/com.google.android.webview
+    app=ProcessRecord{3522b80 2532:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a145i0}
+    isolatedProc=ProcessRecord{3522b80 2532:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a145i0}
+    allowWhileInUsePermissionInFgs=true
+    recentCallingPackage=app.zaloduo.client
+    recentCallingUid=10145
+    allowStartForeground=12
+    startForegroundCount=0
+    infoAllowStartForeground=[callingPackage: app.zaloduo.client; callingUid: 10145; uidState: TOP ; intent: Intent { cmp=app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0 (has extras) }; code:PROC_STATE_TOP; tempAllowListReason:<null>; targetSdkVersion:31; callerTargetSdkVersion:35; startForegroundCount:0; bindFromPackage:null]
+    createTime=-49s490ms startingBgTimeout=--
+    lastActivity=-47s19ms restartTime=-49s287ms createdFromFg=true
+    Bindings:
+    * IntentBindRecord{3e19632 CREATE}:
+      intent={cmp=app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0}
+      binder=android.os.BinderProxy@b8d312c
+      requested=true received=true hasBound=true doRebind=false
+      * Client AppBindRecord{5323418 ProcessRecord{ae2b7e6 2456:app.zaloduo.client/u0a145}}
+        Per-process Connections:
+          ConnectionRecord{1da7f29 u0 CR WPRI app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0:@d0774b0}
+          ConnectionRecord{ea63c24 u0 CR IMP app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0:@b466cb7}
+    All Connections:
+      ConnectionRecord{ea63c24 u0 CR IMP app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0:@b466cb7}
+      ConnectionRecord{1da7f29 u0 CR WPRI app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0:@d0774b0}
+
+  Connection bindings to services:
+  * ConnectionRecord{ea63c24 u0 CR IMP app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0:@b466cb7}
+    binding=AppBindRecord{5323418 app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0:app.zaloduo.client}
+    conn=android.os.BinderProxy@b466cb7 flags=0x80000041
+  * ConnectionRecord{1da7f29 u0 CR WPRI app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0:@d0774b0}
+    binding=AppBindRecord{5323418 app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0:app.zaloduo.client}
+    conn=android.os.BinderProxy@d0774b0 flags=0x80000021
