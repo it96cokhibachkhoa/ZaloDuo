@@ -1,0 +1,234 @@
+11-06 12:30:34.894 V/SplashScreenExceptionList(  567): SplashScreen checking exception for package app.zaloduo.client (target sdk:35) -> false
+11-06 12:30:34.917 D/nativeloader(  929): Configuring clns-8 for other apk . target_sdk_version=35, uses_libraries=, library_path=/data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/lib/x86_64, permitted_path=/data:/mnt/expand
+11-06 12:30:34.919 I/ActivityTaskManager(  567): START u0 {flg=0x10000000 cmp=app.zaloduo.client/.MainActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+11-06 12:30:34.930 D/CoreBackPreview(  567): Window{e36fc17 u0 Splash Screen app.zaloduo.client}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@9d51ed, mPriority=0, mIsAnimationCallback=false}
+11-06 12:30:35.044 I/ActivityManager(  567): Start proc 1989:app.zaloduo.client/u0a209 for next-top-activity {app.zaloduo.client/app.zaloduo.client.MainActivity}
+11-06 12:30:35.107 I/.zaloduo.client( 1989): Using CollectorTypeCMC GC.
+11-06 12:30:35.109 W/.zaloduo.client( 1989): Unexpected CPU variant for x86: x86_64.
+11-06 12:30:35.109 W/.zaloduo.client( 1989): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+11-06 12:30:35.111 E/.zaloduo.client( 1989): Not starting debugger since process cannot load the jdwp agent.
+11-06 12:30:35.221 D/nativeloader( 1989): Configuring clns-7 for other apk /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/app.zaloduo.client
+11-06 12:30:35.261 D/ZaloDuo ( 1989): diag: process start
+11-06 12:30:35.300 I/ActivityThread( 1989): ApplicationInfo updating for app.zaloduo.client, new timestamp: 46594
+11-06 12:30:35.384 I/AppsFilter(  567): interaction: PackageSetting{b4b5835 com.android.microdroid.empty_payload/10191} -> PackageSetting{1f2e4ca app.zaloduo.client/10209} BLOCKED
+11-06 12:30:35.616 V/WindowManager(  567):         {WCT{RemoteToken{c578560 Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}}} m=OPEN f=MOVE_TO_TOP leash=Surface(name=Task=7)/@0x5296fe1 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) d=0 taskParent=-1},
+11-06 12:30:35.619 I/SdkSandboxManager(  567): No SDKs used. Skipping SDK data reconcilation for CallingInfo{mUid=10209, mPackageName='app.zaloduo.client, mAppProcessToken='null'}
+11-06 12:30:35.870 I/AppsFilter(  567): interaction: PackageSetting{b4b5835 com.android.microdroid.empty_payload/10191} -> PackageSetting{1f2e4ca app.zaloduo.client/10209} BLOCKED
+11-06 12:30:36.153 W/.zaloduo.client( 1989): Entry not found
+11-06 12:30:36.223 I/cr_WVCFactoryProvider( 1989): Loaded version=124.0.6367.219 minSdkVersion=29 isBundle=false multiprocess=true packageId=2
+11-06 12:30:36.262 I/cr_VariationsUtils( 1989): Failed reading seed file "/data/user/0/app.zaloduo.client/app_webview/variations_seed_new"
+11-06 12:30:36.262 I/cr_VariationsUtils( 1989): Failed reading seed file "/data/user/0/app.zaloduo.client/app_webview/variations_seed"
+11-06 12:30:36.263 I/cr_VariationsUtils( 1989): Requesting new seed from IVariationsSeedServer
+11-06 12:30:36.273 I/cr_LibraryLoader( 1989): Successfully loaded native library
+11-06 12:30:36.279 I/cr_CachingUmaRecorder( 1989): Flushed 6 samples from 6 histograms, 0 samples were dropped.
+11-06 12:30:36.287 I/cr_CombinedPProvider( 1989): #registerProvider() provider:WV.V7@347bdc1 isPolicyCacheEnabled:false policyProvidersSize:0
+11-06 12:30:36.325 I/cr_PolicyProvider( 1989): #setManagerAndSource() 0
+11-06 12:30:36.415 I/cr_CombinedPProvider( 1989): #linkNativeInternal() 1
+11-06 12:30:36.416 I/cr_AppResProvider( 1989): #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+11-06 12:30:36.416 I/cr_PolicyProvider( 1989): #notifySettingsAvailable() 0
+11-06 12:30:36.416 I/cr_CombinedPProvider( 1989): #onSettingsAvailable() 0
+11-06 12:30:36.416 I/cr_CombinedPProvider( 1989): #flushPolicies()
+11-06 12:30:36.819 I/ActivityManager(  567): Start proc 2110:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0ai9000 for  {app.zaloduo.client/org.chromium.content.app.SandboxedProcessService0:0}
+11-06 12:30:37.019 I/cr_WebViewApkApp( 2084): Launched version=124.0.6367.219 minSdkVersion=29 isBundle=false processName=com.google.android.webview:webview_service
+11-06 12:30:37.127 I/cr_WebViewApkApp( 2110): Launched version=124.0.6367.219 minSdkVersion=29 isBundle=false processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+11-06 12:30:37.305 I/cr_ChildProcessService( 2110): Creating new ChildProcessService pid=2110
+11-06 12:30:37.311 D/ConnectivityService(  567): requestNetwork for uid/pid:10209/1989 activeRequest: null callbackRequest: 57 [NetworkRequest [ REQUEST id=58, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647 isUidTracked: false
+11-06 12:30:37.312 D/OemPaidWifiNetworkFactory(  567): got request NetworkRequest [ REQUEST id=58, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:30:37.312 D/MultiInternetWifiNetworkFactory(  567): got request NetworkRequest [ REQUEST id=58, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:30:37.313 D/WifiNetworkFactory(  567): got request NetworkRequest [ REQUEST id=58, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:30:37.313 D/UntrustedWifiNetworkFactory(  567): got request NetworkRequest [ REQUEST id=58, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:30:37.365 D/ConnectivityService(  567): requestNetwork for uid/pid:10209/1989 activeRequest: null callbackRequest: 60 [NetworkRequest [ REQUEST id=61, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647 isUidTracked: false
+11-06 12:30:37.382 W/cr_media( 1989): BLUETOOTH_CONNECT permission is missing.
+11-06 12:30:37.382 W/cr_media( 1989): registerBluetoothIntentsIfNeeded: Requires BLUETOOTH permission
+11-06 12:30:37.391 D/ZaloDuo ( 1989): diag: no snapshot saved, zalo loading screen visible
+11-06 12:30:37.408 D/OemPaidWifiNetworkFactory(  567): got request NetworkRequest [ REQUEST id=61, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:30:37.408 D/MultiInternetWifiNetworkFactory(  567): got request NetworkRequest [ REQUEST id=61, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:30:37.408 D/WifiNetworkFactory(  567): got request NetworkRequest [ REQUEST id=61, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:30:37.408 D/UntrustedWifiNetworkFactory(  567): got request NetworkRequest [ REQUEST id=61, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10209 RequestorUid: 10209 RequestorPkg: app.zaloduo.client UnderlyingNetworks: Null] ]
+11-06 12:30:37.476 V/WindowManagerShell(  929): Transition requested (#6): android.os.BinderProxy@120e632 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=7 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=app.zaloduo.client/.MainActivity } baseActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} topActivity=ComponentInfo{com.google.android.permissioncontroller/com.android.permissioncontroller.permission.ui.GrantPermissionsActivity} origActivity=null realActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} numActivities=2 lastActiveTime=48843 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@dd16f83} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{4789500 com.android.permissioncontroller.permission.ui.GrantPermissionsActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=true appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=320 topActivityLetterboxHeight=640 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 6 }
+11-06 12:30:37.477 D/ZaloDuo ( 1989): diag: app opened (zalo page still loading)
+11-06 12:30:37.485 I/cr_LibraryLoader( 2110): Successfully loaded native library
+11-06 12:30:37.504 I/ActivityManager(  567): Background started FGS: Allowed [callingPackage: app.zaloduo.client; callingUid: 10209; uidState: TOP ; uidBFSL: [BFSL]; intent: Intent { cmp=app.zaloduo.client/.KeepAliveService }; code:PROC_STATE_TOP; tempAllowListReason:<null>; targetSdkVersion:35; callerTargetSdkVersion:35; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+11-06 12:30:37.520 I/cr_CachingUmaRecorder( 2110): Flushed 2 samples from 2 histograms, 0 samples were dropped.
+11-06 12:30:37.549 D/CoreBackPreview(  567): Window{62d8d06 u0 app.zaloduo.client/app.zaloduo.client.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@32db789, mPriority=0, mIsAnimationCallback=false}
+11-06 12:30:37.649 D/ShortcutService(  567): adding package: app.zaloduo.client userId0
+11-06 12:30:37.649 D/ShortcutService(  567): handlePackageAdded: app.zaloduo.client user=0
+11-06 12:30:37.649 D/ShortcutService(  567): rescanPackageIfNeeded 0@app.zaloduo.client, forceRescan=true , isNewApp=true
+11-06 12:30:38.051 W/ActivityTaskManager(  567): Activity top resumed state loss timeout for ActivityRecord{9c0e455 u0 app.zaloduo.client/.MainActivity t7}
+11-06 12:30:38.051 W/ActivityTaskManager(  567): Activity pause timeout for ActivityRecord{9c0e455 u0 app.zaloduo.client/.MainActivity t7}
+11-06 12:30:38.303 D/ShortcutService(  567): Package app.zaloduo.client has 2 manifest shortcut(s), and 0 share target(s)
+11-06 12:30:38.303 D/ShortcutService(  567): Package app.zaloduo.client added, version -1 -> 21
+11-06 12:30:38.303 D/ShortcutService(  567): Package app.zaloduo.client: publishing manifest shortcuts
+11-06 12:30:38.470 I/AiAiEcho( 1407): AppFetcherImpl onPackageChanged app.zaloduo.client.
+11-06 12:30:38.511 I/AiAiEcho( 1407): AppIndexer Package:[app.zaloduo.client] UserProfile:[0] Enabled:[true].
+11-06 12:30:38.563 I/AiAiEcho( 1407): AppFetcherImplV2 updateApps package:[app.zaloduo.client], userId:[0], reason:[package is updated.].
+11-06 12:30:39.145 I/AppWidgetServiceImpl(  567): Updating package stopped masked state for uid 10209 package app.zaloduo.client isStopped false
+11-06 12:30:39.357 D/CoreBackPreview(  567): Window{e36fc17 u0 Splash Screen app.zaloduo.client EXITING}: Setting back callback null
+11-06 12:30:39.358 W/InputManager-JNI(  567): Input channel object 'e36fc17 Splash Screen app.zaloduo.client (client)' was disposed without first being removed with the input manager!
+11-06 12:30:39.989 V/WindowManager(  567): Sent Transition (#6) createdAt=11-06 12:30:37.450 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=7 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=app.zaloduo.client/.MainActivity } baseActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} topActivity=ComponentInfo{com.google.android.permissioncontroller/com.android.permissioncontroller.permission.ui.GrantPermissionsActivity} origActivity=null realActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} numActivities=2 lastActiveTime=48843 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{c578560 Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{7fa2ed0 com.android.permissioncontroller.permission.ui.GrantPermissionsActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=true appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=320 topActivityLetterboxHeight=640 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 6 }
+11-06 12:30:40.237 D/CarrierSvcBindHelper( 1088): onPackageAdded: app.zaloduo.client
+11-06 12:30:40.284 D/ImsResolver( 1088): maybeAddedImsService, packageName: app.zaloduo.client
+11-06 12:30:40.294 D/CarrierSvcBindHelper( 1088): onPackageModified: app.zaloduo.client
+11-06 12:30:40.298 I/SafetyLabelChangedBroadcastReceiver(  941): received broadcast packageName: app.zaloduo.client, current user: UserHandle{0}, packageChangeEvent: NEW_INSTALL, intent user: UserHandle{0}
+11-06 12:30:40.492 D/ImsResolver( 1088): maybeAddedImsService, packageName: app.zaloduo.client
+11-06 12:30:40.531 W/ogle.android.as( 1407): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:30:40.671 I/cr_VariationsUtils( 2084): Scheduling seed download job
+11-06 12:30:40.716 D/ZaloDuo ( 1989): diag: service start
+11-06 12:30:41.065 W/ForegroundServiceTypeLoggerModule(  567): Foreground service start for UID: 10209 does not have any types
+11-06 12:30:41.676 D/ZaloDuo ( 1989): diag: page load zalo
+11-06 12:30:41.712 D/ZaloDuo ( 1989): diag: no snapshot saved, zalo loading screen visible
+11-06 12:30:41.970 I/cr_CronetLibraryLoader( 1223): Cronet version: 126.0.6452.4, arch: x86_64
+11-06 12:30:41.989 D/ZaloDuo ( 1989): js: shim error: Error: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.
+11-06 12:30:41.989 D/ZaloDuo ( 1989):     at <anonymous>:135:5
+11-06 12:30:41.989 D/ZaloDuo ( 1989):     at safe (<anonymous>:44:18)
+11-06 12:30:41.989 D/ZaloDuo ( 1989):     at <anonymous>:133:3
+11-06 12:30:41.989 D/ZaloDuo ( 1989):     at <anonymous>:3708:3
+11-06 12:30:42.593 I/Launcher.IconCache( 1178): Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity}
+11-06 12:30:42.875 D/ShortcutService(  567): Saving package item app.zaloduo.client to /data/system_ce/0/shortcut_service/packages/app.zaloduo.client.xml
+11-06 12:30:42.890 D/ShortcutService(  567): changing package: app.zaloduo.client userId0
+11-06 12:30:42.890 D/ShortcutService(  567): handlePackageChanged: app.zaloduo.client user=0
+11-06 12:30:42.890 D/ShortcutService(  567): rescanPackageIfNeeded 0@app.zaloduo.client, forceRescan=true , isNewApp=false
+11-06 12:30:42.891 D/ShortcutService(  567): Package app.zaloduo.client has 2 manifest shortcut(s), and 0 share target(s)
+11-06 12:30:42.891 D/ShortcutService(  567): Package app.zaloduo.client updated, version 21 -> 21
+11-06 12:30:42.891 D/ShortcutService(  567): Package app.zaloduo.client: publishing manifest shortcuts
+11-06 12:30:43.036 D/ZaloDuo ( 1989): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:30:43.865 D/ShortcutService(  567): Saving package item app.zaloduo.client to /data/system_ce/0/shortcut_service/packages/app.zaloduo.client.xml
+11-06 12:30:44.196 D/ZaloDuo ( 1989): diag: web: browser online
+11-06 12:30:44.296 D/ZaloDuo ( 1989): diag: network available
+11-06 12:30:44.410 D/ShortcutService(  567): Saving package item app.zaloduo.client to /data/system_ce/0/shortcut_service/packages/app.zaloduo.client.xml
+11-06 12:30:44.417 W/system_server(  567): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:30:45.249 I/cr_SplitCompatApp( 2540): Launched version=124.0.6367.219 minSdkVersion=29 isBundle=true processName=com.android.chrome isIsolated=false
+11-06 12:30:45.372 W/.zaloduo.client( 1989): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~NS6ac1PVUEMK7cqcPGxCNw==/com.google.android.webview-xqMormtSXDN5vJ9ePwcVZg==/WebViewGoogle.apk' with 2 weak references
+11-06 12:30:45.479 D/ShortcutService(  567): Getting shortcuts for launcher= com.google.android.apps.nexuslauncheruser=0 pkg=app.zaloduo.client
+11-06 12:30:45.479 D/ShortcutService(  567): Getting shortcuts for launcher= com.android.systemuiuser=0 pkg=app.zaloduo.client
+11-06 12:30:45.493 D/ShortcutService(  567): Getting shortcuts for launcher= com.google.android.asuser=0 pkg=app.zaloduo.client
+11-06 12:30:45.733 I/cr_LibraryLoader( 2540): Loading monochrome_64 from within /data/app/~~iZFpFTbERgtYa6Wfz6IV-A==/com.android.chrome-PE4gnL8XH0EmbvVTGU7DQA==/Chrome.apk
+11-06 12:30:45.738 I/cr_Linker( 2540): loadLibraryImplLocked: monochrome_64, relroMode=1
+11-06 12:30:45.760 D/ShortcutService(  567): Getting shortcuts for launcher= com.google.android.apps.nexuslauncheruser=0 pkg=app.zaloduo.client
+11-06 12:30:45.788 D/ShortcutService(  567): Getting shortcuts for launcher= com.android.systemuiuser=0 pkg=app.zaloduo.client
+11-06 12:30:45.789 I/cr_LibraryLoader( 2540): Successfully loaded native library
+11-06 12:30:45.790 I/cr_CachingUmaRecorder( 2540): Flushed 18 samples from 17 histograms, 0 samples were dropped.
+11-06 12:30:45.964 D/ShortcutService(  567): Getting shortcuts for launcher= com.google.android.asuser=0 pkg=app.zaloduo.client
+11-06 12:30:45.964 D/ShortcutService(  567): Getting shortcuts for launcher= com.google.android.apps.nexuslauncheruser=0 pkg=app.zaloduo.client
+11-06 12:30:45.965 D/ShortcutService(  567): Getting shortcuts for launcher= com.android.systemuiuser=0 pkg=app.zaloduo.client
+11-06 12:30:45.965 D/ShortcutService(  567): Getting shortcuts for launcher= com.google.android.asuser=0 pkg=app.zaloduo.client
+11-06 12:30:46.484 D/ZaloDuo ( 1989): diag: page load zalo
+11-06 12:30:46.484 D/ZaloDuo ( 1989): diag: no snapshot saved, zalo loading screen visible
+11-06 12:30:46.939 W/ForegroundServiceTypeLoggerModule(  567): Foreground service start for UID: 10152 does not have any types
+11-06 12:30:47.440 D/PackageUpdatedTask( 1178): Package updated: mOp=UPDATE packages=[app.zaloduo.client]
+11-06 12:30:47.668 D/ZaloDuo ( 1989): diag: web: sync ui: no banner
+11-06 12:30:48.215 W/ForegroundServiceTypeLoggerModule(  567): FGS stop call for: 10152 has no types!
+11-06 12:30:48.920 D/ShortcutService(  567): Saving package item app.zaloduo.client to /data/system_ce/0/shortcut_service/packages/app.zaloduo.client.xml
+11-06 12:30:49.162 D/ZaloDuo ( 1989): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:30:49.706 W/s.nexuslauncher( 1178): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:30:49.882 I/cr_WebViewApkApp( 2844): Launched version=124.0.6367.219 minSdkVersion=29 isBundle=false processName=com.google.android.webview:webview_apk
+11-06 12:30:49.966 I/cr_LibraryLoader( 2844): Successfully loaded native library
+11-06 12:30:50.065 W/system_server(  567): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:30:50.337 W/cr_AWNetworkFetcherTask( 2844): IOException during downloadToFile.
+11-06 12:30:50.337 W/cr_AWNetworkFetcherTask( 2844): java.io.IOException: Cleartext HTTP traffic to edgedl.me.gvt1.com not permitted
+11-06 12:30:50.337 W/cr_AWNetworkFetcherTask( 2844): 	at com.android.okhttp.HttpHandler$CleartextURLFilter.checkURLPermitted(HttpHandler.java:127)
+11-06 12:30:50.337 W/cr_AWNetworkFetcherTask( 2844): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:462)
+11-06 12:30:50.337 W/cr_AWNetworkFetcherTask( 2844): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+11-06 12:30:50.337 W/cr_AWNetworkFetcherTask( 2844): 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+11-06 12:30:50.337 W/cr_AWNetworkFetcherTask( 2844): 	at org.chromium.android_webview.nonembedded.NetworkFetcherTask.download(chromium-TrichromeWebViewGoogle6432.apk-stable-636771938:56)
+11-06 12:30:50.653 D/ZaloDuo ( 1989): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:50.710 I/cr_HttpFlagsLoader( 1619): HTTP flags file `/data/user_de/0/com.google.android.gms/app_httpflags/flags.binarypb` is missing. This is expected if HTTP flags functionality is currently disabled in the host system.
+11-06 12:30:50.723 I/cr_VariationsUtils( 2084): Downloading new seed [fastMode=FALSE]
+11-06 12:30:50.731 W/ndroid.systemui(  929): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:30:50.806 D/ZaloDuo ( 1989): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:30:50.840 I/cr_VariationsSeedFetch( 2084): Fetched first run seed in 117 ms
+11-06 12:30:50.847 I/cr_CronetLibraryLoader( 1619): Cronet version: 127.0.6493.0, arch: x86_64
+11-06 12:30:51.070 D/ZaloDuo ( 1989): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.097 D/ZaloDuo ( 1989): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.097 D/ZaloDuo ( 1989): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.106 D/ZaloDuo ( 1989): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.109 D/ZaloDuo ( 1989): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.137 D/ZaloDuo ( 1989): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.144 D/ZaloDuo ( 1989): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.150 D/ZaloDuo ( 1989): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.164 D/ZaloDuo ( 1989): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.176 D/ZaloDuo ( 1989): console: do open indexeddb zlocalstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.185 D/ZaloDuo ( 1989): console: do open indexeddb zsecure-localstorage undefined @https://zalo-chat-static.zadn.vn/v1/lazy/3.037eb2baf9d1ad9f2d7e.js:1
+11-06 12:30:51.453 D/ZaloDuo ( 1989): diag: boot completed
+11-06 12:30:52.059 I/cr_CronetLibraryLoader( 2485): Cronet version: 126.0.6452.4, arch: x86_64
+11-06 12:30:55.934 I/ActivityTaskManager(  567): START u0 {flg=0x10000000 cmp=app.zaloduo.client/.MainActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=3
+11-06 12:30:55.952 D/CoreBackPreview(  567): Window{2458113 u0 app.zaloduo.client/app.zaloduo.client.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@de9ff8b, mPriority=0, mIsAnimationCallback=false}
+11-06 12:30:56.025 D/WindowManagerShell(  929): onActivityRestartAttempt: ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity}
+11-06 12:31:00.011 D/ZaloDuo ( 1989): console: do open indexeddb zsecure-localstorage 2 @https://zalo-chat-static.zadn.vn/v1/lazy/web-startup.a00a02c532982ab4915a.js:1
+11-06 12:31:00.280 W/s.nexuslauncher( 1178): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:00.483 W/ndroid.settings( 1107): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:00.935 W/gle.android.gms( 1410): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:01.588 I/FontLog ( 1223): Package app.zaloduo.client has no metadata [CONTEXT service_id=132 ]
+11-06 12:31:01.598 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:02.509 D/ZaloDuo ( 1989): console: do open indexeddb zdb_qos 3 @https://zalo-chat-static.zadn.vn/v1/lazy/web-startup.a00a02c532982ab4915a.js:1
+11-06 12:31:02.799 I/Blockstore( 1410): [DataStoreImpl] Clearing Blockstore Data for package app.zaloduo.client [CONTEXT service_id=258 ]
+11-06 12:31:02.813 D/ZaloDuo ( 1989): console: Uncaught (in promise) #<Object> @https://zalo-chat-static.zadn.vn/v1/lazy/1.c72c0957b455ab70b73c.js:1
+11-06 12:31:04.363 W/ndroid.settings( 1107): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:05.016 D/ZaloDuo ( 1989): diag: page load zalo
+11-06 12:31:05.503 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:05.856 D/ZaloDuo ( 1989): diag: web: sync ui: no banner
+11-06 12:31:06.207 W/gle.android.gms( 1410): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:09.427 D/ZaloDuo ( 1989): script status: v10|{"enabled":true,"detected":false,"chat":false}
+11-06 12:31:10.220 D/ZaloDuo ( 1989): diag: zalo login screen
+11-06 12:31:10.945 I/ActivityManager(  567): Background started FGS: Allowed [callingPackage: com.google.android.apps.messaging; callingUid: 10136; uidState: RCVR; uidBFSL: n/a; intent: Intent { cmp=com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService (has extras) }; code:BACKGROUND_FGS_PERMISSION; tempAllowListReason:<null>; targetSdkVersion:35; callerTargetSdkVersion:35; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+11-06 12:31:11.096 W/ActivityManager(  567): Foreground service started from background can not have location/camera/microphone access: service com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService
+11-06 12:31:11.170 W/ForegroundServiceTypeLoggerModule(  567): Foreground service start for UID: 10136 does not have any types
+11-06 12:31:12.605 D/ZaloDuo ( 1989): console: TrustedDeviceModel initialize failed (attempt 1/1): Error: Handshake timeout @https://stc-zlogin.zdn.vn/js/sentry.min.js:2
+11-06 12:31:12.605 D/ZaloDuo ( 1989): console: Failed to initialize trusted protocol: Error: Handshake timeout @https://stc-zlogin.zdn.vn/js/sentry.min.js:2
+11-06 12:31:13.733 W/ActivityManager(  567): Foreground service started from background can not have location/camera/microphone access: service com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService
+11-06 12:31:13.734 I/ActivityManager(  567): Background started FGS: Allowed [callingPackage: com.google.android.apps.messaging; callingUid: 10136; uidState: FGS ; uidBFSL: [BFSL]; intent: Intent { cmp=com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService }; code:PROC_STATE_FGS; tempAllowListReason:<null>; targetSdkVersion:35; callerTargetSdkVersion:35; startForegroundCount:1; bindFromPackage:null: isBindService:false] (Called on SHORT_SERVICE)
+11-06 12:31:13.885 W/ForegroundServiceTypeLoggerModule(  567): FGS stop call for: 10136 has no types!
+11-06 12:31:15.350 W/gle.android.gms( 1410): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:16.099 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:16.931 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:18.539 I/ActivityManager(  567): Background started FGS: Allowed [callingPackage: com.google.android.apps.wellbeing; callingUid: 10142; uidState: RCVR; uidBFSL: n/a; intent: Intent { cmp=com.google.android.apps.wellbeing/com.google.apps.tiktok.concurrent.InternalForegroundService (has extras) }; code:BACKGROUND_ACTIVITY_PERMISSION; tempAllowListReason:<71e4b08 android.intent.action.BOOT_COMPLETED/u0,reasonCode:BOOT_COMPLETED,duration:20000,callingUid:1000>; targetSdkVersion:34; callerTargetSdkVersion:34; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+11-06 12:31:18.544 W/ForegroundServiceTypeLoggerModule(  567): Foreground service start for UID: 10142 does not have any types
+11-06 12:31:18.551 W/ForegroundServiceTypeLoggerModule(  567): FGS stop call for: 10142 has no types!
+11-06 12:31:20.861 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:21.336 W/.apps.wellbeing( 1349): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:21.606 I/cr_CronetLibraryLoader( 1410): Cronet version: 126.0.6452.4, arch: x86_64
+11-06 12:31:21.820 I/AiAiCaptions( 1407): Enable com.google.android.apps.miphone.aiai.captions.CaptionsForegroundService
+11-06 12:31:22.860 I/cr_CronetLibraryLoader( 3387): Cronet version: 126.0.6452.4, arch: x86_64
+11-06 12:31:23.074 I/cr_CronetUrlRequestContext( 3387): destroyNativeStreamLocked org.chromium.net.impl.CronetBidirectionalStream@5c52234
+11-06 12:31:23.706 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:24.181 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:25.444 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:25.588 W/ssioncontroller(  941): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:26.377 I/cr_CronetUrlRequestContext( 3387): destroyNativeStreamLocked org.chromium.net.impl.CronetBidirectionalStream@b704af
+11-06 12:31:28.436 V/WindowManager(  567):         {WCT{RemoteToken{c578560 Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}}} m=TO_BACK f=NONE leash=Surface(name=Task=7)/@0x5296fe1 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) d=0 taskParent=-1},
+11-06 12:31:28.804 D/ZaloDuo ( 1989): diag: app to background
+11-06 12:31:29.828 I/cr_WVCFactoryProvider( 1619): Loaded version=124.0.6367.219 minSdkVersion=29 isBundle=false multiprocess=true packageId=2
+11-06 12:31:29.892 I/cr_VariationsUtils( 1619): Failed reading seed file "/data/user/0/com.google.android.googlequicksearchbox/app_webview/variations_seed_new"
+11-06 12:31:29.892 I/cr_VariationsUtils( 1619): Failed reading seed file "/data/user/0/com.google.android.googlequicksearchbox/app_webview/variations_seed"
+11-06 12:31:29.892 I/cr_VariationsUtils( 1619): Requesting new seed from IVariationsSeedServer
+11-06 12:31:29.894 I/cr_LibraryLoader( 1619): Successfully loaded native library
+11-06 12:31:29.896 I/cr_CachingUmaRecorder( 1619): Flushed 7 samples from 7 histograms, 0 samples were dropped.
+11-06 12:31:29.930 I/cr_CombinedPProvider( 1619): #registerProvider() provider:WV.V7@7094a81 isPolicyCacheEnabled:false policyProvidersSize:0
+11-06 12:31:29.938 I/cr_PolicyProvider( 1619): #setManagerAndSource() 0
+11-06 12:31:30.006 I/cr_CombinedPProvider( 1619): #linkNativeInternal() 1
+11-06 12:31:30.007 I/cr_AppResProvider( 1619): #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+11-06 12:31:30.007 I/cr_PolicyProvider( 1619): #notifySettingsAvailable() 0
+11-06 12:31:30.007 I/cr_CombinedPProvider( 1619): #onSettingsAvailable() 0
+11-06 12:31:30.007 I/cr_CombinedPProvider( 1619): #flushPolicies()
+11-06 12:31:30.028 I/cr_WebViewApkApp( 3926): Launched version=124.0.6367.219 minSdkVersion=29 isBundle=false processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+11-06 12:31:30.057 I/cr_ChildProcessService( 3926): Creating new ChildProcessService pid=3926
+11-06 12:31:30.215 I/cr_VariationsUtils( 2084): Throttling seed download job
+11-06 12:31:30.216 I/cr_VariationsUtils( 2084): Writing new seed to app's data directory
+11-06 12:31:31.033 W/.apps.wellbeing( 1349): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:33.252 I/cr_CronetUrlRequestContext( 1410): destroyNativeStreamLocked org.chromium.net.impl.CronetBidirectionalStream@18d4ce
+11-06 12:31:37.235 W/ForegroundServiceTypeLoggerModule(  567): Foreground service start for UID: 10152 does not have any types
+11-06 12:31:37.722 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:41.020 W/ForegroundServiceTypeLoggerModule(  567): FGS stop call for: 10152 has no types!
+11-06 12:31:41.937 W/ForegroundServiceTypeLoggerModule(  567): Foreground service start for UID: 10152 does not have any types
+11-06 12:31:46.536 I/AiAiCaptions( 1407): Would enable com.google.android.apps.miphone.aiai.captions.CaptionsForegroundService but already enabled
+11-06 12:31:46.923 W/ForegroundServiceTypeLoggerModule(  567): FGS stop call for: 10152 has no types!
+11-06 12:31:47.091 I/ActivityTaskManager(  567): START u0 {flg=0x10000000 cmp=app.zaloduo.client/.MainActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=2
+11-06 12:31:47.092 V/WindowManagerShell(  929): Transition requested (#12): android.os.BinderProxy@6544ea2 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=7 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=app.zaloduo.client/.MainActivity } baseActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} topActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} origActivity=null realActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} numActivities=1 lastActiveTime=98322 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@5270733} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{a41caf0 app.zaloduo.client.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=320 topActivityLetterboxHeight=640 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 12 }
+11-06 12:31:47.101 D/WindowManagerShell(  929): onActivityRestartAttempt: ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity}
+11-06 12:31:47.121 I/TopTaskTracker( 1178): onTaskMovedToFront: (moved taskInfo to front) taskId=7, baseIntent=Intent { flg=0x10000000 cmp=app.zaloduo.client/.MainActivity }
+11-06 12:31:47.157 V/WindowManager(  567): Sent Transition (#12) createdAt=11-06 12:31:47.088 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=7 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=app.zaloduo.client/.MainActivity } baseActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} topActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} origActivity=null realActivity=ComponentInfo{app.zaloduo.client/app.zaloduo.client.MainActivity} numActivities=1 lastActiveTime=98322 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{c578560 Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{c99bd5d app.zaloduo.client.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=320 topActivityLetterboxHeight=640 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 12 }
+11-06 12:31:47.161 D/ZaloDuo ( 1989): diag: app opened (zalo page still loading)
+11-06 12:31:47.164 V/WindowManager(  567):         {WCT{RemoteToken{c578560 Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}}} m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=7)/@0x5296fe1 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) d=0 taskParent=-1},
+11-06 12:31:47.258 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
+11-06 12:31:48.681 W/.apps.wellbeing( 1349): ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P9lS5EW45LlDg8cUykTJkw==/app.zaloduo.client-B1Achc1IEHAPPnD8299G8g==/base.apk' with 1 weak references
+11-06 12:31:56.245 D/ActivityTaskManager(  567): Skipping, user setup not complete: Task{19503f8 #7 type=standard A=10209:app.zaloduo.client}
