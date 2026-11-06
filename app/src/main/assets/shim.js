@@ -25,7 +25,8 @@
   var bridge = {};
   ['showNotification', 'cancelNotification', 'permission', 'requestPermission', 'isHidden', 'mediaActive',
     'ringing', 'saveFile', 'shareFile', 'log', 'mobileState', 'systemBars', 'pageReady', 'diag', 'convList',
-    'nativeLayout', 'connState', 'needLogin', 'prefetch', 'dockState', 'connLog', 'convOpened', 'showKeyboard'].forEach(function (m) {
+    'nativeLayout', 'connState', 'needLogin', 'prefetch', 'dockState', 'connLog', 'convOpened', 'showKeyboard',
+    'editing'].forEach(function (m) {
     bridge[m] = function () {
       var b = window.ZaloBridge;
       if (!b || typeof b[m] !== 'function') return m === 'permission' ? 'default' : undefined;
@@ -480,6 +481,8 @@
 
   // ------------------------------------------------------------------ 7. Bề rộng trang
   var mobile = !!cfg.mobile;
+  /** Chế độ BlackBerry Q20 (Prefs.q20): màn vuông, bàn phím cứng, trackpad. */
+  var q20 = mobile && cfg.q20 === true;
   var vw = +cfg.viewportWidth || 0;
   if (mobile || vw > 0) safe(function () {
     var content = mobile
@@ -1741,7 +1744,8 @@
         var el = lastTouch.el instanceof Element ? lastTouch.el : null;
         var touchedChat = Date.now() - lastTouch.t < 1500 && !!el && !!chat &&
           (chat.contains(el) || !!el.closest('body > .popover-v3, body > [class*=popover], body > [class*=mention]'));
-        if (chat && !touchedChat) return undefined;
+        // BlackBerry Q20: bàn phím cứng không bật bàn phím ảo, cho focus ngay để mở chat là gõ được.
+        if (chat && !touchedChat && !q20) return undefined;
       }
       return origFocus.apply(this, arguments);
     };
@@ -3409,10 +3413,12 @@
     var KB = 'zd_kb_h', full = innerHeight, kb = 0, held = 0;
     try { kb = parseInt(localStorage.getItem(KB), 10) || 0; } catch (e) { /* ignore */ }
     function setKb(h) {
-      kb = Math.max(220, Math.min(Math.round(h), Math.round(full * 0.6) || 420)); // full: cao khi không có bàn phím
+      // BlackBerry Q20 (màn vuông ~336px, bàn phím cứng nên không có bàn phím ảo để đo): bảng thấp, chừa chỗ cho tin nhắn.
+      kb = q20 ? Math.max(140, Math.min(Math.round(h), Math.round(full * 0.45) || 160))
+        : Math.max(220, Math.min(Math.round(h), Math.round(full * 0.6) || 420)); // full: cao khi không có bàn phím
       document.documentElement.style.setProperty('--zd-kb', kb + 'px');
     }
-    setKb(kb || 280);
+    setKb(q20 ? Math.round(full * 0.42) : kb || 280);
     var CSS18 = [
       'html.zd-m body > .popover-v3:has(> .media-dock) { left: 0 !important; right: 0 !important; top: auto !important;',
       '  bottom: 0 !important; width: 100% !important; transform: none !important; box-sizing: border-box !important;',
@@ -3455,6 +3461,7 @@
         return;
       }
       if (!inp) return;
+      if (q20 && full - innerHeight < 150) return; // bàn phím cứng: không có bàn phím ảo phải cất, bấm thẳng
       e.preventDefault(); // giữ cú bấm, tự cất bàn phím
       held = Date.now();
       var h0 = innerHeight, done = false;
@@ -3500,6 +3507,56 @@
       s.textContent = CSS18;
       (document.head || document.documentElement).appendChild(s);
     }
+  });
+
+  // ------------------------------------------------------------------ 19. Bàn phím cứng (BlackBerry Q20)
+  /*
+   * Báo app khi có ô nhập được focus / bỏ focus (JsBridge.editing): đang gõ trong trang thì phím cứng thuộc về trang,
+   * danh sách chat native không bắt phím (NativeChatList.onKey). Ô nhập bị gỡ khỏi trang mà không có focusout (đóng
+   * khung chat): kiểm tra lại mỗi giây khi đang báo "đang gõ".
+   * api.typeText: chèn chữ gõ ở danh sách native (gõ để tìm) vào ô tìm kiếm vừa mở.
+   * Ở khung chat, ô nhập chưa focus mà gõ chữ: focus ô nhập, chữ đi thẳng vào đó (như BlackBerry Hub).
+   */
+  safe(function () {
+    if (!mobile || window.opener || window.top !== window) return;
+    function editable(el) {
+      if (!el || !el.isConnected) return false;
+      if (el.isContentEditable) return true;
+      if (el.tagName === 'TEXTAREA') return !el.readOnly && !el.disabled;
+      return el.tagName === 'INPUT' && !el.readOnly && !el.disabled &&
+        /^(text|search|email|url|tel|number|password|)$/i.test(el.type || '');
+    }
+    var reported = false, timer = 0;
+    function report() {
+      var on = editable(document.activeElement);
+      if (on !== reported) {
+        reported = on;
+        bridge.editing(on);
+      }
+      if (on && !timer) {
+        timer = setInterval(function () { safe(report); }, 1000);
+      } else if (!on && timer) {
+        clearInterval(timer);
+        timer = 0;
+      }
+    }
+    document.addEventListener('focusin', function () { safe(report); }, true);
+    document.addEventListener('focusout', function () { setTimeout(function () { safe(report); }, 0); }, true);
+    api.typeText = function (s) {
+      safe(function () {
+        var a = document.activeElement;
+        if (editable(a) && s) document.execCommand('insertText', false, String(s));
+      });
+    };
+    if (!q20) return;
+    document.addEventListener('keydown', function (e) {
+      // Alt vẫn cho qua: bàn phím BlackBerry gõ số / ký hiệu bằng Alt.
+      if (!M.chat || e.ctrlKey || e.metaKey || !e.key || e.key.length !== 1) return;
+      if (editable(document.activeElement)) return;
+      var box = document.getElementById('richInput');
+      if (!box || !M.main || !M.main.contains(box)) return;
+      box.focus(); // chữ của phím này đi vào ô vừa focus
+    }, true);
   });
 
   api.version = 10;

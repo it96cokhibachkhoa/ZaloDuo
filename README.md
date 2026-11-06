@@ -25,3 +25,17 @@ Nchung là thông báo Zalo sẽ đối xử ZaloDuo giống việc bạn sử d
 - Ứng dụng hoàn toàn miễn phí. Mọi người có thể fork về và tùy chỉnh theo nhu cầu cá nhân.
 
 Vì là ứng dụng miễn phí. Mọi người có thể gửi coffee cho mình qua STK: 0778211992 MBBank. Xin cảm ơn.
+
+## Bản fork cho BlackBerry Q20 (Classic / Zinwa Q25 chạy Android)
+
+Bản này thêm **Chế độ BlackBerry Q20** cho máy Q20 đã thay main Android (vd. Zinwa Q25, Android 13): màn vuông 720x720, bàn phím cứng, trackpad. Không chạy trên BB10 gốc (Android runtime của BB10 chỉ là Android 4.3, WebView quá cũ cho Zalo Web).
+
+- **Tự bật** khi app nhận ra màn vuông nhỏ (tỉ lệ ≤ 1.25, cạnh ngắn < 480 dp). Bật / tắt tay ở Cài đặt → Hiển thị → "Chế độ BlackBerry Q20".
+- **Màn vuông:** dòng chat thấp hơn (62 dp thay vì 78, ảnh 40 dp), dock nổi sát đáy (cách 8 px), bảng biểu cảm / sticker thấp (≈ 42% chiều cao) để vẫn thấy tin nhắn, giữ hướng màn hình tự nhiên (không xoay theo cảm biến).
+- **Trackpad / phím mũi tên** ở danh sách chat: lên / xuống chọn hội thoại, bấm trackpad hoặc Enter để mở. Chạm màn hình là bỏ chọn.
+- **Space / Shift+Space:** cuộn danh sách một trang xuống / lên.
+- **Gõ để tìm:** ở danh sách chat gõ chữ bất kỳ là mở ô tìm kiếm của Zalo, chữ vừa gõ được điền sẵn.
+- **Trong khung chat:** mở chat là ô nhập được focus ngay; ô nhập chưa focus mà gõ chữ thì chữ đi thẳng vào ô nhập. Enter để gửi (như Zalo Web).
+- **Phím Menu (phím BlackBerry):** mở Cài đặt của app.
+
+**Build APK trên bản fork:** tab Actions → bật Actions cho fork → Build APK → Run workflow. Không có secret khóa ký thì workflow build bản **debug** (`ZaloDuo-<version>-<commit>-debug.apk`, nằm trong Releases). Mỗi bản debug build trên GitHub ký bằng khóa khác nhau, nên muốn cài đè mà giữ đăng nhập thì thêm 4 secret khóa ký như hướng dẫn trong `.github/workflows/build.yml`. Máy ảo trong CI có thêm một lượt chạy màn 720x720 / 320 dpi (nhánh `ci/api-33-q20`).

@@ -2,6 +2,7 @@ package app.zaloduo.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.DisplayMetrics;
 
 /** Cài đặt người dùng, lưu trong SharedPreferences. */
 final class Prefs {
@@ -84,7 +85,29 @@ final class Prefs {
     /** Khoảng cách từ dock tới đáy màn hình, px CSS. */
     static final String DOCK_BOTTOM = "dock_bottom";
 
-    static int dockBottom(Context c) { return integer(c, DOCK_BOTTOM, 24); }
+    static int dockBottom(Context c) { return integer(c, DOCK_BOTTOM, q20(c) ? 8 : 24); }
+
+    /**
+     * Chế độ BlackBerry Q20 (Classic, bản thay main Android như Zinwa Q25): màn vuông 720x720 (~360x360 dp), bàn phím
+     * cứng, trackpad. Danh sách chat gọn hơn, dock sát đáy, bảng biểu cảm thấp, điều khiển bằng phím. Mặc định tự nhận
+     * theo màn hình (vuông và nhỏ — màn trong của máy gập cũng gần vuông nhưng rộng hơn 480 dp).
+     */
+    static final String Q20 = "q20";
+
+    static boolean q20(Context c) { return bool(c, Q20, q20Detected(c)); }
+
+    @SuppressWarnings("deprecation")
+    static boolean q20Detected(Context c) {
+        // Kích thước thật của màn hình (không theo cửa sổ: chia đôi màn hình trên điện thoại thường cũng ra gần vuông).
+        android.hardware.display.DisplayManager dm = c.getSystemService(android.hardware.display.DisplayManager.class);
+        android.view.Display d = dm == null ? null : dm.getDisplay(android.view.Display.DEFAULT_DISPLAY);
+        if (d == null) return false;
+        DisplayMetrics m = new DisplayMetrics();
+        d.getRealMetrics(m);
+        int w = m.widthPixels, h = m.heightPixels;
+        if (w <= 0 || h <= 0 || m.density <= 0) return false;
+        return Math.max(w, h) <= Math.min(w, h) * 1.25f && Math.min(w, h) / m.density < 480;
+    }
 
     /** Màu nền trang Zalo ở mép trên/dưới lần gần nhất (sáng/tối), để mở app không bị chớp trắng. */
     static final String BAR_TOP = "bar_top";

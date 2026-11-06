@@ -1,7 +1,9 @@
 name: Build APK
 
 # Chạy khi chủ repo bấm tay (tab Actions → Build APK → Run workflow) hoặc đẩy tag phiên bản, ví dụ: git push origin v2.2.
-# Cần 4 secret: ZALODUO_KEYSTORE_BASE64, ZALODUO_KEYSTORE_PASSWORD, ZALODUO_KEY_ALIAS, ZALODUO_KEY_PASSWORD.
+# Có 4 secret ZALODUO_KEYSTORE_BASE64, ZALODUO_KEYSTORE_PASSWORD, ZALODUO_KEY_ALIAS, ZALODUO_KEY_PASSWORD thì build bản
+# release ký bằng khóa đó. Bản fork chưa có secret: build bản debug (khóa debug của runner — mỗi lần build khác khóa,
+# muốn cài đè giữ đăng nhập thì nên thêm 4 secret trên).
 on:
   workflow_dispatch:
   push:
@@ -12,8 +14,8 @@ permissions:
 
 jobs:
   build:
-    # Chỉ chủ repo chạy được (bản fork / người khác không build, không dùng được khóa ký trong Secrets).
-    if: github.actor == github.repository_owner && github.repository == 'quocanh21081992/ZaloDuo'
+    # Chỉ chủ repo (bản gốc hoặc bản fork của chính họ) chạy được; người khác không dùng được khóa ký trong Secrets.
+    if: github.actor == github.repository_owner
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,9 +32,14 @@ jobs:
         env:
           KEYSTORE_BASE64: ${{ secrets.ZALODUO_KEYSTORE_BASE64 }}
         run: |
-          if [ -z "$KEYSTORE_BASE64" ]; then echo "Thiếu secret ZALODUO_KEYSTORE_BASE64" >&2; exit 1; fi
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "Không có secret ZALODUO_KEYSTORE_BASE64: build bản debug" >&2
+            echo "BUILD_TYPE=debug" >> "$GITHUB_ENV"
+            exit 0
+          fi
           echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/zaloduo.jks"
           echo "ZALODUO_KEYSTORE_FILE=$RUNNER_TEMP/zaloduo.jks" >> "$GITHUB_ENV"
+          echo "BUILD_TYPE=release" >> "$GITHUB_ENV"
 
       # Tên bản build: ZaloDuo-<versionName>-<commit>, ví dụ ZaloDuo-1.1-b95dc31.apk
       - name: Build APK
@@ -42,12 +49,13 @@ jobs:
           ZALODUO_KEY_PASSWORD: ${{ secrets.ZALODUO_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
-          ./gradlew --no-daemon assembleRelease
+          if [ "$BUILD_TYPE" = release ]; then ./gradlew --no-daemon assembleRelease; else ./gradlew --no-daemon assembleDebug; fi
           rm -f "$ZALODUO_KEYSTORE_FILE"
           VERSION=$(sed -n "s/.*versionName = '\(.*\)'.*/\1/p" app/build.gradle)
           SHA=$(git rev-parse --short=7 HEAD)
           NAME="ZaloDuo-$VERSION-$SHA"
-          cp app/build/outputs/apk/release/app-release.apk "$NAME.apk"
+          [ "$BUILD_TYPE" = release ] || NAME="$NAME-debug"
+          cp "app/build/outputs/apk/$BUILD_TYPE/app-$BUILD_TYPE.apk" "$NAME.apk"
           echo "NAME=$NAME" >> "$GITHUB_ENV"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           echo "SHA=$SHA" >> "$GITHUB_ENV"
@@ -76,6 +84,11 @@ jobs:
       fail-fast: false
       matrix:
         api-level: [31, 35]
+        skin: ['']
+        include:
+          # Màn vuông 720x720 như BlackBerry Q20 / Zinwa Q25 (Android 13): app phải tự bật chế độ Q20.
+          - api-level: 33
+            skin: q20
     steps:
       - uses: actions/checkout@v4
 
@@ -97,7 +110,8 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot
-          script: bash ci/smoke.sh
+          # Q20: ép màn 720x720, 320 dpi (~360x360 dp) như BlackBerry Q20 / Zinwa Q25.
+          script: if [ "${{ matrix.skin }}" = q20 ]; then adb shell wm size 720x720; adb shell wm density 320; fi; bash ci/smoke.sh
 
       - name: Publish results to branch
         if: always()
@@ -106,5 +120,5 @@ jobs:
           cd ci-out
           git init -q -b results
           git add -A
-          git -c user.name="ci" -c user.email="ci@users.noreply.github.com" commit -q -m "smoke api-${{ matrix.api-level }} run ${{ github.run_number }}" || exit 0
-          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" results:ci/api-${{ matrix.api-level }}
+          git -c user.name="ci" -c user.email="ci@users.noreply.github.com" commit -q -m "smoke api-${{ matrix.api-level }}${{ matrix.skin }} run ${{ github.run_number }}" || exit 0
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" results:ci/api-${{ matrix.api-level }}${{ matrix.skin && format('-{0}', matrix.skin) || '' }}

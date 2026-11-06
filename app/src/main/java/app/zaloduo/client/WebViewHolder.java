@@ -296,6 +296,7 @@ final class WebViewHolder {
                 + ",dockBottom:" + Prefs.dockBottom(app)
                 + ",dockCloud:" + Prefs.dockCloud(app)
                 + ",dockTools:" + Prefs.dockTools(app)
+                + ",q20:" + Prefs.q20(app)
                 + ",nativeList:" + (Prefs.mobileUi(app) && Prefs.nativeList(app)) + "};\n" + shimSource;
     }
 
@@ -350,6 +351,9 @@ final class WebViewHolder {
 
     /** Khung chat đang mở toàn màn hình (giao diện điện thoại) — Back sẽ quay về danh sách. */
     static volatile boolean mobileChatOpen;
+
+    /** Trang đang có ô nhập được focus (shim.js mục 19): phím cứng thuộc về trang, danh sách native không bắt phím. */
+    static volatile boolean editing;
 
     /** Trang Zalo đã hiện danh sách chat (shim.js báo); false trong lúc đang tải / đăng nhập. */
     static boolean pageReady;

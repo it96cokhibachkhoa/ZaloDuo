@@ -103,6 +103,10 @@ public class SettingsActivity extends Activity {
                     Prefs.put(this, Prefs.NATIVE_LIST, idx == 0);
                     WebViewHolder.applySettings(true); // màn chính tự dựng lại khi quay về (MainActivity.onResume)
                 });
+        // Màn vuông 720x720 + bàn phím cứng + trackpad; tự bật khi nhận ra màn vuông nhỏ (Prefs.q20Detected).
+        toggle("Chế độ BlackBerry Q20 (màn vuông, bàn phím cứng, trackpad)"
+                        + (Prefs.q20Detected(this) ? " — máy này đã được nhận ra" : ""),
+                Prefs.Q20, Prefs.q20Detected(this), on -> WebViewHolder.applySettings(true));
         slider("Độ đậm nền thanh dock", Prefs.dockOpacity(this), 100, "%", p -> {
             Prefs.put(this, Prefs.DOCK_OPACITY, p);
             WebViewHolder.applyDockSettings();
@@ -152,6 +156,11 @@ public class SettingsActivity extends Activity {
             });
         }
         button("Đăng xuất & xóa dữ liệu Zalo trong app", this::confirmReset);
+        if (Prefs.q20(this)) {
+            note("BlackBerry Q20 — ở danh sách chat: trackpad lên/xuống chọn hội thoại, bấm trackpad hoặc Enter để mở, "
+                    + "Space / Shift+Space cuộn một trang, gõ chữ để tìm kiếm. Phím Menu (phím BlackBerry) mở màn hình này. "
+                    + "Trong khung chat: gõ là chữ vào ô nhập, Enter để gửi.");
+        }
         note("Mẹo: nhấn giữ biểu tượng app để mở nhanh màn hình này.\n"
                 + "Phiên bản " + versionName());
     }
@@ -241,6 +250,7 @@ public class SettingsActivity extends Activity {
                     .append(" startOnBoot=").append(Prefs.startOnBoot(this))
 
                     .append(" mobileUi=").append(Prefs.mobileUi(this))
+                    .append(" q20=").append(Prefs.q20(this)).append(Prefs.q20Detected(this) ? "(detected)" : "")
                     .append(" viewport=").append(Prefs.viewportWidth(this))
                     .append(" textZoom=").append(Prefs.textZoom(this)).append(Prefs.textZoomSetting(this) == 0 ? "(device)" : "")
                     .append(" dock(opacity=").append(Prefs.dockOpacity(this))

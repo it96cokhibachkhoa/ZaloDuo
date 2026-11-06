@@ -20,7 +20,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
+import android.content.pm.ActivityInfo;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +72,8 @@ public class MainActivity extends Activity {
     private NativeDock nativeDock;
     /** Cỡ chữ lúc dựng màn hình (danh sách / dock native đo theo nó). */
     private int builtZoom;
+    /** Chế độ BlackBerry Q20 lúc dựng màn hình (đổi trong Cài đặt thì dựng lại). */
+    private boolean builtQ20;
     private FrameLayout popupContainer;
     private FrameLayout fullscreenContainer;
 
@@ -89,6 +93,10 @@ public class MainActivity extends Activity {
             finish();
             return;
         }
+
+        builtQ20 = Prefs.q20(this);
+        // Màn vuông + bàn phím cứng: giữ hướng tự nhiên của máy, không xoay theo cảm biến (bàn phím luôn ở dưới).
+        setRequestedOrientation(builtQ20 ? ActivityInfo.SCREEN_ORIENTATION_NOSENSOR : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         root = new FrameLayout(this);
         root.setBackgroundColor(Color.WHITE);
@@ -142,7 +150,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         // Đổi giao diện Native / WebView trong Cài đặt: dựng lại màn chính cho đúng (danh sách native có hay không).
-        if ((Prefs.mobileUi(this) && Prefs.nativeList(this)) != (nativeList != null)) recreate();
+        if ((Prefs.mobileUi(this) && Prefs.nativeList(this)) != (nativeList != null) || Prefs.q20(this) != builtQ20) recreate();
         else if (nativeList != null && Prefs.textZoom(this) != builtZoom) recreate(); // đổi cỡ chữ trong Cài đặt: native vẽ lại theo cỡ mới
         // "Theo cỡ chữ của máy": đổi cỡ chữ trong Android thì màn hình được dựng lại (native theo cỡ mới), trang Zalo
         // (WebView giữ lại) phải áp lại cỡ chữ.
@@ -219,6 +227,34 @@ public class MainActivity extends Activity {
             return;
         }
         fallbackBack();
+    }
+
+    /**
+     * Bàn phím cứng / trackpad (BlackBerry Q20): ở danh sách chat native thì danh sách bắt phím trước (chọn dòng, mở,
+     * gõ để tìm — NativeChatList.onKey). Phím Menu (phím BlackBerry) mở Cài đặt của app. Còn lại đi tới trang như cũ.
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent e) {
+        if (nativeList != null && customView == null && WebViewHolder.topPopup() == null
+                && !WebViewHolder.mobileChatOpen && nativeList.onKey(e)) {
+            return true;
+        }
+        if (e.getKeyCode() == KeyEvent.KEYCODE_MENU && builtQ20) {
+            if (e.getAction() == KeyEvent.ACTION_UP && !e.isCanceled()) startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+        // Mở chat bằng phím (không chạm) thì WebView có thể chưa giữ focus của Android: phím gõ không tới được trang.
+        if (builtQ20 && WebViewHolder.mobileChatOpen && customView == null && WebViewHolder.topPopup() == null
+                && e.getKeyCode() != KeyEvent.KEYCODE_BACK) {
+            WebView wv = WebViewHolder.peek();
+            if (wv != null && !wv.hasFocus()) wv.requestFocus();
+        }
+        return super.dispatchKeyEvent(e);
+    }
+
+    /** Ô nhập trong trang được focus / bỏ focus (JsBridge.editing). */
+    void onEditing(boolean on) {
+        if (nativeList != null) nativeList.onEditing(on);
     }
 
     private void fallbackBack() {
@@ -339,6 +375,7 @@ public class MainActivity extends Activity {
 
     /** Trang Zalo bắt đầu tải lại trong khi app đang mở. */
     void onPageReload() {
+        WebViewHolder.editing = false; // trang mới chưa có ô nhập nào được focus
         if (nativeList != null) nativeList.onPageReload();
         if (snapshotView == null && Prefs.mobileUi(this)) showSnapshot();
     }

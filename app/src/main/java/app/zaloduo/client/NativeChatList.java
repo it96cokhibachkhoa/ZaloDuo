@@ -14,6 +14,7 @@ import android.util.Log;
 import android.util.LruCache;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -63,6 +64,9 @@ final class NativeChatList extends FrameLayout {
     private boolean announced;
     /** Cỡ chữ theo cài đặt "Cỡ chữ" của app (như trang web), không theo cỡ chữ hệ thống. */
     private final float zoom;
+    /** Chế độ BlackBerry Q20 (Prefs.q20): dòng thấp hơn, ảnh nhỏ hơn để màn vuông ~336 dp hiện được nhiều hội thoại hơn. */
+    private final boolean q20;
+    private final int rowAv;
 
     static final class Item {
         String id, name, avatar, text, icon;
@@ -76,6 +80,8 @@ final class NativeChatList extends FrameLayout {
         super(c);
         density = getResources().getDisplayMetrics().density;
         zoom = Prefs.textZoom(c) / 100f;
+        q20 = Prefs.q20(c);
+        rowAv = q20 ? 40 : 48;
         listView = new ListView(c) {
             /**
              * Android 12+: nội dung danh sách ghi một lần mỗi khung hình vào nút content; kính mờ dưới dock vẽ lại chính
@@ -105,16 +111,11 @@ final class NativeChatList extends FrameLayout {
         listView.setVerticalScrollBarEnabled(false);
         listView.setOverScrollMode(OVER_SCROLL_NEVER);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener((parent, view, pos, id) -> {
-            if (opening()) return; // đã chọn một hội thoại, đang mở: bỏ qua chạm khác (chạm nhanh dòng thứ hai)
-            Item it = items.get(pos);
-            if (booting) { // trang chưa xong: nhớ lại, mở khi trang sẵn sàng (endBoot)
-                pendingOpen = it.id;
-                return;
-            }
-            openingAt = android.os.SystemClock.uptimeMillis();
-            if (onOpen != null) onOpen.run(); // dock native mờ đi ngay, không chờ trang báo
-            WebViewHolder.evalMain("window.__zw&&window.__zw.openConv&&window.__zw.openConv(" + JSONObject.quote(it.id) + ")");
+        listView.setOnItemClickListener((parent, view, pos, id) -> open(pos));
+        // Chạm màn hình: bỏ dòng đang chọn bằng trackpad / phím (như BlackBerry: chạm là thoát chế độ con trỏ).
+        listView.setOnTouchListener((v, e) -> {
+            if (e.getActionMasked() == android.view.MotionEvent.ACTION_DOWN) setKeySel(-1);
+            return false;
         });
         // Giữ lâu: menu thao tác hội thoại của Zalo kiểu "focus" như app Zalo: nền tối đi, dòng được giữ nổi lên thành
         // thẻ, menu xổ dưới thẻ. Menu là của trang web (vẽ trên WebView) nên thẻ cũng do trang vẽ, từ ảnh chụp dòng này
@@ -424,6 +425,138 @@ final class NativeChatList extends FrameLayout {
 
     private boolean opening() {
         return openingAt != 0 && android.os.SystemClock.uptimeMillis() - openingAt < 1500;
+    }
+
+    /** Mở hội thoại ở dòng pos (chạm, hoặc Enter / bấm trackpad ở chế độ BlackBerry). */
+    private void open(int pos) {
+        if (opening() || pos < 0 || pos >= items.size()) return; // đang mở một hội thoại: bỏ qua chạm khác (chạm nhanh dòng thứ hai)
+        Item it = items.get(pos);
+        if (booting) { // trang chưa xong: nhớ lại, mở khi trang sẵn sàng (endBoot)
+            pendingOpen = it.id;
+            return;
+        }
+        openingAt = android.os.SystemClock.uptimeMillis();
+        if (onOpen != null) onOpen.run(); // dock native mờ đi ngay, không chờ trang báo
+        WebViewHolder.evalMain("window.__zw&&window.__zw.openConv&&window.__zw.openConv(" + JSONObject.quote(it.id) + ")");
+    }
+
+    // ------------------------------------------------------------------ bàn phím cứng, trackpad (BlackBerry Q20)
+
+    /**
+     * Hội thoại đang chọn bằng trackpad / phím mũi tên (theo mã, không theo vị trí: tin mới đẩy hội thoại lên đầu thì
+     * vẫn chọn đúng hội thoại đó); null: không có (đang dùng cảm ứng).
+     */
+    private String keySelId;
+    /** Chữ gõ ở danh sách để tìm kiếm, chờ ô tìm kiếm của trang được focus (onEditing) rồi mới chèn vào. */
+    private final StringBuilder typed = new StringBuilder();
+    private final Runnable dropTyped = () -> typed.setLength(0);
+
+    /** Vị trí hội thoại đang chọn, -1 nếu không có / không còn trong danh sách. */
+    private int keySelPos() {
+        if (keySelId == null) return -1;
+        for (int i = 0; i < items.size(); i++) if (keySelId.equals(items.get(i).id)) return i;
+        return -1;
+    }
+
+    private void setKeySel(int pos) {
+        String id = pos >= 0 && pos < items.size() ? items.get(pos).id : null;
+        if (TextUtils.equals(id, keySelId)) return;
+        keySelId = id;
+        adapter.notifyDataSetChanged();
+    }
+
+    /** Danh sách đang hiện, nhận chạm (không bị khung chat / hộp thoại che) và trang không có ô nhập đang focus. */
+    private boolean acceptsKeys() {
+        return getVisibility() == VISIBLE && !booting && !items.isEmpty() && !WebViewHolder.editing
+                && (lastWv == null || lastWv.passTop == 0);
+    }
+
+    /**
+     * Phím cứng khi đang ở danh sách chat: trackpad / mũi tên lên xuống chọn dòng, Enter / bấm trackpad mở, Space /
+     * Shift+Space cuộn một trang, gõ chữ / số là tìm kiếm (như "gõ để tìm" của BlackBerry). Trả false: phím không thuộc
+     * danh sách, để hệ thống / trang xử lý.
+     */
+    boolean onKey(KeyEvent e) {
+        if (typed.length() > 0 && e.getAction() == KeyEvent.ACTION_DOWN) { // đang chờ ô tìm kiếm: gom tiếp chữ gõ nhanh
+            int ch = e.getUnicodeChar(e.getMetaState());
+            if (ch > 0 && !Character.isISOControl(ch)) {
+                typed.appendCodePoint(ch);
+                return true;
+            }
+        }
+        if (!acceptsKeys()) return false;
+        int code = e.getKeyCode();
+        boolean down = e.getAction() == KeyEvent.ACTION_DOWN;
+        switch (code) {
+            case KeyEvent.KEYCODE_DPAD_UP:
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                if (down) moveKeySel(code == KeyEvent.KEYCODE_DPAD_DOWN ? 1 : -1);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+            case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_NUMPAD_ENTER:
+                int pos = keySelPos();
+                if (pos < 0) return false;
+                if (down && e.getRepeatCount() == 0) {
+                    setKeySel(-1);
+                    open(pos);
+                }
+                return true;
+            case KeyEvent.KEYCODE_SPACE:
+                if (down) {
+                    int page = Math.max(dp(80), getHeight() - topPx - dp(80));
+                    listView.smoothScrollBy(e.isShiftPressed() ? -page : page, 200);
+                }
+                return true;
+            default:
+                break;
+        }
+        if (!down || e.getRepeatCount() != 0 || e.isCtrlPressed() || e.isMetaPressed()) return false;
+        int ch = e.getUnicodeChar(e.getMetaState());
+        if (ch <= 0 || Character.isWhitespace(ch) || Character.isISOControl(ch)) return false;
+        typed.setLength(0);
+        typed.appendCodePoint(ch);
+        removeCallbacks(dropTyped);
+        postDelayed(dropTyped, 2000); // trang không mở được ô tìm kiếm: bỏ chữ đã gom
+        setKeySel(-1);
+        tap("search", 0);
+        return true;
+    }
+
+    private void moveKeySel(int step) {
+        int first = listView.getFirstVisiblePosition();
+        int cur = keySelPos();
+        int pos = cur < 0 ? Math.max(first, firstUnderHeader()) : Math.max(0, Math.min(items.size() - 1, cur + step));
+        setKeySel(pos);
+        // Giữ dòng chọn nằm dưới thanh trên (thanh trên của trang che phần đầu danh sách).
+        int top = topPx + dp(4), bottom = getHeight() - dp(64 + Prefs.dockBottom(getContext())); // chừa dock nổi
+        View v = listView.getChildAt(pos - first);
+        if (v == null) {
+            listView.setSelectionFromTop(pos, Math.round(top - listView.getTranslationY())); // danh sách đang dịch theo thanh trên
+            return;
+        }
+        float y = v.getTop() + listView.getTranslationY();
+        if (y < top) listView.smoothScrollBy(Math.round(y - top), 120);
+        else if (y + v.getHeight() > bottom) listView.smoothScrollBy(Math.round(y + v.getHeight() - bottom), 120);
+    }
+
+    /** Dòng đầu tiên không bị thanh trên che. */
+    private int firstUnderHeader() {
+        int first = listView.getFirstVisiblePosition();
+        for (int i = 0; i < listView.getChildCount(); i++) {
+            View v = listView.getChildAt(i);
+            if (v.getTop() + listView.getTranslationY() >= topPx - dp(8)) return first + i;
+        }
+        return first;
+    }
+
+    /** Ô nhập của trang vừa được focus (ô tìm kiếm mở do gõ chữ): chèn chữ đã gom. */
+    void onEditing(boolean on) {
+        if (!on || typed.length() == 0) return;
+        String s = typed.toString();
+        typed.setLength(0);
+        removeCallbacks(dropTyped);
+        WebViewHolder.evalMain("window.__zw&&window.__zw.typeText&&window.__zw.typeText(" + JSONObject.quote(s) + ")");
     }
 
     // ------------------------------------------------------------------ thanh trên native
@@ -1005,11 +1138,25 @@ final class NativeChatList extends FrameLayout {
         public View getView(int pos, View convert, ViewGroup parent) {
             Row r = convert instanceof Row ? (Row) convert : new Row(getContext());
             r.bind(items.get(pos));
+            // Dòng đang chọn bằng trackpad: nền nhạt theo màu chữ (sáng / tối đều thấy) + vạch xanh bên trái.
+            r.setBackground(keySelId != null && keySelId.equals(items.get(pos).id) ? keySelBg() : null);
             return r;
         }
     }
 
-    /** Một dòng như Zalo Web: cao 78, ảnh 48, cách lề 16, tên 16px, giờ 12px, tin cuối 14px. */
+    private android.graphics.drawable.Drawable keySelBg() {
+        GradientDrawable fill = new GradientDrawable();
+        fill.setColor((fg & 0x00FFFFFF) | 0x1A000000);
+        GradientDrawable bar = new GradientDrawable();
+        bar.setColor(0xFF0068FF);
+        android.graphics.drawable.LayerDrawable d = new android.graphics.drawable.LayerDrawable(
+                new android.graphics.drawable.Drawable[]{fill, bar});
+        d.setLayerWidth(1, dp(3));
+        d.setLayerGravity(1, Gravity.START | Gravity.FILL_VERTICAL);
+        return d;
+    }
+
+    /** Một dòng như Zalo Web: cao 78, ảnh 48, cách lề 16, tên 16px, giờ 12px, tin cuối 14px (Q20: cao 62, ảnh 40, lề 12). */
     private final class Row extends LinearLayout {
         final ImageView avatar, mutedIc, msgIc, pinIc;
         final TextView name, time, text, badge;
@@ -1042,11 +1189,12 @@ final class NativeChatList extends FrameLayout {
             super(c);
             setOrientation(HORIZONTAL);
             setGravity(Gravity.CENTER_VERTICAL);
-            setPadding(dp(16), dp(4), dp(16), dp(4));
-            setMinimumHeight(dp(78));
+            int side = q20 ? 12 : 16;
+            setPadding(dp(side), dp(q20 ? 3 : 4), dp(side), dp(q20 ? 3 : 4));
+            setMinimumHeight(dp(q20 ? 62 : 78));
             avatar = new ImageView(c);
             avatar.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            addView(avatar, new LayoutParams(dp(48), dp(48)));
+            addView(avatar, new LayoutParams(dp(rowAv), dp(rowAv)));
             mutedIc = icon(c, R.drawable.zd_ic_muted, 14);
             msgIc = icon(c, R.drawable.zd_ic_image, 16);
             pinIc = icon(c, R.drawable.zd_ic_pin, 16);
@@ -1054,7 +1202,7 @@ final class NativeChatList extends FrameLayout {
             LinearLayout col = new LinearLayout(c);
             col.setOrientation(VERTICAL);
             LayoutParams colLp = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
-            colLp.leftMargin = dp(12);
+            colLp.leftMargin = dp(q20 ? 10 : 12);
             addView(col, colLp);
 
             LinearLayout line1 = new LinearLayout(c);
@@ -1090,7 +1238,7 @@ final class NativeChatList extends FrameLayout {
             bLp.leftMargin = dp(8);
             line2.addView(badge, bLp);
             LayoutParams l2 = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            l2.topMargin = dp(4);
+            l2.topMargin = dp(q20 ? 3 : 4);
             col.addView(line2, l2);
         }
 
@@ -1150,20 +1298,20 @@ final class NativeChatList extends FrameLayout {
                 boundAvatar = avKey;
                 boundId = it.id;
                 if (!keep) {
-                    avatar.setImageBitmap(Avatars.placeholder(it.name, it.me, dp(48)));
+                    avatar.setImageBitmap(Avatars.placeholder(it.name, it.me, dp(rowAv)));
                     hasRealAvatar = false;
                 }
                 if (it.group && TextUtils.isEmpty(it.avatar) && it.members.length > 0) {
                     final String key = boundAvatar;
                     boolean dark = Color.luminance(bg) < 0.4f;
-                    Avatars.loadGroup(getContext(), it.members, it.total, dp(48), bg, dark ? 0xFF3A3F46 : 0xFFE5E9EF,
+                    Avatars.loadGroup(getContext(), it.members, it.total, dp(rowAv), bg, dark ? 0xFF3A3F46 : 0xFFE5E9EF,
                             dark ? 0xFFE6E8EB : 0xFF5A6981, b -> {
                                 if (b != null && TextUtils.equals(key, boundAvatar)) setAvatar(b);
                                 glass.invalidate();
                             });
                 } else if (!TextUtils.isEmpty(it.avatar)) {
                     final String key = boundAvatar;
-                    Avatars.load(getContext(), it.avatar, dp(48), b -> {
+                    Avatars.load(getContext(), it.avatar, dp(rowAv), b -> {
                         if (b != null && TextUtils.equals(key, boundAvatar)) setAvatar(b);
                         glass.invalidate();
                     });

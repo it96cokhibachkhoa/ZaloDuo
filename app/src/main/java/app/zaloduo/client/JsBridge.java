@@ -184,6 +184,17 @@ final class JsBridge {
         });
     }
 
+    /** Ô nhập trong trang được focus / bỏ focus (mục 19 của shim.js): phím cứng của BlackBerry Q20 đi đâu. */
+    @JavascriptInterface
+    public void editing(String t, final boolean on) {
+        if (!ok(t) || owner.popup) return;
+        App.MAIN.post(() -> {
+            WebViewHolder.editing = on;
+            MainActivity a = WebViewHolder.host();
+            if (a != null) a.onEditing(on);
+        });
+    }
+
     /** Trạng thái kết nối máy chủ Zalo ("on" / "wait" / "off", mục 11 của shim.js): hiện ở thông báo chạy nền. */
     @JavascriptInterface
     public void connState(String t, final String state) {
