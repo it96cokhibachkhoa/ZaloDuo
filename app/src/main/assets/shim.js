@@ -712,11 +712,9 @@
       'html.zd-m #sidebarNav, html.zd-m #sidebarNav > :not(#main-tab) { flex: 1 1 auto !important;' +
         ' width: auto !important; max-width: none !important; min-width: 0 !important; }',
       'html.zd-m #chatOnboard { display: none !important; }',
-      // Lời nhắc đồng bộ tin nhắn (banner đầu danh sách, nút cuối danh sách) và thẻ "Đồng bộ ngay / Tải Zalo PC
-      // để xem đầy đủ tin nhắn" trong khung chat (nhận ra qua hình hai thiết bị chuyển tin).
-      'html.zd-m .sync-v2-banner, html.zd-m .tds-conversation__footer-wrapper:has(.tds-conversation__footer-content-sync-button),' +
-        ' html.zd-m .flx-centralized:has(> .tds-bubble-info-ecard__container img[src*="transfer-messages"])' +
-        ' { display: none !important; }',
+      // Lời nhắc đồng bộ tin nhắn (banner đầu danh sách, nút cuối danh sách, thẻ "Đồng bộ ngay" trong khung chat) KHÔNG
+      // ẩn nữa: đăng nhập Web mới thì Zalo chỉ có tin cũ / danh sách hội thoại sau khi đồng bộ từ điện thoại chính —
+      // ẩn đi thì danh sách trống trơn mà không có chỗ bấm đồng bộ. Xem thêm api.startSync (Cài đặt → Đồng bộ tin nhắn).
       // Banner hệ thống trên cùng "Sử dụng Zalo PC… Tải ngay" (nhận ra qua nút tải); banner khác vẫn hiện.
       // Gợi ý giới thiệu zCloud / trợ lý Kiki lúc mới đăng nhập (chỉ vào tab đã bỏ khỏi dock).
       'html.zd-m .zcloud-onboard-tip, html.zd-m .zcloud-offload-onboarding-tip,' +
@@ -3542,6 +3540,26 @@
     }
     document.addEventListener('focusin', function () { safe(report); }, true);
     document.addEventListener('focusout', function () { setTimeout(function () { safe(report); }, 0); }, true);
+    /**
+     * Bấm hộ nút đồng bộ tin nhắn của Zalo Web (banner đầu danh sách, nút cuối danh sách, thẻ trong khung chat, hoặc
+     * nút nào ghi "Đồng bộ"): Zalo mở hộp thoại / gửi yêu cầu xác nhận sang điện thoại chính. Trả về true nếu bấm được.
+     */
+    api.startSync = function () {
+      return !!safe(function () {
+        var sels = ['.sync-v2-banner button', '.sync-v2-banner [role=button]', '.sync-v2-banner .z--btn--v2',
+          '.tds-conversation__footer-content-sync-button', '.sync-v2-banner'];
+        for (var i = 0; i < sels.length; i++) {
+          var el = document.querySelector(sels[i]);
+          if (el) { el.click(); log('sync: clicked ' + sels[i]); return true; }
+        }
+        var b = [].filter.call(document.querySelectorAll('button, .z--btn--v2, [role=button]'), function (x) {
+          var t = (x.textContent || '').trim();
+          return t.length < 40 && /Đồng bộ|Sync/i.test(t);
+        })[0];
+        if (b) { b.click(); log('sync: clicked text button'); return true; }
+        return false;
+      });
+    };
     api.typeText = function (s) {
       safe(function () {
         var a = document.activeElement;

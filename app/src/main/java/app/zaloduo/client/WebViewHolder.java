@@ -367,6 +367,15 @@ final class WebViewHolder {
         main.evaluateJavascript(readAsset(app, "dump.js"), value -> done.onReceiveValue(decodeJsString(value)));
     }
 
+    /** Bấm hộ nút đồng bộ tin nhắn của Zalo Web (shim.js api.startSync): "true" nếu tìm thấy nút để bấm. */
+    static void startSync(final ValueCallback<String> done) {
+        if (main == null) {
+            done.onReceiveValue(null);
+            return;
+        }
+        main.evaluateJavascript("!!(window.__zw&&window.__zw.startSync&&window.__zw.startSync())", done);
+    }
+
     /** Trạng thái ngắn cho màn hình Cài đặt: phiên bản script, đã nhận dạng bố cục chưa. */
     static void scriptStatus(final ValueCallback<String> done) {
         if (main == null) {

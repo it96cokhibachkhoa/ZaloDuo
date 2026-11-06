@@ -142,6 +142,17 @@ public class SettingsActivity extends Activity {
                 .show());
         cacheButton = (Button) list.getChildAt(list.getChildCount() - 1);
         updateCacheLabel();
+        // Đăng nhập Web mới: danh sách chat trống tới khi đồng bộ từ điện thoại chính. Bấm hộ nút "Đồng bộ" của Zalo Web
+        // rồi quay về màn chính để thấy hộp thoại / làm theo hướng dẫn của Zalo, xác nhận trên điện thoại chính.
+        button("Đồng bộ tin nhắn từ điện thoại chính", () -> WebViewHolder.startSync(r -> {
+            if ("true".equals(r)) {
+                Toast.makeText(this, "Đã gửi yêu cầu đồng bộ. Xác nhận trên điện thoại chính.", Toast.LENGTH_LONG).show();
+                finish();
+            } else {
+                Toast.makeText(this, r == null ? "Zalo chưa tải xong, mở app rồi thử lại"
+                        : "Không thấy nút đồng bộ của Zalo. Thử lại sau khi trang tải xong.", Toast.LENGTH_LONG).show();
+            }
+        }));
         button("Tải lại Zalo", () -> {
             WebViewHolder.reload();
             Toast.makeText(this, "Đang tải lại", Toast.LENGTH_SHORT).show();
