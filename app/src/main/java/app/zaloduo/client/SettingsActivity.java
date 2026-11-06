@@ -251,6 +251,7 @@ public class SettingsActivity extends Activity {
 
                     .append(" mobileUi=").append(Prefs.mobileUi(this))
                     .append(" q20=").append(Prefs.q20(this)).append(Prefs.q20Detected(this) ? "(detected)" : "")
+                    .append(" display=").append(Prefs.displayInfo(this))
                     .append(" viewport=").append(Prefs.viewportWidth(this))
                     .append(" textZoom=").append(Prefs.textZoom(this)).append(Prefs.textZoomSetting(this) == 0 ? "(device)" : "")
                     .append(" dock(opacity=").append(Prefs.dockOpacity(this))
@@ -263,6 +264,9 @@ public class SettingsActivity extends Activity {
                             == android.content.res.Configuration.UI_MODE_NIGHT_YES)
                     .append('\n');
             sb.append("page: ").append(page == null ? "zalo not open" : page).append('\n');
+            // Danh sách chat native đã nhận từ trang (convlist.json): trống hẳn là Zalo Web chưa có hội thoại nào.
+            java.io.File conv = new java.io.File(getFilesDir(), "convlist.json");
+            sb.append("native convlist: ").append(conv.exists() ? conv.length() + " bytes" : "none").append('\n');
             sb.append(DiagLog.dump(this));
             if (CrashLog.hasPending(this)) sb.append("--- last crash\n").append(CrashLog.read(this)).append('\n');
             ClipboardManager cm = getSystemService(ClipboardManager.class);

@@ -96,8 +96,32 @@ final class Prefs {
 
     static boolean q20(Context c) { return bool(c, Q20, q20Detected(c)); }
 
-    @SuppressWarnings("deprecation")
+    /** Tên máy BlackBerry Classic / Q20 thay main Android (Zinwa Q25, Xelex Q25...). */
+    private static boolean q20Model() {
+        String s = (android.os.Build.MANUFACTURER + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " "
+                + android.os.Build.DEVICE + " " + android.os.Build.PRODUCT).toLowerCase(java.util.Locale.ROOT);
+        return s.matches(".*\\b(q20|q25|zinwa|xelex)\\b.*") || s.contains("blackberry classic");
+    }
+
     static boolean q20Detected(Context c) {
+        return q20Model() || q20Screen(c);
+    }
+
+    /** Kích thước màn hình thật (px) và mật độ, cho log debug: "720x720@2.6". */
+    @SuppressWarnings("deprecation")
+    static String displayInfo(Context c) {
+        android.hardware.display.DisplayManager dm = c.getSystemService(android.hardware.display.DisplayManager.class);
+        android.view.Display d = dm == null ? null : dm.getDisplay(android.view.Display.DEFAULT_DISPLAY);
+        if (d == null) return "?";
+        DisplayMetrics m = new DisplayMetrics();
+        d.getRealMetrics(m);
+        android.content.res.Configuration cf = c.getResources().getConfiguration();
+        return m.widthPixels + "x" + m.heightPixels + "@" + m.density + " cfg " + cf.screenWidthDp + "x" + cf.screenHeightDp
+                + "dp sw" + cf.smallestScreenWidthDp + " model=" + android.os.Build.MODEL + " device=" + android.os.Build.DEVICE;
+    }
+
+    @SuppressWarnings("deprecation")
+    private static boolean q20Screen(Context c) {
         // Kích thước thật của màn hình (không theo cửa sổ: chia đôi màn hình trên điện thoại thường cũng ra gần vuông).
         android.hardware.display.DisplayManager dm = c.getSystemService(android.hardware.display.DisplayManager.class);
         android.view.Display d = dm == null ? null : dm.getDisplay(android.view.Display.DEFAULT_DISPLAY);
