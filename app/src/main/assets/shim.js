@@ -2505,6 +2505,7 @@
 
     var pageStart = Date.now();
     var lastSent = '', building = false, names = {}, namesAt = 0; // tên + ảnh bạn bè / nhóm, lấy lại tối đa mỗi 60 s
+    var lastStat = '', nativeBroken = false; // nativeBroken: danh sách native rỗng dù trang có hội thoại (xem buildAndSend)
     /**
      * Mã các hội thoại danh sách web đang hiện (đã lọc theo Ưu tiên / Khác, Chưa đọc, Phân loại...), theo thứ tự của
      * Zalo: prop "conversations" của component cha #conversationListId (danh sách ảo hóa chỉ vẽ vài dòng trong DOM).
@@ -2558,7 +2559,7 @@
         } catch (e) { /* ignore */ }
         // Hội thoại ảo của Zalo (vd. "stranger_box" — hộp tin người lạ, mã không phải số): web chỉ hiện khi có tin.
         convs = convs.filter(function (c) { return c.isGroup || /^\d+$/.test(c.userId) || previews[c.userId]; });
-        var list = convs.map(function (c) {
+        function toItem(c) {
           var id = c.userId, p = previews[id], u = unreads[id] || {}, info = names[id];
           if (!info || !info.n) {
             // Không có trong danh bạ / nhóm (người lạ, Official Account...): hồ sơ của Zalo vẫn có tên + ảnh.
@@ -2599,14 +2600,42 @@
             t: p ? +p.messageTime || 0 : 0, m: text, ic: icon, miss: miss,
             u: (u.smsUnreadCount || 0) + (u.strangerUnreadCount || 0), at: u.mentionUnreadCount || 0,
             ud: u.smsUnreadNotCount || 0, p: pinned[id] || 0, mu: muted, me: id === me };
-        });
-        var order = webOrder();
+        }
+        var list = convs.map(toItem);
+        var order = webOrder(), fromStore = list.length, added = 0;
         if (order) {
           // Đúng tab lọc đang chọn trên thanh của Zalo, theo thứ tự của Zalo.
           var byId = {};
           list.forEach(function (it) { byId[it.id] = it; });
+          // Hội thoại web đang hiện mà getConversations / ConvInfo không trả về (đăng nhập Web mới, vừa đồng bộ từ điện
+          // thoại chính; bản Zalo Web khác): dựng từ tin xem trước + hồ sơ, không thì danh sách native thiếu / trống trơn.
+          order.forEach(function (id) {
+            if (byId[id]) return;
+            var ci = null;
+            try { ci = z.info && z.info.getConvByIdSync ? z.info.getConvByIdSync(id) : null; } catch (e) { /* ignore */ }
+            var grp = ci && ci.isGroup != null ? !!ci.isGroup : !!(names[id] && names[id].ms) || /^g\d/.test(id);
+            var it = safe(function () { return toItem({ userId: id, isGroup: grp }); });
+            if (it) { byId[id] = it; added++; }
+          });
           list = order.map(function (id) { return byId[id]; }).filter(Boolean);
         } else list.sort(function (a, b) { return (b.p - a.p) || (b.t - a.t); });
+        var stat = 'native list: store ' + fromStore + ', web ' + (order ? order.length : 'n/a') + ', added ' + added + ', shown ' + list.length;
+        if (stat !== lastStat) { lastStat = stat; diag(stat); }
+        // Trang có hội thoại mà danh sách native vẫn rỗng (không đọc được dữ liệu của bản Zalo này): đừng che danh sách
+        // web bằng một danh sách trống — tạm tắt chế độ native, hiện danh sách của Zalo Web.
+        var webRows = (order && order.length) || !!document.querySelector('#conversationList .msg-item');
+        if (!list.length && webRows) {
+          if (!nativeBroken) diag('native list: empty but web list has rows, showing web list');
+          nativeBroken = true;
+          nativeOk = false;
+          safe(syncNative);
+          return;
+        }
+        if (nativeBroken && list.length) {
+          nativeBroken = false;
+          nativeOk = true; // app đã báo sẵn sàng từ trước (nativeReady chỉ gọi một lần mỗi trang)
+          setTimeout(function () { safe(syncNative); }, 300); // chờ app vẽ danh sách vừa gửi rồi mới ẩn danh sách web
+        }
         document.documentElement.classList.toggle('zd-nempty', !!order && !order.length);
         // Trang vừa tải (lại): Zalo đã có danh sách hội thoại nhưng chưa nạp tin cuối / danh bạ — toàn "Chưa có tin
         // nhắn", tên là mã số, sai thứ tự. Đừng gửi bản đó đè lên danh sách app đang hiện; chờ nạp xong (tối đa 25 s
@@ -2773,7 +2802,7 @@
      * kiếm. Báo vị trí thanh trên (#contact-search) và dock cho app (px CSS, theo khung WebView).
      */
     var nativeOk = false, lastLayout = '';
-    api.nativeReady = function (ok) { nativeOk = !!ok; syncNative(); };
+    api.nativeReady = function (ok) { nativeOk = !!ok && !nativeBroken; syncNative(); };
     function syncNative() {
       var root = document.documentElement;
       var msgTab = document.querySelector('#main-tab [data-translate-title=STR_TAB_MESSAGE]');
@@ -2804,7 +2833,8 @@
       // dh: dock đang trượt xuống ẩn (html.zd-dockhide) — app cho lớp kính mờ dưới dock trượt theo cùng lúc.
       var lay = JSON.stringify({ on: active, pass: pass, top: hb, dock: d ? [Math.round(d.left), Math.round(d.top), Math.round(d.right),
         Math.round(d.bottom)] : null, dh: root.classList.contains('zd-dockhide'), tabs: filterTabs(), cat: catLabel(), bg: getComputedStyle(root).getPropertyValue('--zd-listbg') || '',
-        fg: nm ? getComputedStyle(nm).color : '', fg2: sub ? getComputedStyle(sub).color : '', me: meInfo() });
+        fg: nm ? getComputedStyle(nm).color : '', fg2: sub ? getComputedStyle(sub).color : '', me: meInfo(),
+        nb: nativeBroken }); // nb: danh sách native không dùng được, app bỏ lớp che lúc mở app (NativeChatList.setLayout)
       if (lay !== lastLayout) { lastLayout = lay; bridge.nativeLayout(lay); }
     }
     api.syncNative = function () { safe(syncNative); };

@@ -998,6 +998,13 @@ final class NativeChatList extends FrameLayout {
         lastLayout = json;
         lastWv = wv;
         if (booting) { // đang che trang lúc tải (boot): áp bố cục thật khi trang xong
+            // Trang báo danh sách native không dùng được (không đọc được hội thoại của bản Zalo này): chế độ native sẽ
+            // không bật, đừng chờ — bỏ lớp che để thấy danh sách của Zalo Web.
+            if (json.contains("\"nb\":true")) {
+                DiagLog.add("native list unusable, showing web list");
+                cancelBoot();
+                return;
+            }
             if (bootLayoutOn() && wv != null) wv.setBackgroundColor(Color.TRANSPARENT); // trước khi đổi lớp (endBoot)
             if (bootEnding && bootLayoutOn()) endBoot();
             return;
