@@ -3603,6 +3603,21 @@
         return false;
       });
     };
+    // Nhật ký đồng bộ tin nhắn (Cài đặt → Sao chép log debug): banner / thẻ đồng bộ của Zalo hiện, đổi chữ (vd. "Đang
+    // đồng bộ 40%"), mất đi. Chỉ chữ giao diện của Zalo, không có nội dung tin.
+    var syncState = '', syncTimer = 0;
+    function watchSync() {
+      var b = document.querySelector('.sync-v2-banner');
+      var card = document.querySelector('.tds-conversation__footer-content-sync-button, ' +
+        '.tds-bubble-info-ecard__container img[src*="transfer-messages"]');
+      var st = (b ? 'banner "' + (b.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80) + '"' : 'no banner') +
+        (card ? ', sync button in list/chat' : '');
+      if (st !== syncState) { syncState = st; diag('sync ui: ' + st); }
+    }
+    new MutationObserver(function () {
+      if (syncTimer) return;
+      syncTimer = setTimeout(function () { syncTimer = 0; safe(watchSync); }, 1000);
+    }).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
     api.typeText = function (s) {
       safe(function () {
         var a = document.activeElement;
