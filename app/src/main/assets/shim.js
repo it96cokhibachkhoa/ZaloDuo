@@ -2480,7 +2480,17 @@
      * Tài khoản đã đồng bộ tin nhắn từ điện thoại chính: gọi hàm định dạng với isSyncEnabled false thì Zalo ra
      * "[Tin nhắn chưa đồng bộ]" cho mọi dòng, dù web hiện đúng nội dung. Thử với đồng bộ bật trước; vẫn ra câu "chưa
      * đồng bộ" mà tin cuối có nội dung thì tự đoán từ nội dung; tin thật sự chưa có nội dung thì giữ câu của Zalo.
+     * txt: giá trị Zalo trả về có lúc là đối tượng (tên, tin xem trước) — lấy chữ bên trong, không in ra "[object Object]".
      */
+    function txt(v) {
+      if (typeof v === 'string') return v;
+      if (typeof v === 'number') return String(v);
+      if (v && typeof v === 'object') {
+        var ks = ['title', 'name', 'displayName', 'text', 'msg', 'content', 'description'];
+        for (var i = 0; i < ks.length; i++) if (typeof v[ks[i]] === 'string' && v[ks[i]]) return v[ks[i]];
+      }
+      return '';
+    }
     var FMT_OPTS = [{ isSyncing: false, isSyncEnabled: true }, { isSyncing: false, isSyncEnabled: false }];
     function previewText(p) {
       var unsynced = null;
@@ -2488,9 +2498,9 @@
         for (var k = 0; k < FMT_OPTS.length; k++) {
           try {
             var f = Z.fmt(p, FMT_OPTS[k]) || {};
-            var key = f.message || '', s = key;
+            var key = txt(f.message), s = key;
             if (f.isSystemicMessage && Z.i18n) {
-              s = Z.i18n.str(s);
+              s = txt(Z.i18n.str(s));
               (f.systemicMessageArgs || []).forEach(function (a, i) { s = s.split('%' + (i + 1) + '$s').join(a); });
             }
             if (!s) continue;
@@ -2508,7 +2518,7 @@
       if (typeof m === 'string') t = m;
       else if (m && typeof m === 'object') {
         if (m.catId || m.stickerId) t = '[Sticker]';
-        else if (m.title) t = m.title;
+        else if (txt(m.title)) t = txt(m.title);
         else if (m.thumb || /\.(jpe?g|png|gif|webp)/i.test(m.href || '')) t = '[Hình ảnh]';
         else if (m.href) t = '[Liên kết]';
       }
@@ -2554,12 +2564,12 @@
         if (fresh && ((all[1] || []).length || (all[2] || []).length)) {
           namesAt = Date.now();
           loadAliases(z);
-          (all[1] || []).forEach(function (f) { names[f.userId] = { n: f.displayName || f.zaloName, a: f.avatar }; });
+          (all[1] || []).forEach(function (f) { names[f.userId] = { n: txt(f.displayName) || txt(f.zaloName), a: txt(f.avatar) }; });
           (all[2] || []).forEach(function (g) {
             // Nhóm không có ảnh riêng: Zalo ghép ảnh vài thành viên + tổng số người.
             var ms = (Array.isArray(g.topMember) ? g.topMember : []).map(function (t) { return t && t.avatar; })
               .filter(Boolean).slice(0, 3);
-            names[g.userId] = { n: g.displayName, a: g.avatar, ms: ms, tm: g.totalMember || 0 };
+            names[g.userId] = { n: txt(g.displayName), a: txt(g.avatar), ms: ms, tm: g.totalMember || 0 };
           });
         }
         var previews = {}, unreads = {}, pinned = {};
@@ -2579,14 +2589,14 @@
             var ci = null;
             try { ci = z.profile ? z.profile.getProfileFriendByIdSync(id) : null; } catch (e) { /* ignore */ }
             try { ci = ci || (z.info && z.info.getConvByIdSync ? z.info.getConvByIdSync(id) : null); } catch (e) { /* ignore */ }
-            var cn = ci && (ci.displayName || ci.zaloName || ci.groupName || ci.name);
+            var cn = ci && (txt(ci.displayName) || txt(ci.zaloName) || txt(ci.groupName) || txt(ci.name));
             if (cn) {
-              info = { n: cn, a: ci.avatar || (info && info.a) || '', ms: info && info.ms, tm: info && info.tm };
+              info = { n: cn, a: txt(ci.avatar) || (info && info.a) || '', ms: info && info.ms, tm: info && info.tm };
               names[id] = info;
             }
           }
           info = info || {};
-          var name = (!c.isGroup && aliasOf(id)) || info.n || (id === me ? 'My Documents' : '') || (p && !c.isGroup && p.fromUid === id ? p.dName : '') || id;
+          var name = (!c.isGroup && aliasOf(id)) || txt(info.n) || (id === me ? 'My Documents' : '') || (p && !c.isGroup && p.fromUid === id ? txt(p.dName) : '') || id;
           if (name === 'Truyền File') name = 'My Documents'; // tên nội bộ của My Documents, web hiện "My Documents"
           var text = 'Chưa có tin nhắn', icon = '', miss = false;
           if (p) {
@@ -2598,11 +2608,11 @@
             else if (c.isGroup && (p.dName || p.fromUid)) {
               // Người gửi trong nhóm: tên gợi nhớ / tên trong danh bạ như Zalo hiện trong chat, không phải tên Zalo gốc (dName).
               var fr = names[p.fromUid];
-              var who = aliasOf(p.fromUid) || (fr && !fr.ms && fr.n) || p.dName;
+              var who = aliasOf(p.fromUid) || (fr && !fr.ms && txt(fr.n)) || txt(p.dName);
               if (!who) { // không phải bạn bè, tin cuối không có dName
                 try {
                   var pr = z.profile ? z.profile.getProfileFriendByIdSync(p.fromUid) : null;
-                  who = pr && (pr.displayName || pr.zaloName);
+                  who = pr && (txt(pr.displayName) || txt(pr.zaloName));
                 } catch (e) { /* ignore */ }
               }
               if (who) text = who + ': ' + text;
@@ -2683,6 +2693,28 @@
       buildTimer = setTimeout(function () { safe(buildAndSend); }, ms);
     }
     api.requestConvList = function () { lastSent = ''; scheduleBuild(0); };
+    /**
+     * Danh sách native cuộn gần tới cuối (NativeChatList.loadMore): Zalo chỉ nạp thêm hội thoại cũ khi danh sách web
+     * (ẩn dưới danh sách native) cuộn tới đáy — cuộn hộ nó xuống đáy để Zalo nạp tiếp, danh sách mới gửi sang app như
+     * mọi lần đổi dữ liệu.
+     */
+    api.loadMoreConvs = function () {
+      safe(function () {
+        var l = document.getElementById('conversationList') || document.getElementById('conversationListId');
+        if (!l) return;
+        function scrollable(el) {
+          var oy = getComputedStyle(el).overflowY;
+          return (oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 4;
+        }
+        var el = null;
+        for (var a = l; a && a !== document.body && !el; a = a.parentElement) if (scrollable(a)) el = a;
+        if (!el) el = [].slice.call(l.querySelectorAll('div'), 0, 40).filter(scrollable)[0] || null;
+        if (!el) return;
+        el.scrollTop = el.scrollHeight;
+        el.dispatchEvent(new Event('scroll', { bubbles: true }));
+        scheduleBuild(1500);
+      });
+    };
     api.openConv = function (id) {
       var z = findZalo();
       if (z && z.conv && z.conv.openConversation) {

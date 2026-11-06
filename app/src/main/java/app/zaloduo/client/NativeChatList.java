@@ -144,6 +144,7 @@ final class NativeChatList extends FrameLayout {
 
             @Override
             public void onScroll(AbsListView view, int first, int visible, int total) {
+                if (total > 0 && first + visible >= total - 2) loadMore(); // gần cuối (hay danh sách ngắn hơn màn hình)
                 View v = view.getChildAt(0);
                 if (v == null) return;
                 // Độ dịch tính bằng px CSS (giống khi cuộn danh sách web) để shim.js ẩn/hiện dock + thanh trên.
@@ -425,6 +426,20 @@ final class NativeChatList extends FrameLayout {
 
     private boolean opening() {
         return openingAt != 0 && android.os.SystemClock.uptimeMillis() - openingAt < 1500;
+    }
+
+    private long moreAt;
+
+    /**
+     * Cuộn tới cuối danh sách: nhờ trang nạp thêm hội thoại cũ (Zalo chỉ nạp khi danh sách web của nó cuộn tới đáy,
+     * mà danh sách web nằm ẩn dưới danh sách này). Tối đa mỗi 2 s một lần.
+     */
+    private void loadMore() {
+        if (booting) return;
+        long now = android.os.SystemClock.uptimeMillis();
+        if (now - moreAt < 2000) return;
+        moreAt = now;
+        WebViewHolder.evalMain("window.__zw&&window.__zw.loadMoreConvs&&window.__zw.loadMoreConvs()");
     }
 
     /** Mở hội thoại ở dòng pos (chạm, hoặc Enter / bấm trackpad ở chế độ BlackBerry). */
