@@ -2476,18 +2476,31 @@
       if (v && typeof v === 'object') v = v.alias || v.aliasName || v.name || v.displayName || '';
       return typeof v === 'string' ? v.trim() : '';
     }
+    /*
+     * Tài khoản đã đồng bộ tin nhắn từ điện thoại chính: gọi hàm định dạng với isSyncEnabled false thì Zalo ra
+     * "[Tin nhắn chưa đồng bộ]" cho mọi dòng, dù web hiện đúng nội dung. Thử với đồng bộ bật trước; vẫn ra câu "chưa
+     * đồng bộ" mà tin cuối có nội dung thì tự đoán từ nội dung; tin thật sự chưa có nội dung thì giữ câu của Zalo.
+     */
+    var FMT_OPTS = [{ isSyncing: false, isSyncEnabled: true }, { isSyncing: false, isSyncEnabled: false }];
     function previewText(p) {
+      var unsynced = null;
       if (Z.fmt) {
-        try {
-          var f = Z.fmt(p, { isSyncing: false, isSyncEnabled: false }) || {};
-          var s = f.message || '';
-          if (f.isSystemicMessage && Z.i18n) {
-            s = Z.i18n.str(s);
-            (f.systemicMessageArgs || []).forEach(function (a, i) { s = s.split('%' + (i + 1) + '$s').join(a); });
-          }
-          if (s) return { t: zEmoji(String(s).replace(/\s+/g, ' ').slice(0, 200)), ic: f.icon || '', miss: !!f.isMisscall };
-        } catch (e) { /* dùng cách đoán bên dưới */ }
+        for (var k = 0; k < FMT_OPTS.length; k++) {
+          try {
+            var f = Z.fmt(p, FMT_OPTS[k]) || {};
+            var key = f.message || '', s = key;
+            if (f.isSystemicMessage && Z.i18n) {
+              s = Z.i18n.str(s);
+              (f.systemicMessageArgs || []).forEach(function (a, i) { s = s.split('%' + (i + 1) + '$s').join(a); });
+            }
+            if (!s) continue;
+            var out = { t: zEmoji(String(s).replace(/\s+/g, ' ').slice(0, 200)), ic: f.icon || '', miss: !!f.isMisscall };
+            if (f.isSystemicMessage && /sync|đồng bộ/i.test(key + ' ' + s)) { unsynced = unsynced || out; continue; }
+            return out;
+          } catch (e) { /* thử cách khác bên dưới */ }
+        }
       }
+      if (unsynced && (p.message == null || p.message === '')) return unsynced;
       return { t: zEmoji(guessText(p)), ic: '', miss: false };
     }
     function guessText(p) {
